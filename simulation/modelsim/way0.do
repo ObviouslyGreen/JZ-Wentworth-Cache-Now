@@ -1,8 +1,8 @@
 onerror {resume}
 quietly WaveActivateNextPane {} 0
-add wave -noupdate -height 15 -label data0 /mp2_tb/dut/cache_datapath_module/data0/data
-add wave -noupdate -height 15 -label tag0 /mp2_tb/dut/cache_datapath_module/tag0/data
-add wave -noupdate -height 15 -label pc_out /mp2_tb/dut/datapath_module/pc_out
+add wave -noupdate -height 15 -label data0 /mp3_tb/dut/cache_datapath_module/data0/data
+add wave -noupdate -height 15 -label tag0 /mp3_tb/dut/cache_datapath_module/tag0/data
+add wave -noupdate -height 15 -label pc_out /mp3_tb/dut/datapath_module/pc_out
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {24916137 ps} 0}
 quietly wave cursor active 1
