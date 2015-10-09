@@ -1,0 +1,144 @@
+Flow report for mp1
+Sun Sep 13 16:37:38 2015
+Quartus II 32-bit Version 13.1.4 Build 182 03/12/2014 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Flow Summary
+  3. Flow Settings
+  4. Flow Non-Default Global Settings
+  5. Flow Elapsed Time
+  6. Flow OS Summary
+  7. Flow Log
+  8. Flow Messages
+  9. Flow Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2014 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++-----------------------------------------------------------------------------+
+; Flow Summary                                                                ;
++-------------------------------+---------------------------------------------+
+; Flow Status                   ; Successful - Sun Sep 13 16:21:56 2015       ;
+; Quartus II 32-bit Version     ; 13.1.4 Build 182 03/12/2014 SJ Full Version ;
+; Revision Name                 ; mp1                                         ;
+; Top-level Entity Name         ; mp1                                         ;
+; Family                        ; Stratix III                                 ;
+; Device                        ; EP3SE50F780C2                               ;
+; Timing Models                 ; Final                                       ;
+; Logic utilization             ; 2 %                                         ;
+;     Combinational ALUTs       ; 459 / 38,000 ( 1 % )                        ;
+;     Memory ALUTs              ; 0 / 19,000 ( 0 % )                          ;
+;     Dedicated logic registers ; 232 / 38,000 ( < 1 % )                      ;
+; Total registers               ; 232                                         ;
+; Total pins                    ; 54 / 488 ( 11 % )                           ;
+; Total virtual pins            ; 0                                           ;
+; Total block memory bits       ; 0 / 5,455,872 ( 0 % )                       ;
+; DSP block 18-bit elements     ; 0 / 384 ( 0 % )                             ;
+; Total PLLs                    ; 0 / 4 ( 0 % )                               ;
+; Total DLLs                    ; 0 / 4 ( 0 % )                               ;
++-------------------------------+---------------------------------------------+
+
+
++-----------------------------------------+
+; Flow Settings                           ;
++-------------------+---------------------+
+; Option            ; Setting             ;
++-------------------+---------------------+
+; Start date & time ; 09/13/2015 16:21:05 ;
+; Main task         ; Compilation         ;
+; Revision Name     ; mp1                 ;
++-------------------+---------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                            ;
++--------------------------------------+---------------------------------------+---------------+-------------+----------------+
+; Assignment Name                      ; Value                                 ; Default Value ; Entity Name ; Section Id     ;
++--------------------------------------+---------------------------------------+---------------+-------------+----------------+
+; COMPILER_SIGNATURE_ID                ; 176831337767014.144217926401931       ; --            ; --          ; --             ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                    ; --            ; --          ; mp1_tb         ;
+; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; mp1_tb                                ; --            ; --          ; eda_simulation ;
+; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                     ; --            ; --          ; eda_simulation ;
+; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (SystemVerilog)       ; <None>        ; --          ; --             ;
+; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE                       ; --            ; --          ; eda_simulation ;
+; EDA_TEST_BENCH_FILE                  ; mp1_tb.sv                             ; --            ; --          ; mp1_tb         ;
+; EDA_TEST_BENCH_FILE                  ; memory.sv                             ; --            ; --          ; mp1_tb         ;
+; EDA_TEST_BENCH_MODULE_NAME           ; mp1_tb                                ; --            ; --          ; mp1_tb         ;
+; EDA_TEST_BENCH_NAME                  ; mp1_tb                                ; --            ; --          ; eda_simulation ;
+; EDA_TEST_BENCH_RUN_SIM_FOR           ; 200 ns                                ; --            ; --          ; mp1_tb         ;
+; EDA_TIME_SCALE                       ; 1 ps                                  ; --            ; --          ; eda_simulation ;
+; MAX_CORE_JUNCTION_TEMP               ; 85                                    ; --            ; --          ; --             ;
+; MIN_CORE_JUNCTION_TEMP               ; 0                                     ; --            ; --          ; --             ;
+; NOMINAL_CORE_SUPPLY_VOLTAGE          ; 1.1V                                  ; --            ; --          ; --             ;
+; PARTITION_COLOR                      ; 16764057                              ; --            ; --          ; Top            ;
+; PARTITION_FITTER_PRESERVATION_LEVEL  ; PLACEMENT_AND_ROUTING                 ; --            ; --          ; Top            ;
+; PARTITION_NETLIST_TYPE               ; SOURCE                                ; --            ; --          ; Top            ;
+; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                   ; --            ; --          ; --             ;
+; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW ; --            ; --          ; --             ;
+; PROJECT_OUTPUT_DIRECTORY             ; output_files                          ; --            ; --          ; --             ;
++--------------------------------------+---------------------------------------+---------------+-------------+----------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                             ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis      ; 00:00:05     ; 1.0                     ; 445 MB              ; 00:00:03                           ;
+; Fitter                    ; 00:00:18     ; 1.6                     ; 786 MB              ; 00:00:14                           ;
+; Assembler                 ; 00:00:05     ; 1.0                     ; 418 MB              ; 00:00:04                           ;
+; TimeQuest Timing Analyzer ; 00:00:06     ; 1.0                     ; 508 MB              ; 00:00:03                           ;
+; EDA Netlist Writer        ; 00:00:05     ; 1.0                     ; 380 MB              ; 00:00:02                           ;
+; TimeQuest Timing Analyzer ; 00:00:06     ; 1.2                     ; 465 MB              ; 00:00:02                           ;
+; Total                     ; 00:00:45     ; --                      ; --                  ; 00:00:28                           ;
++---------------------------+--------------+-------------------------+---------------------+------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                                            ;
++---------------------------+-------------------------------+------------------+------------+----------------+
+; Module Name               ; Machine Hostname              ; OS Name          ; OS Version ; Processor type ;
++---------------------------+-------------------------------+------------------+------------+----------------+
+; Analysis & Synthesis      ; eceb-2022-23.ews.illinois.edu ; Scientific Linux ; 6          ; x86_64         ;
+; Fitter                    ; eceb-2022-23.ews.illinois.edu ; Scientific Linux ; 6          ; x86_64         ;
+; Assembler                 ; eceb-2022-23.ews.illinois.edu ; Scientific Linux ; 6          ; x86_64         ;
+; TimeQuest Timing Analyzer ; eceb-2022-23.ews.illinois.edu ; Scientific Linux ; 6          ; x86_64         ;
+; EDA Netlist Writer        ; eceb-2022-23.ews.illinois.edu ; Scientific Linux ; 6          ; x86_64         ;
+; TimeQuest Timing Analyzer ; eceb-2022-23.ews.illinois.edu ; Scientific Linux ; 6          ; x86_64         ;
++---------------------------+-------------------------------+------------------+------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_map --read_settings_files=on --write_settings_files=off mp1 -c mp1
+quartus_fit --read_settings_files=off --write_settings_files=off mp1 -c mp1
+quartus_asm --read_settings_files=off --write_settings_files=off mp1 -c mp1
+quartus_sta mp1 -c mp1
+quartus_eda --read_settings_files=off --write_settings_files=off mp1 -c mp1
+quartus_sta mp1 -c mp1
+
+
+

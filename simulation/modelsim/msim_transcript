@@ -1,0 +1,338 @@
+# do mp2_run_msim_rtl_verilog.do 
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Copying /software/altera/13.1/modelsim_ase/linuxaloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# ** Warning: Copied /software/altera/13.1/modelsim_ase/linuxaloem/../modelsim.ini to modelsim.ini.
+#          Updated modelsim.ini.
+# 
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/comparator.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module comparator
+# 
+# Top level modules:
+# 	comparator
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/mux4.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module mux4
+# 
+# Top level modules:
+# 	mux4
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/nzp_comparator.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module nzp_comparator
+# 
+# Top level modules:
+# 	nzp_comparator
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/adder.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module adder
+# 
+# Top level modules:
+# 	adder
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/mux2.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module mux2
+# 
+# Top level modules:
+# 	mux2
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/lc3b_types.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package lc3b_types
+# 
+# Top level modules:
+# 	--none--
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/plus2.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module plus2
+# 
+# Top level modules:
+# 	plus2
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/register.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module register
+# 
+# Top level modules:
+# 	register
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/cache_control.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package cache_control_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module cache_control
+# 
+# Top level modules:
+# 	cache_control
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/data_membyte_filter.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package data_membyte_filter_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module data_membyte_filter
+# 
+# Top level modules:
+# 	data_membyte_filter
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/byte_select_mux2.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package byte_select_mux2_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module byte_select_mux2
+# 
+# Top level modules:
+# 	byte_select_mux2
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/array.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package array_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module array
+# 
+# Top level modules:
+# 	array
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/cache_datapath.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package cache_datapath_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module cache_datapath
+# 
+# Top level modules:
+# 	cache_datapath
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/stb_filter.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package stb_filter_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module stb_filter
+# 
+# Top level modules:
+# 	stb_filter
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/regfile_filter.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package regfile_filter_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module regfile_filter
+# 
+# Top level modules:
+# 	regfile_filter
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/zadj.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package zadj_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module zadj
+# 
+# Top level modules:
+# 	zadj
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/zext.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package zext_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module zext
+# 
+# Top level modules:
+# 	zext
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/sext.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package sext_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module sext
+# 
+# Top level modules:
+# 	sext
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/adj.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package adj_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module adj
+# 
+# Top level modules:
+# 	adj
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/alu.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package alu_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module alu
+# 
+# Top level modules:
+# 	alu
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/control.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package control_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module control
+# 
+# Top level modules:
+# 	control
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/datapath.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package datapath_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module datapath
+# 
+# Top level modules:
+# 	datapath
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/gencc.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package gencc_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module gencc
+# 
+# Top level modules:
+# 	gencc
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/ir.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package ir_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module ir
+# 
+# Top level modules:
+# 	ir
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/mp2.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package mp2_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module mp2
+# 
+# Top level modules:
+# 	mp2
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/regfile.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling package regfile_sv_unit
+# -- Importing package lc3b_types
+# -- Compiling module regfile
+# 
+# Top level modules:
+# 	regfile
+# 
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/physical_memory.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module physical_memory
+# 
+# Top level modules:
+# 	physical_memory
+# vlog -sv -work work +incdir+/home/syao6/ece411/mp2 {/home/syao6/ece411/mp2/mp2_tb.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module mp2_tb
+# 
+# Top level modules:
+# 	mp2_tb
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L stratixiii_ver -L rtl_work -L work -voptargs="+acc"  mp2_tb
+# vsim -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L stratixiii_ver -L rtl_work -L work -voptargs=\"+acc\" -t 1ps mp2_tb 
+# Loading sv_std.std
+# Loading work.mp2_tb
+# Loading work.lc3b_types
+# Loading work.mp2_sv_unit
+# Loading work.mp2
+# Loading work.control_sv_unit
+# Loading work.control
+# Loading work.datapath_sv_unit
+# Loading work.datapath
+# Loading work.ir_sv_unit
+# Loading work.ir
+# Loading work.alu_sv_unit
+# Loading work.alu
+# Loading work.regfile_sv_unit
+# Loading work.regfile
+# Loading work.sext_sv_unit
+# Loading work.sext
+# Loading work.adj_sv_unit
+# Loading work.adj
+# Loading work.zadj_sv_unit
+# Loading work.zadj
+# Loading work.regfile_filter_sv_unit
+# Loading work.regfile_filter
+# Loading work.stb_filter_sv_unit
+# Loading work.stb_filter
+# Loading work.zext_sv_unit
+# Loading work.zext
+# Loading work.adder
+# Loading work.plus2
+# Loading work.nzp_comparator
+# Loading work.gencc_sv_unit
+# Loading work.gencc
+# Loading work.register
+# Loading work.mux2
+# Loading work.mux4
+# Loading work.cache_datapath_sv_unit
+# Loading work.cache_datapath
+# Loading work.comparator
+# Loading work.byte_select_mux2_sv_unit
+# Loading work.byte_select_mux2
+# Loading work.data_membyte_filter_sv_unit
+# Loading work.data_membyte_filter
+# Loading work.array_sv_unit
+# Loading work.array
+# Loading work.cache_control_sv_unit
+# Loading work.cache_control
+# Loading work.physical_memory
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run 200 ns
+do wave.do
+restart -f; run 30000ns
+# Loading sv_std.std
+# Loading work.mp2_tb
+# Loading work.lc3b_types
+# Loading work.mp2_sv_unit
+# Loading work.mp2
+# Loading work.control_sv_unit
+# Loading work.control
+# Loading work.datapath_sv_unit
+# Loading work.datapath
+# Loading work.ir_sv_unit
+# Loading work.ir
+# Loading work.alu_sv_unit
+# Loading work.alu
+# Loading work.regfile_sv_unit
+# Loading work.regfile
+# Loading work.sext_sv_unit
+# Loading work.sext
+# Loading work.adj_sv_unit
+# Loading work.adj
+# Loading work.zadj_sv_unit
+# Loading work.zadj
+# Loading work.regfile_filter_sv_unit
+# Loading work.regfile_filter
+# Loading work.stb_filter_sv_unit
+# Loading work.stb_filter
+# Loading work.zext_sv_unit
+# Loading work.zext
+# Loading work.adder
+# Loading work.plus2
+# Loading work.nzp_comparator
+# Loading work.gencc_sv_unit
+# Loading work.gencc
+# Loading work.register
+# Loading work.mux2
+# Loading work.mux4
+# Loading work.cache_datapath_sv_unit
+# Loading work.cache_datapath
+# Loading work.comparator
+# Loading work.byte_select_mux2_sv_unit
+# Loading work.byte_select_mux2
+# Loading work.data_membyte_filter_sv_unit
+# Loading work.data_membyte_filter
+# Loading work.array_sv_unit
+# Loading work.array
+# Loading work.cache_control_sv_unit
+# Loading work.cache_control
+# Loading work.physical_memory
+write list -window .main_pane.list.interior.cs.body /home/syao6/ece411/mp2/simulation/modelsim/list.lst
+add wave -position insertpoint  \
+sim:/mp2_tb/dut/cache_datapath_module/data0/data
+add wave -position insertpoint  \
+sim:/mp2_tb/dut/cache_datapath_module/tag0/data
+add wave -position insertpoint  \
+sim:/mp2_tb/dut/datapath_module/pc_out
+write format wave -window .main_pane.wave.interior.cs.body.pw.wf /home/syao6/ece411/mp2/simulation/modelsim/way0.do
+add wave -position insertpoint  \
+sim:/mp2_tb/dut/datapath_module/pc_out
+add wave -position insertpoint  \
+sim:/mp2_tb/dut/cache_datapath_module/tag1/data
+add wave -position insertpoint  \
+sim:/mp2_tb/dut/cache_datapath_module/data1/data
+do wave.do
+do wave.do
