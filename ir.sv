@@ -2,6 +2,7 @@ import lc3b_types::*;
 
 /*
  * Instruction register that outputs useful signals for the CPU
+ * (provided but modified)
  */
 module ir
 (

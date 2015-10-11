@@ -18,11 +18,17 @@ lc3b_mem_data data;
 always_comb
 begin
     if (sel0 == 1'b1)
+    begin
         selected_data = a;
+    end
     else if (sel1 == 1'b1)
+    begin
         selected_data = b;
+    end
     else
+    begin
         selected_data = a;
+    end
 
     data = selected_data;
 

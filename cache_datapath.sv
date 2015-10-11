@@ -3,7 +3,6 @@ import lc3b_types::*;
 /*
  * Datapath for cache
  */
-
 module cache_datapath
 (
     input clk,
@@ -307,6 +306,5 @@ mux2 #(.width(9)) pmemtag_mux
     .b(tag1_out),
     .f(pmem_tag)
 );
-
 
 endmodule : cache_datapath

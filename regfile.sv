@@ -28,10 +28,8 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (load == 1)
-    begin
+    if (load)
         data[dest] = in;
-    end
 end
 
 always_comb

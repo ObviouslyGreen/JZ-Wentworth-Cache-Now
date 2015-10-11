@@ -7,6 +7,7 @@ module alu
     output lc3b_word f
 );
 
+
 always_comb
 begin
     case (aluop)

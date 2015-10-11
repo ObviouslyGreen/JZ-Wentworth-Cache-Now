@@ -110,7 +110,8 @@ begin : state_actions
 
     /* Actions for each state */
     case (state)
-        fetch1: begin
+        fetch1:
+        begin
             /* MAR <= PC */
             marmux_sel = 2'b01;
             load_mar = 1;
@@ -120,43 +121,50 @@ begin : state_actions
             load_pc = 1;
         end
 
-        fetch2: begin
+        fetch2:
+        begin
             /* Read memory */
             mem_read = 1;
             mdrmux_sel = 1;
             load_mdr = 1;
         end
 
-        fetch3: begin
+        fetch3:
+        begin
             /* Load IR */
             load_ir = 1;
         end
 
         decode: /* Do nothing */;
 
-        s_add: begin
+        s_add:
+        begin
             /* DR <= SRA + SRB */
             aluop = alu_add;
             load_regfile = 1;
             load_cc = 1;
-            if (imm_enable == 1) begin
+            if (imm_enable == 1)
+            begin
                 /* DR <= A + SEXT(IR[4:0]) */
                 alumux_sel = 2'b10;
             end
         end
 
-        s_and: begin
+        s_and:
+        begin
             /* DR <= A & B */
             aluop = alu_and;
             load_regfile = 1;
             load_cc = 1;
-            if (imm_enable == 1) begin
+            if (imm_enable == 1)
+            begin
                 /* DR <= A & SEXT(IR[4:0]) */
                 alumux_sel = 2'b11;
             end
         end
 
-        s_not: begin
+        s_not:
+        begin
             /* DR <= NOT(A) */
             aluop = alu_not;
             load_regfile = 1;
@@ -165,34 +173,39 @@ begin : state_actions
 
         br: /* Do nothing */;
 
-        br_taken: begin
+        br_taken:
+        begin
             /* PC <= PC + SEXT(IR[8:0] << 1) */
             pcmux_sel = 2'b01;
             load_pc = 1;
         end
 
-        calc_addr: begin
+        calc_addr:
+        begin
             /* MAR <= A + SEXT(IR[5:0] << 1) */
             alumux_sel = 2'b01;
             aluop = alu_add;
             load_mar = 1;
         end
 
-        ldr1: begin
+        ldr1:
+        begin
             /* MDR <= M[MAR] */
             mdrmux_sel = 1;
             load_mdr = 1;
             mem_read = 1;
         end
 
-        ldr2: begin
+        ldr2:
+        begin
             /* DR <= MDR */
             regfilemux_sel = 2'b01;
             load_regfile = 1;
             load_cc = 1;
         end
 
-        ldb1: begin
+        ldb1:
+        begin
             /* MAR <= A + SEXT(IR[5:0]) */
             offset6mux_sel = 1;
             alumux_sel = 2'b01;
@@ -200,14 +213,16 @@ begin : state_actions
             load_mar = 1;
         end
 
-        ldb2: begin
+        ldb2:
+        begin
             /* MDR <= M[MAR] */
             mdrmux_sel = 1;
             load_mdr = 1;
             mem_read = 1;
         end
 
-        ldb3: begin
+        ldb3:
+        begin
             /* DR <= ZEXT(MDR[7:0]) */
             regfilemux_sel = 2'b01;
             regfile_filter_enable = 1;
@@ -215,47 +230,54 @@ begin : state_actions
             load_cc = 1;
         end
 
-        ldi1: begin
+        ldi1:
+        begin
             /* MDR <= M[MAR] */
             mdrmux_sel = 1;
             load_mdr = 1;
             mem_read = 1;
         end
 
-        ldi2: begin
+        ldi2:
+        begin
             /* MAR <= MDR */
             marmux_sel = 2'b10;
             load_mar = 1;
             regfilemux_sel = 2'b01;
         end
 
-        ldi3: begin
+        ldi3:
+        begin
             /* MDR <= M[MAR] */
             mdrmux_sel = 1;
             load_mdr = 1;
             mem_read = 1;
         end
 
-        ldi4: begin
+        ldi4:
+        begin
             /* DR <= MDR */
             regfilemux_sel = 2'b01;
             load_cc = 1;
             load_regfile = 1;
         end
 
-        str1: begin
+        str1:
+        begin
             /* MDR <= SR */
             storemux_sel = 1;
             aluop = alu_pass;
             load_mdr = 1;
         end
 
-        str2: begin
+        str2:
+        begin
             /* M[MAR] <= MDR */
             mem_write = 1;
         end
 
-        stb1: begin
+        stb1:
+        begin
             /* MAR <= A + SEXT(IR[5:0]) */
             offset6mux_sel = 1;
             alumux_sel = 2'b01;
@@ -263,7 +285,8 @@ begin : state_actions
             load_mar = 1;
         end
 
-        stb2: begin
+        stb2:
+        begin
             /* MDR <= SR */
             storemux_sel = 1;
             stb_filter_enable = 1;
@@ -271,57 +294,68 @@ begin : state_actions
             load_mdr = 1;
         end
 
-        stb3: begin
+        stb3:
+        begin
             /* M[MAR] <= MDR[15:8] | MDR[7:0] */
             mem_byte_enable = (stb_high_enable) ? 2'b10 : 2'b01;
             mem_write = 1;
         end
 
-        sti1: begin
+        sti1:
+        begin
             /* MDR <= M[MAR] */
             mdrmux_sel = 1;
             load_mdr = 1;
             mem_read = 1;
         end
 
-        sti2: begin
+        sti2:
+        begin
             /* MAR <= MDR */
             marmux_sel = 2'b10;
             load_mar = 1;
             regfilemux_sel = 2'b01;
         end
 
-        sti3: begin
+        sti3:
+        begin
             /* MDR <= SR */
             storemux_sel = 1;
             aluop = alu_pass;
             load_mdr = 1;
         end
 
-        sti4: begin
+        sti4:
+        begin
             /* M[MAR] <= MDR */
             mem_write = 1;
         end
 
-        jmp_ret: begin
+        jmp_ret:
+        begin
             /* PC <= A */
             pcmux_sel = 2'b10;
             load_pc = 1;
         end
 
-        jmp_sub1: begin
+        jmp_sub1:
+        begin
             /* R7 <= PC+ */
             destmux_sel = 1;
             regfilemux_sel = 2'b11;
             load_regfile = 1'b1;
         end
 
-        jmp_sub2: begin
-            if (jsr_enable) begin
+        jmp_sub2:
+        begin
+            if (jsr_enable)
+            begin
                 /* PC <= PC + (SEXT(IR[10:0]) << 1) */
                 offsetaddermux_sel = 1'b1;
                 pcmux_sel = 2'b01;
-            end else begin
+            end
+            else
+            begin
                 /* PC <= A */
                 storemux_sel = 0;
                 pcmux_sel = 2'b10;
@@ -329,18 +363,24 @@ begin : state_actions
             load_pc = 1'b1;
         end
 
-        shf: begin
+        shf:
+        begin
             alumux_sel = 2'b11;
 
-            if (d_enable == 0) begin
+            if (d_enable == 0)
+            begin
                 /* DR <= SR << IR[3:0] */
                 aluop = alu_sll;
-            end else begin
-                if (imm_enable == 0) begin
+            end
+            else
+            begin
+                if (imm_enable == 0)
+                begin
                     /* DR <= SR >> IR[3:0], 0 */
                     aluop = alu_srl;
                 end
-                else begin
+                else
+                begin
                     /* DR <= SR >> IR[3:0], SR[15] */
                     aluop = alu_sra;
                 end
@@ -350,40 +390,44 @@ begin : state_actions
             load_regfile = 1;
         end
 
-        lea: begin
+        lea:
+        begin
             /* DR <= PC + (SEXT(IR[8:0]) << 1) */
             regfilemux_sel = 2'b10;
             load_regfile = 1;
         end
 
-        trap1: begin
+        trap1:
+        begin
             /* R7 <= PC+ */
             destmux_sel = 1;
             regfilemux_sel = 2'b11;
             load_regfile = 1;
         end
 
-        trap2: begin
+        trap2:
+        begin
             /* MAR <= ZEXT(trapvect8 << 1) */
             marmux_sel = 2'b11;
             load_mar = 1;
         end
 
-        trap3: begin
+        trap3:
+        begin
             /* MDR <= M[MAR] */
             mdrmux_sel = 1;
             load_mdr = 1;
             mem_read = 1;
         end
 
-        trap4: begin
+        trap4:
+        begin
             regfilemux_sel = 2'b01;
             pcmux_sel = 2'b11;
             load_pc = 1;
         end
 
         default: /* Do nothing */;
-
     endcase
 end
 
@@ -394,22 +438,26 @@ begin : next_state_logic
 
      next_state = state;
      case (state)
-        fetch1: begin
+        fetch1:
+        begin
             next_state = fetch2;
         end
 
-        fetch2: begin
+        fetch2:
+         begin
             if (mem_resp == 0)
                 next_state = fetch2;
             else
                 next_state = fetch3;
         end
 
-        fetch3: begin
+        fetch3:
+        begin
             next_state = decode;
         end
 
-        decode: begin
+        decode:
+        begin
             case (opcode)
                 op_add:
                     next_state = s_add;
@@ -457,193 +505,219 @@ begin : next_state_logic
                     next_state = trap1;
 
                 default: /* Do nothing */;
-
             endcase
         end
 
-        s_add: begin
+        s_add:
+        begin
             next_state = fetch1;
         end
 
-        s_and: begin
+        s_and:
+        begin
             next_state = fetch1;
         end
 
-        s_not: begin
+        s_not:
+        begin
             next_state = fetch1;
         end
 
-        br: begin
+        br:
+        begin
             if (branch_enable == 1)
                 next_state = br_taken;
             else
                 next_state = fetch1;
         end
 
-        br_taken: begin
+        br_taken:
+        begin
             next_state = fetch1;
         end
 
-        calc_addr: begin
+        calc_addr:
+        begin
             case (opcode)
-                op_ldr: begin
+                op_ldr:
                     next_state = ldr1;
-                end
 
-                op_ldi: begin
+                op_ldi:
                     next_state = ldi1;
-                end
 
-                op_str: begin
+                op_str:
                     next_state = str1;
-                end
 
-                op_sti: begin
+                op_sti:
                     next_state = sti1;
-                end
 
                 default: /* Do nothing */;
-
             endcase
         end
 
-        ldr1: begin
+        ldr1:
+        begin
             if (mem_resp == 0)
                 next_state = ldr1;
             else
                 next_state = ldr2;
         end
 
-        ldr2: begin
+        ldr2:
+        begin
             next_state = fetch1;
         end
 
-        ldb1: begin
+        ldb1:
+        begin
             next_state = ldb2;
         end
 
-        ldb2: begin
+        ldb2:
+        begin
             if (mem_resp == 0)
                 next_state = ldb2;
             else
                 next_state = ldb3;
         end
 
-        ldb3: begin
+        ldb3:
+        begin
             next_state = fetch1;
         end
 
-        ldi1: begin
+        ldi1:
+        begin
             if (mem_resp == 0)
                 next_state = ldi1;
             else
                 next_state = ldi2;
         end
 
-        ldi2: begin
+        ldi2:
+        begin
             next_state = ldi3;
         end
 
-        ldi3: begin
+        ldi3:
+        begin
             if (mem_resp == 0)
                 next_state = ldi3;
             else
                 next_state = ldi4;
         end
 
-        ldi4: begin
+        ldi4:
+        begin
             next_state = fetch1;
         end
 
-        str1: begin
+        str1:
+        begin
             next_state = str2;
         end
 
-        str2: begin
+        str2:
+        begin
             if (mem_resp == 0)
                 next_state = str2;
             else
                 next_state = fetch1;
         end
 
-        stb1: begin
+        stb1:
+        begin
             next_state = stb2;
         end
 
-        stb2: begin
+        stb2:
+        begin
             next_state = stb3;
         end
 
-        stb3: begin
+        stb3:
+        begin
             if (mem_resp == 0)
                 next_state = stb3;
             else
                 next_state = fetch1;
         end
 
-        sti1: begin
+        sti1:
+        begin
             if (mem_resp == 0)
                 next_state = sti1;
             else
                 next_state = sti2;
         end
 
-        sti2: begin
+        sti2:
+        begin
             next_state = sti3;
         end
 
-        sti3: begin
+        sti3:
+        begin
             next_state = sti4;
         end
 
-        sti4: begin
+        sti4:
+        begin
             if (mem_resp == 0)
                 next_state = sti4;
             else
                 next_state = fetch1;
         end
 
-        jmp_ret: begin
+        jmp_ret:
+        begin
             next_state = fetch1;
         end
 
-        jmp_sub1: begin
+        jmp_sub1:
+        begin
             next_state = jmp_sub2;
         end
 
-        jmp_sub2: begin
+        jmp_sub2:
+        begin
             next_state = fetch1;
         end
 
-        shf: begin
+        shf:
+        begin
             next_state = fetch1;
         end
 
-        lea: begin
+        lea:
+        begin
             next_state = fetch1;
         end
 
-        trap1: begin
+        trap1:
+        begin
             next_state = trap2;
         end
 
-        trap2: begin
+        trap2:
+        begin
             next_state = trap3;
         end
 
-        trap3: begin
+        trap3:
+        begin
             if (mem_resp == 0)
                 next_state = trap3;
             else
                 next_state = trap4;
         end
 
-        trap4: begin
+        trap4:
+        begin
             next_state = fetch1;
         end
 
         default: /* Do nothing */;
-
     endcase
 end
 

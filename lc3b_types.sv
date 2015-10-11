@@ -1,5 +1,5 @@
 /*
- * Custom typedefs for project
+ * Custom typedefs for project (provided but modified)
  */
 package lc3b_types;
 

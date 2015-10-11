@@ -62,42 +62,50 @@ begin: state_actions
 
     /* Actions for each state */
     case (state)
-        idle_rw_cache: begin
-            if (hit) begin
+        idle_rw_cache:
+        begin
+            if (hit)
+            begin
                 ld_lru = 1'b1;
                 mem_resp = 1'b1;
 
-                if (mem_write) begin
+                if (mem_write)
+                begin
                     writecachemux_sel = 1'b1;
                     dirtymux_sel = 1'b1;
 
-                    if (curr_way) begin
+                    if (curr_way)
+                    begin
                         data1mux_sel = 1'b1;
                         ld_dirty1 = 1'b1;
                     end
-                    else begin
+                    else
+                    begin
                         data0mux_sel = 1'b1;
                         ld_dirty0 = 1'b1;
                     end
-
                 end
-
             end
         end
 
-        phys_mem_write: begin
+        phys_mem_write:
+        begin
             dirtymux_sel = 1'b0;
-            if (lru_out) begin
+            if (lru_out)
+            begin
                 ld_dirty1 = 1'b1;
             end
-            else begin
+            else
+            begin
                 ld_dirty0 = 1'b1;
             end
+
             pmem_address = {pmem_tag, mem_address[6:4], 4'b0000};
             pmem_write = 1'b1;
         end
 
-        phys_mem_read: begin
+        phys_mem_read:
+        begin
             ld_cache = 1'b1;
             pmem_read = 1'b1;
         end
@@ -105,7 +113,6 @@ begin: state_actions
         default:
             /* nothing */;
     endcase
-
 end
 
 always_comb
@@ -116,37 +123,47 @@ begin: next_state_logic
      next_state = state;
      case (state)
         idle_rw_cache:
-            if ((mem_read | mem_write) & (~hit)) begin
-                if (lru_out) begin
+        begin
+            if ((mem_read | mem_write) & (~hit))
+            begin
+                if (lru_out)
+                begin
                     if (dirty1_out)
                         next_state = phys_mem_write;
                     else
                         next_state = phys_mem_read;
-                end else begin
+                end
+                else
+                begin
                     if (dirty0_out)
                         next_state = phys_mem_write;
                     else
                         next_state = phys_mem_read;
                 end
-            end else
+            end
+            else
                 next_state = idle_rw_cache;
+        end
 
         phys_mem_write:
+        begin
             if (pmem_resp)
                 next_state = phys_mem_read;
             else
                 next_state = phys_mem_write;
+        end
 
         phys_mem_read:
+        begin
             if (pmem_resp)
                 next_state = idle_rw_cache;
             else
                 next_state = phys_mem_read;
+        end
 
         default:
             /* nothing */;
      endcase
-
  end
 
 always_ff @ (posedge clk)
