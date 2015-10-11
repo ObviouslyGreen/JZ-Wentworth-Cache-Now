@@ -1,10 +1,14 @@
 import lc3b_types::*;
 
+/*
+ * Determine NZP based on input
+ */
 module gencc
 (
     input lc3b_word in,
     output lc3b_nzp out
 );
+
 
 always_comb
 begin

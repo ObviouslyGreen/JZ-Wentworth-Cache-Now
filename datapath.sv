@@ -1,5 +1,8 @@
 import lc3b_types::*;
 
+/*
+ * Datapath for CPU
+ */
 module datapath
 (
     input clk,
@@ -137,7 +140,7 @@ sext #(.width(5)) sext5
 );
 
 /*
- * SEXT6 
+ * SEXT6
  */
 sext #(.width(6)) sext6
 (
@@ -223,7 +226,7 @@ adder offset_adder
 );
 
 /*
- * PC plus 2    
+ * PC plus 2
  */
 plus2 plus2_module
 (

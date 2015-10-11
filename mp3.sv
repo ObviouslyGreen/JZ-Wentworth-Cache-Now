@@ -1,5 +1,8 @@
 import lc3b_types::*;
 
+/*
+ * Top level for MP3
+ */
 module mp3
 (
     input clk,

@@ -1,3 +1,7 @@
+/*
+ * Memory (provided)
+ * Memory doesn't respond instantly like magic memory
+ */
 module memory
 (
     input clk,

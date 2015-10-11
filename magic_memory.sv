@@ -1,5 +1,5 @@
 /*
- * Magic memory
+ * Magic memory (provided)
  */
 module magic_memory
 (

@@ -9,6 +9,7 @@ module zext #(parameter width = 8)
     output lc3b_word out
 );
 
+
 assign out = $unsigned({in});
 
 endmodule : zext

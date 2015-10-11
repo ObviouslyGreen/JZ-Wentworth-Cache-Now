@@ -1,5 +1,9 @@
 import lc3b_types::*;
 
+/*
+ * Regfile for CPU (provided)
+ */
+
 module regfile
 (
     input clk,

@@ -9,6 +9,7 @@ module adj #(parameter width = 8)
     output lc3b_word out
 );
 
+
 assign out = $signed({in, 1'b0});
 
 endmodule : adj

@@ -1,5 +1,8 @@
 import lc3b_types::*;
 
+/*
+ * Module to determine which byte of data to load to regfile
+ */
 module regfile_filter
 (
     input filter_enable,
@@ -7,6 +10,7 @@ module regfile_filter
     input lc3b_word in,
     output lc3b_word out
 );
+
 
 always_comb
 begin

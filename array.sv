@@ -1,5 +1,8 @@
 import lc3b_types::*;
 
+/*
+ * N-bit 8-length array
+ */
 module array #(parameter width = 128)
 (
     input clk,
@@ -8,6 +11,7 @@ module array #(parameter width = 128)
     input [width-1:0] in,
     output logic [width-1:0] out
 );
+
 
 logic [width-1:0] data [7:0];
 

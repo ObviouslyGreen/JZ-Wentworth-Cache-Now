@@ -1,8 +1,12 @@
+/*
+ * NZP comparator to set branch enable
+ */
 module nzp_comparator
 (
     input [2:0] nzp, ir_nzp,
     output logic branch_enable
 );
+
 
 logic [2:0] result;
 

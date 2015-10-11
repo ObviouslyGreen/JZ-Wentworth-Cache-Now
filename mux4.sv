@@ -1,9 +1,13 @@
+/*
+ * N-bit four input mux
+ */
 module mux4 #(parameter width = 16)
 (
     input [1:0] sel,
     input [width-1:0] a, b, c, d,
     output logic [width-1:0] f
 );
+
 
 always_comb
 begin

@@ -1,5 +1,8 @@
 import lc3b_types::*;
 
+/*
+ * Module to determine which byte(s) to write into memory
+ */
 module stb_filter
 (
     input filter_enable,
@@ -7,6 +10,7 @@ module stb_filter
     input lc3b_word in,
     output lc3b_word out
 );
+
 
 always_comb
 begin

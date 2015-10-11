@@ -1,5 +1,9 @@
 import lc3b_types::*;
 
+/*
+ * Datapath for cache
+ */
+
 module cache_datapath
 (
     input clk,
@@ -99,10 +103,10 @@ comparator comparator1
  */
 byte_select_mux2 byte_select_mux_module
 (
-    .sel0(comparator0_out), 
+    .sel0(comparator0_out),
     .sel1(comparator1_out),
     .offset(offset),
-    .a(data0_out), 
+    .a(data0_out),
     .b(data1_out),
     .f(mem_rdata),
     .selected_data(curr_datablock)
@@ -174,7 +178,7 @@ array #(.width(9)) tag1
 );
 
 /*
- * Valid 0 
+ * Valid 0
  */
 array #(.width(1)) valid0
 (

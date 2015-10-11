@@ -1,5 +1,8 @@
 import lc3b_types::*;
 
+/*
+ * 2-input mux that selects which byte to output based on offset
+ */
 module byte_select_mux2
 (
     input sel0, sel1,
@@ -8,6 +11,7 @@ module byte_select_mux2
     output lc3b_word f,
     output lc3b_mem_data selected_data
 );
+
 
 lc3b_mem_data data;
 

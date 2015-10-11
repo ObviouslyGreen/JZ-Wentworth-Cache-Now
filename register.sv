@@ -1,3 +1,6 @@
+/*
+ * Register module (provided)
+ */
 module register #(parameter width = 16)
 (
     input clk,

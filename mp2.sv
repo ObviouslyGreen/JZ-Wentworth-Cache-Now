@@ -1,5 +1,8 @@
 import lc3b_types::*;
 
+/*
+ * Top level for mp2
+ */
 module mp2
 (
     input clk,

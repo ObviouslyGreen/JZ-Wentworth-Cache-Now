@@ -1,3 +1,6 @@
+/*
+ * Physical memory module (provided)
+ */
 module physical_memory
 (
     input clk,

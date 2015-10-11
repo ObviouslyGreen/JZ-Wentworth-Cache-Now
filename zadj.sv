@@ -9,6 +9,7 @@ module zadj #(parameter width = 8)
     output lc3b_word out
 );
 
+
 assign out = $unsigned({in, 1'b0});
 
 endmodule : zadj

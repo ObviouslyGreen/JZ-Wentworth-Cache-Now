@@ -1,5 +1,9 @@
 import lc3b_types::*;
 
+/*
+ * Module to determine which byte/word to write during a cache hit
+ */
+
 module data_membyte_filter
 (
     input lc3b_mem_wmask mem_byte_enable,
@@ -8,6 +12,7 @@ module data_membyte_filter
     input lc3b_c_offset offset,
     output lc3b_mem_data out
 );
+
 
 lc3b_mem_data data;
 

@@ -1,5 +1,9 @@
 import lc3b_types::*;
 
+/*
+ * Control signals and state machine for the cache
+ */
+
 module cache_control
 (
     input clk,
@@ -90,7 +94,7 @@ begin: state_actions
                 ld_dirty0 = 1'b1;
             end
             pmem_address = {pmem_tag, mem_address[6:4], 4'b0000};
-            pmem_write = 1'b1;  
+            pmem_write = 1'b1;
         end
 
         phys_mem_read: begin

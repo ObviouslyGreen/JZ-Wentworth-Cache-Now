@@ -1,3 +1,6 @@
+/*
+ * Custom typedefs for project
+ */
 package lc3b_types;
 
 typedef logic [127:0] lc3b_mem_data;

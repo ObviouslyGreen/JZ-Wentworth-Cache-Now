@@ -9,6 +9,7 @@ module sext #(parameter width = 8)
     output lc3b_word out
 );
 
+
 assign out = $signed({in});
 
 endmodule : sext

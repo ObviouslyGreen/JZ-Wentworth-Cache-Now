@@ -1,5 +1,8 @@
 import lc3b_types::*; /* Import types defined in lc3b_types.sv */
 
+/*
+ * Control signals and state machine for CPU
+ */
 module control
 (
     /* Input and output port declarations */
@@ -38,6 +41,7 @@ module control
     output lc3b_mem_wmask mem_byte_enable
 );
 
+
 enum int unsigned {
     /* List of states */
     fetch1,
@@ -62,7 +66,7 @@ enum int unsigned {
     str1,
     str2,
     stb1,
-    stb2, 
+    stb2,
     stb3,
     sti1,
     sti2,
@@ -75,7 +79,7 @@ enum int unsigned {
     lea,
     trap1,
     trap2,
-    trap3, 
+    trap3,
     trap4
 } state, next_state;
 
@@ -331,7 +335,7 @@ begin : state_actions
             if (d_enable == 0) begin
                 /* DR <= SR << IR[3:0] */
                 aluop = alu_sll;
-            end else begin 
+            end else begin
                 if (imm_enable == 0) begin
                     /* DR <= SR >> IR[3:0], 0 */
                     aluop = alu_srl;
@@ -413,22 +417,22 @@ begin : next_state_logic
                 op_and:
                     next_state = s_and;
 
-                op_br: 
+                op_br:
                     next_state = br;
 
-                op_ldb: 
+                op_ldb:
                     next_state = ldb1;
 
-                op_ldi: 
+                op_ldi:
                     next_state = calc_addr;
 
-                op_ldr: 
+                op_ldr:
                     next_state = calc_addr;
 
-                op_not: 
+                op_not:
                     next_state = s_not;
 
-                op_str: 
+                op_str:
                     next_state = calc_addr;
 
                 op_stb:
@@ -437,10 +441,10 @@ begin : next_state_logic
                 op_sti:
                     next_state = calc_addr;
 
-                op_jmp: 
+                op_jmp:
                     next_state = jmp_ret;
 
-                op_jsr: 
+                op_jsr:
                     next_state = jmp_sub1;
 
                 op_shf:
@@ -522,7 +526,7 @@ begin : next_state_logic
             if (mem_resp == 0)
                 next_state = ldb2;
             else
-                next_state = ldb3;        
+                next_state = ldb3;
         end
 
         ldb3: begin

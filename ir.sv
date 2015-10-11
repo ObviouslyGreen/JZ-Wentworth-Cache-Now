@@ -1,5 +1,8 @@
 import lc3b_types::*;
 
+/*
+ * Instruction register that outputs useful signals for the CPU
+ */
 module ir
 (
     input clk,
@@ -17,6 +20,7 @@ module ir
     output logic imm_enable,
     output logic jsr_enable
 );
+
 
 lc3b_word data;
 
