@@ -3,7 +3,6 @@ import lc3b_types::*;
 /*
  * Control signals and state machine for the cache
  */
-
 module cache_control
 (
     input clk,
