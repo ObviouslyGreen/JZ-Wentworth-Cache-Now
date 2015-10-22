@@ -42,6 +42,10 @@ module datapath
 
 /* declare internal signals */
 logic global_load;
+initial
+begin
+    global_load = 1'b1;
+end
 
 lc3b_reg sr1;
 lc3b_reg sr2;
@@ -102,6 +106,8 @@ lc3b_word offsetadder_mux_out;
 lc3b_word offsetadder_out;
 lc3b_word offsetadderReg_out;
 
+lc3b_word textreg_out;
+
 lc3b_word offset6mux_out;
 lc3b_word pc_plus2_out;
 lc3b_nzp gencc_out;
@@ -110,7 +116,7 @@ lc3b_nzp cc_out;
 lc3b_control_word ctrl;
 lc3b_control_word ctrl_exec;
 lc3b_control_word ctrl_mem;
-lc3b_control_word ctrl_wr;
+lc3b_control_word ctrl_wb;
 /**************************************
  * User modules                       *
  **************************************/
@@ -167,7 +173,7 @@ alu alu_module
 regfile regfile_module
 (
     .clk(clk),
-    .load(ctrl_wr.load_regfile),
+    .load(ctrl_wb.load_regfile),
     .in(regfile_filter_out),
     .src_a(storemux_out[2:0]),
     .src_b(sr2),
@@ -208,7 +214,7 @@ adj #(.width(6)) adj6
  */
 adj #(.width(9)) adj9
 (
-    .in(irReg_out[9:0]),        //offset9
+    .in(irReg_out[8:0]),        //offset9
     .out(adj9_out)
 );
 
@@ -235,7 +241,7 @@ zadj #(.width(8)) zadj8
  */
 regfile_filter regfile_filter_module
 (
-    .filter_enable(ctrl_wr.regfile_filter_enable),
+    .filter_enable(ctrl_wb.regfile_filter_enable),
     .high_byte_enable(mem_address[0]),
     .in(regfilemux_out),
     .out(regfile_filter_out)
@@ -344,7 +350,7 @@ register mdr
 register #(.width(3)) cc
 (
     .clk(clk),
-    .load(ctrl_wr.load_cc),
+    .load(ctrl_wb.load_cc),
     .in(gencc_out),
     .out(cc_out)
 );
@@ -357,7 +363,7 @@ register #(.width(3)) cc
 register pcReg1
 (
     .clk(clk),
-    .load(global_load),                  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NEEED TO CHANGE LOAD LOGIC FOR EVERYTHING!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    .load(global_load),
     .in(pc_plus2_out),
     .out(pcReg_out1)
 );
@@ -421,7 +427,7 @@ ctrl_register ctrlword3
     .clk(clk),
     .load(global_load),
     .in(ctrl_mem),
-    .out(ctrl_wr)
+    .out(ctrl_wb)
 );
 
 register irReg
@@ -544,7 +550,7 @@ mux2 #(.width(3)) dest_mux
  */
 mux4 pc_mux
 (
-    .sel(ctrl_wr.pcmux_sel),
+    .sel(ctrl_wb.pcmux_sel),
     .a(pc_plus2_out),
     .b(offsetadderReg_out),      //changes for trans reg
     .c(sr1reg2_out),            //changed to trans reg
@@ -581,7 +587,7 @@ mux4 alu_mux
  */
 mux4 regfile_mux
 (
-    .sel(ctrl_wr.regfilemux_sel),
+    .sel(ctrl_wb.regfilemux_sel),
     .a(dataReg_out),       //changes for trans reg
     .b(mem_wdata),
     .c(offsetadderReg_out), //changes for trans reg

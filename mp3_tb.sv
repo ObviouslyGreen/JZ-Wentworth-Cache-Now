@@ -14,6 +14,7 @@ logic [127:0] pmem_wdata;*/
 logic mem_resp;
 logic mem_read;
 logic mem_write;
+logic [1:0] mem_byte_enable;
 logic [15:0] mem_address;
 logic [15:0] mem_rdata;
 logic [15:0] mem_wdata;
@@ -22,6 +23,7 @@ logic [15:0] mem_wdata;
 logic instr_resp;
 logic instr_read;
 logic instr_write;
+logic [1:0] instr_mem_byte_enable;
 logic [15:0] instr_address;
 logic [15:0] instr_rdata;
 logic [15:0] instr_wdata;
@@ -48,12 +50,14 @@ mp3 dut
     .mem_rdata,
     .mem_read,
     .mem_write,
+    .mem_byte_enable,
     .mem_address,
     .mem_wdata,
     .instr_resp,
     .instr_rdata,
     .instr_read,
     .instr_write,
+    .instr_mem_byte_enable,
     .instr_address,
     .instr_wdata
 );
@@ -82,6 +86,7 @@ magic_memory_dp memory
     /* Instruction Memory */
     .read_a(instr_read),
     .write_a(instr_write),
+    .wmask_a(),
     .address_a(instr_address),
     .wdata_a(instr_wdata),
     .resp_a(instr_resp),
@@ -90,6 +95,7 @@ magic_memory_dp memory
     /* Yes */
     .read_b(mem_read),
     .write_b(mem_write),
+    .wmask_b(mem_byte_enable),
     .address_b(mem_address),
     .wdata_b(mem_wdata),
     .resp_b(mem_resp),

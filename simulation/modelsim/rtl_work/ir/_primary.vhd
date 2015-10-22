@@ -18,6 +18,7 @@ entity ir is
         offset11        : out    vl_logic_vector(10 downto 0);
         d_enable        : out    vl_logic;
         imm_enable      : out    vl_logic;
-        jsr_enable      : out    vl_logic
+        jsr_enable      : out    vl_logic;
+        \out\           : out    vl_logic_vector(15 downto 0)
     );
 end ir;

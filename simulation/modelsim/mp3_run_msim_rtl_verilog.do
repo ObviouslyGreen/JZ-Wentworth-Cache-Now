@@ -5,35 +5,30 @@ if {[file exists rtl_work]} {
 vlib rtl_work
 vmap work rtl_work
 
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/comparator.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/mux4.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/nzp_comparator.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/adder.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/mux2.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/lc3b_types.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/plus2.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/register.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/cache_control.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/data_membyte_filter.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/byte_select_mux2.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/array.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/cache_datapath.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/stb_filter.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/regfile_filter.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/zadj.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/zext.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/sext.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/adj.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/alu.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/control.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/datapath.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/gencc.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/ir.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/mp3.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/regfile.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mux4.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/nzp_comparator.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adder.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mux2.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/lc3b_types.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/plus2.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/register.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ctrl_register.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/control_rom.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/stb_filter.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile_filter.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zadj.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zext.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/sext.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adj.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/alu.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/datapath.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/gencc.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ir.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mp3.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile.sv}
 
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/physical_memory.sv}
-vlog -sv -work work +incdir+/home/syao6/ece411/mp3 {/home/syao6/ece411/mp3/mp3_tb.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mp3_tb.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/magic_memory_dp.sv}
 
 vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L stratixiii_ver -L rtl_work -L work -voptargs="+acc"  mp3_tb
 
