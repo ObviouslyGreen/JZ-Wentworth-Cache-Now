@@ -105,6 +105,9 @@ lc3b_nzp gencc_out;
 lc3b_nzp cc_out;
 
 lc3b_control_word ctrl;
+lc3b_control_word ctrl_exec;
+lc3b_control_word ctrl_mem;
+lc3b_control_word ctrl_wr;
 /**************************************
  * User modules                       *
  **************************************/
@@ -149,7 +152,7 @@ control_rom control_rom_module
  */
 alu alu_module
 (
-    .aluop(aluop),
+    .aluop(ctrl_exec.aluop),
     .a(stb_filter_out),
     .b(alumux_out),
     .f(alu_out)
@@ -161,7 +164,7 @@ alu alu_module
 regfile regfile_module
 (
     .clk(clk),
-    .load(load_regfile),
+    .load(ctrl_wr.load_regfile),
     .in(regfile_filter_out),
     .src_a(storemux_out[2:0]),
     .src_b(sr2),
@@ -229,7 +232,7 @@ zadj #(.width(8)) zadj8
  */
 regfile_filter regfile_filter_module
 (
-    .filter_enable(regfile_filter_enable),
+    .filter_enable(ctrl_wr.regfile_filter_enable),
     .high_byte_enable(mem_address[0]),
     .in(regfilemux_out),
     .out(regfile_filter_out)
@@ -240,7 +243,7 @@ regfile_filter regfile_filter_module
  */
 stb_filter stb_filter_module
 (
-    .filter_enable(stb_filter_enable),
+    .filter_enable(ctrl_exec.stb_filter_enable),
     .high_byte_enable(mem_address[0]),
     .in(sr1reg1_out),               //changed to trans reg
     .out(stb_filter_out)
@@ -305,7 +308,7 @@ gencc gencc_module
 register pc
 (
     .clk(clk),
-    .load(load_pc),
+    .load(1'b1),
     .in(pcmux_out),
     .out(instr_address)
 );
@@ -316,7 +319,7 @@ register pc
 register mar
 (
     .clk(clk),
-    .load(load_mar),
+    .load(ctrl_mem.load_mar),
     .in(marmux_out),
     .out(mem_address)
 );
@@ -327,7 +330,7 @@ register mar
 register mdr
 (
     .clk(clk),
-    .load(load_mdr),
+    .load(ctrl_mem.load_mdr),
     .in(mdrmux_out),
     .out(mdr_out)           //changed for trans reg
 );
@@ -338,7 +341,7 @@ register mdr
 register #(.width(3)) cc
 (
     .clk(clk),
-    .load(load_cc),
+    .load(ctrl_wr.load_cc),
     .in(gencc_out),
     .out(cc_out)
 );
@@ -348,7 +351,7 @@ register #(.width(3)) cc
  * TRANSITION Registers               *
  **************************************/
 
-register pcreg1
+register pcReg1
 (
     .clk(clk),
     .load(global_load),                  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NEEED TO CHANGE LOAD LOGIC FOR EVERYTHING!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -356,21 +359,21 @@ register pcreg1
     .out(pcReg_out1)
 );
 
-register pcreg2
+register pcReg2
 (
     .clk(clk),
     .load(global_load),                       
     .in(pcReg_out1),
     .out(pcReg_out2)
 );
-register pcreg3
+register pcReg3
 (
     .clk(clk),
     .load(global_load),
     .in(pcReg_out2),
     .out(pcReg_out3)
 );
-register pcreg4
+register pcReg4
 (
     .clk(clk),
     .load(global_load),
@@ -378,7 +381,7 @@ register pcreg4
     .out(pcReg_out4)
 );
 
-register alu
+register aluReg
 (
     .clk(clk),
     .load(global_load),
@@ -426,7 +429,7 @@ register irReg
     .out(irReg_out)
 );
 
-register writeReg1
+register #(.width(3)) writeReg1
 (
     .clk(clk),
     .load(global_load),
@@ -434,7 +437,7 @@ register writeReg1
     .out(writeReg1_out)
 );
 
-register writeReg2
+register #(.width(3)) writeReg2
 (
     .clk(clk),
     .load(global_load),
@@ -442,7 +445,7 @@ register writeReg2
     .out(writeReg2_out)
 );
 
-register writeReg3
+register #(.width(3)) writeReg3
 (
     .clk(clk),
     .load(global_load),
@@ -516,7 +519,7 @@ register offsetadderReg
  */
 mux2 #(.width(3)) store_mux
 (
-    .sel(storemux_sel),
+    .sel(ctrl.storemux_sel),
     .a(sr1),
     .b(dest),
     .f(storemux_out)
@@ -527,7 +530,7 @@ mux2 #(.width(3)) store_mux
  */
 mux2 #(.width(3)) dest_mux
 (
-    .sel(destmux_sel),
+    .sel(ctrl.destmux_sel),
     .a(dest),
     .b(3'b111),
     .f(destmux_out)
@@ -538,7 +541,7 @@ mux2 #(.width(3)) dest_mux
  */
 mux4 pc_mux
 (
-    .sel(pcmux_sel),
+    .sel(ctrl_mem.pcmux_sel),
     .a(pc_plus2_out),
     .b(offsetadderReg_out),      //changes for trans reg
     .c(sr1reg2_out),            //changed to trans reg
@@ -551,7 +554,7 @@ mux4 pc_mux
  */
 mux4 alu_mux
 (
-    .sel(alumux_sel),
+    .sel(ctrl_exec.alumux_sel),
     .a(sr2reg1_out),         //changed for trans reg
     .b(offset6mux_out),
     .c(sext5_out),
@@ -564,7 +567,7 @@ mux4 alu_mux
  */
 mux4 regfile_mux
 (
-    .sel(regfilemux_sel),
+    .sel(ctrl_wr.regfilemux_sel),
     .a(dataReg_out),       //changes for trans reg
     .b(mem_wdata),
     .c(offsetadderReg_out), //changes for trans reg
@@ -577,7 +580,7 @@ mux4 regfile_mux
  */
 mux4 mar_mux
 (
-    .sel(marmux_sel),
+    .sel(ctrl_mem.marmux_sel),
     .a(aluReg_out),           //changed for trans reg
     .b(pcReg_out3),                //changed for trans reg
     .c(regfile_filter_out),
@@ -590,7 +593,7 @@ mux4 mar_mux
  */
 mux2 mdr_mux
 (
-    .sel(mdrmux_sel),
+    .sel(ctrl_mem.mdrmux_sel),
     .a(sr2reg2_out),         //changed for trans reg
     .b(mem_rdata),
     .f(mdrmux_out)
@@ -601,7 +604,7 @@ mux2 mdr_mux
  */
 mux2 offset_adder_mux
 (
-    .sel(offsetaddermux_sel),
+    .sel(ctrl_exec.offsetaddermux_sel),
     .a(adj9_out),
     .b(adj11_out),
     .f(offsetadder_mux_out)
@@ -612,7 +615,7 @@ mux2 offset_adder_mux
  */
 mux2 offset6_mux
 (
-    .sel(offset6mux_sel),
+    .sel(ctrl_exec.offset6mux_sel),
     .a(adj6_out),
     .b(sext6_out),
     .f(offset6mux_out)
