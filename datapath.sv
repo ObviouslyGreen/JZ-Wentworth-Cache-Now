@@ -68,8 +68,16 @@ lc3b_word regfilemux_out;
 lc3b_word marmux_out;
 lc3b_word mdrmux_out;
 lc3b_word offsetadder_mux_out;
-lc3b_word alu_out;
-lc3b_word pc_out;
+
+lc3b_word alu_out1;
+lc3b_word alu_out2;
+lc3b_word dataReg_out;
+
+lc3b_word pc_out1;
+lc3b_word pc_out2;
+lc3b_word pc_out3;
+lc3b_word pc_out4;
+
 lc3b_word offsetadder_out;
 lc3b_word offset6mux_out;
 lc3b_word pc_plus2_out;
@@ -112,7 +120,7 @@ alu alu_module
     .aluop(aluop),
     .a(stb_filter_out),
     .b(alumux_out),
-    .f(alu_out)
+    .f(alu_out1)
 );
 
 /*
@@ -262,12 +270,12 @@ gencc gencc_module
 /*
  * PC
  */
-register pc
+register pc1
 (
     .clk(clk),
     .load(load_pc),
     .in(pcmux_out),
-    .out(pc_out)
+    .out(pc_out1)
 );
 
 /*
@@ -304,6 +312,72 @@ register #(.width(3)) cc
 );
 
 
+/**************************************
+ * TRANSITION Registers               *
+ **************************************/
+register pc2
+(
+    .clk(clk),
+    .load(load_pc2),                                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NEEED TO CHANGE LOAD LOGIC FOR EVERYTHING!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    .in(pc_out1),
+    .out(pc_out2)
+);
+register pc3
+(
+    .clk(clk),
+    .load(load_pc3),
+    .in(pc_out2),
+    .out(pc_out3)
+);
+register pc4
+(
+    .clk(clk),
+    .load(load_pc4),
+    .in(pc_out3),
+    .out(pc_out4)
+);
+
+register alu
+(
+    .clk(clk),
+    .load(load_alu),
+    .in(alu_out1),
+    .out(alu_out2)
+);
+
+register dataReg
+(
+    .clk(clk),
+    .load(load_dataReg),
+    .in(alu_out2),
+    .out(dataReg_out)
+);
+
+register ctrlword1
+(
+    .clk(clk),
+    .load(load_opcode1),
+    .in(opcode),
+    .out(opcode_out1)
+);
+
+register ctrlword2
+(
+    .clk(clk),
+    .load(load_opcode2),
+    .in(opcode),
+    .out(opcode_out1)
+);
+
+register ctrlword3
+(
+    .clk(clk),
+    .load(load_opcode3),
+    .in(opcode),
+    .out(opcode_out1)
+);
+
+//insert IR reg, destmux reg(write reg 1,2,3), SR1 reg 1 and 2, and MDR reg
 /**************************************
  * Multiplexers                       *
  **************************************/
@@ -362,10 +436,10 @@ mux4 alu_mux
 mux4 regfile_mux
 (
     .sel(regfilemux_sel),
-    .a(alu_out),
+    .a(dataReg_out),       //changes for trans reg
     .b(mem_wdata),
     .c(offsetadder_out),
-    .d(pc_out),
+    .d(pc_out4),            //changed to trans reg
     .f(regfilemux_out)
 );
 
@@ -414,5 +488,6 @@ mux2 offset6_mux
     .b(sext6_out),
     .f(offset6mux_out)
 );
+
 
 endmodule : datapath
