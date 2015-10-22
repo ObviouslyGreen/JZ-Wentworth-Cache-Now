@@ -35,9 +35,10 @@ module datapath
     /* declare more ports here */
     input lc3b_word mem_rdata,
     output lc3b_word mem_wdata,
-    output lc3b_word mem_address
+    output lc3b_word mem_address,
+    input lc3b_word instr_rdata,
+    output lc3b_word instr_address
 );
-
 
 /* declare internal signals */
 lc3b_reg sr1;
@@ -103,7 +104,7 @@ lc3b_word pc_plus2_out;
 lc3b_nzp gencc_out;
 lc3b_nzp cc_out;
 
-
+lc3b_control_word ctrl;
 /**************************************
  * User modules                       *
  **************************************/
@@ -114,8 +115,8 @@ lc3b_nzp cc_out;
 ir ir_module
 (
     .clk(clk),
-    .load(load_ir),
-    .in(mem_wdata),
+    .load(1'b1),
+    .in(instr_rdata),
     .opcode(opcode),
     .dest(dest),
     .src1(sr1),
@@ -130,6 +131,17 @@ ir ir_module
     .imm_enable(imm_enable),
     .jsr_enable(jsr_enable),
     .out(ir_out)
+);
+
+/*
+ * Control ROM
+ */
+
+control_rom control_rom_module
+(
+    .opcode(opcode),
+    .imm_enable(imm_enable),
+    .ctrl(ctrl)
 );
 
 /*
@@ -258,7 +270,7 @@ adder offset_adder
  */
 plus2 plus2_module
 (
-    .in(pc_out),
+    .in(instr_address),
     .out(pc_plus2_out)
 );
 
@@ -295,7 +307,7 @@ register pc
     .clk(clk),
     .load(load_pc),
     .in(pcmux_out),
-    .out(pc_out)
+    .out(instr_address)
 );
 
 /*
@@ -382,28 +394,28 @@ register dataReg
     .out(dataReg_out)
 );
 
-register ctrlword1
+ctrl_register ctrlword1
 (
     .clk(clk),
     .load(global_load),
-    .in(opcode),
-    .out(opcode_out1)
+    .in(ctrl),
+    .out(ctrl_exec)
 );
 
-register ctrlword2
+ctrl_register ctrlword2
 (
     .clk(clk),
     .load(global_load),
-    .in(opcode),
-    .out(opcode_out1)
+    .in(ctrl_exec),
+    .out(ctrl_mem)
 );
 
-register ctrlword3
+ctrl_register ctrlword3
 (
     .clk(clk),
     .load(global_load),
-    .in(opcode),
-    .out(opcode_out1)
+    .in(ctrl_mem),
+    .out(ctrl_wr)
 );
 
 register irReg

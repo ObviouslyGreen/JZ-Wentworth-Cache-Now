@@ -14,13 +14,25 @@ module mp3
     output pmem_write,
     output lc3b_word pmem_address,
     output lc3b_mem_data pmem_wdata*/
+
     input mem_resp,
     input lc3b_word mem_rdata,
     output mem_read,
     output mem_write,
     output lc3b_word mem_address,
-    output lc3b_word mem_wdata
+    output lc3b_word mem_wdata,
+    input instr_resp,
+    input lc3b_word instr_rdata,
+    output instr_read,
+    output instr_write,
+    output lc3b_word instr_address,
+    output lc3b_word instr_wdata
 );
+
+
+assign instr_wdata = 0;
+assign instr_write = 1'b0;
+assign instr_read = 1'b1;
 
 /* declare internal signals */
 logic load_pc;
@@ -131,7 +143,9 @@ datapath datapath_module
     .jsr_enable(jsr_enable),
     .mem_rdata(mem_rdata),
     .mem_wdata(mem_wdata),
-    .mem_address(mem_address)
+    .mem_address(mem_address),
+    .instr_rdata(instr_rdata),
+    .instr_address(instr_address)
 );
 /*
 cache_datapath cache_datapath_module
