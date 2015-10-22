@@ -8,12 +8,18 @@ module mp3
     input clk,
 
     /* Memory signals */
-    input pmem_resp,
+    /*input pmem_resp,
     input lc3b_mem_data pmem_rdata,
     output pmem_read,
     output pmem_write,
     output lc3b_word pmem_address,
-    output lc3b_mem_data pmem_wdata
+    output lc3b_mem_data pmem_wdata*/
+    input mem_resp,
+    input lc3b_word mem_rdata,
+    output mem_read,
+    output mem_write,
+    output lc3b_word mem_address,
+    output lc3b_word mem_wdata
 );
 
 /* declare internal signals */
@@ -63,6 +69,7 @@ lc3b_word cache_wdata;
 lc3b_mem_wmask mem_byte_enable;
 
 /* Instantiate MP 2 top level blocks here */
+/*
 control control_module
 (
     .clk(clk),
@@ -94,7 +101,7 @@ control control_module
     .mem_read(cache_read),
     .mem_write(cache_write),
     .mem_byte_enable(mem_byte_enable)
-);
+);*/
 
 datapath datapath_module
 (
@@ -122,11 +129,11 @@ datapath datapath_module
     .d_enable(d_enable),
     .imm_enable(imm_enable),
     .jsr_enable(jsr_enable),
-    .mem_rdata(cache_rdata),
-    .mem_wdata(cache_wdata),
-    .mem_address(cache_address)
+    .mem_rdata(mem_rdata),
+    .mem_wdata(mem_wdata),
+    .mem_address(mem_address)
 );
-
+/*
 cache_datapath cache_datapath_module
 (
     .clk(clk),
@@ -178,5 +185,5 @@ cache_control cache_control_module
     .pmem_read(pmem_read),
     .pmem_write(pmem_write)
 );
-
+*/
 endmodule : mp3

@@ -4,18 +4,25 @@ timeunit 1ns;
 timeprecision 1ns;
 
 logic clk;
-logic pmem_resp;
+/*logic pmem_resp;
 logic pmem_read;
 logic pmem_write;
 logic [15:0] pmem_address;
 logic [127:0] pmem_rdata;
-logic [127:0] pmem_wdata;
+logic [127:0] pmem_wdata;*/
+
+logic mem_resp;
+logic mem_read;
+logic mem_write;
+logic [15:0] mem_address;
+logic [15:0] mem_rdata;
+logic [15:0] mem_wdata;
 
 /* Clock generator */
 initial clk = 0;
 always #5 clk = ~clk;
 
-mp3 dut
+/*mp3 dut
 (
     .clk,
     .pmem_resp,
@@ -24,9 +31,19 @@ mp3 dut
     .pmem_write,
     .pmem_address,
     .pmem_wdata
+);*/
+mp3 dut
+(
+    .clk,
+    .mem_resp,
+    .mem_rdata,
+    .mem_read,
+    .mem_write,
+    .mem_address,
+    .mem_wdata
 );
 
-physical_memory memory
+magic_memory memory
 (
     .clk,
     .read(pmem_read),
