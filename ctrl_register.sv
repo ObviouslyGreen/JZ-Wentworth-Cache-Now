@@ -55,4 +55,4 @@ begin
     out = ctrl;
 end
 
-endmodule : register
+endmodule : ctrl_register

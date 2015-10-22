@@ -35,7 +35,7 @@ assign instr_write = 1'b0;
 assign instr_read = 1'b1;
 
 /* declare internal signals */
-logic load_pc;
+/*logic load_pc;
 logic load_ir;
 logic load_regfile;
 logic load_mar;
@@ -51,7 +51,7 @@ logic [1:0] regfilemux_sel;
 logic [1:0] marmux_sel;
 logic mdrmux_sel;
 logic offsetaddermux_sel;
-logic offset6mux_sel;
+logic offset6mux_sel;*/
 lc3b_aluop aluop;
 lc3b_opcode opcode;
 logic branch_enable;
@@ -118,7 +118,7 @@ control control_module
 datapath datapath_module
 (
     .clk(clk),
-    .load_pc(load_pc),
+    /*.load_pc(load_pc),
     .load_ir(load_ir),
     .load_regfile(load_regfile),
     .load_mar(load_mar),
@@ -134,7 +134,7 @@ datapath datapath_module
     .marmux_sel(marmux_sel),
     .mdrmux_sel(mdrmux_sel),
     .offsetaddermux_sel(offsetaddermux_sel),
-    .offset6mux_sel(offset6mux_sel),
+    .offset6mux_sel(offset6mux_sel),*/
     .aluop(aluop),
     .opcode(opcode),
     .branch_enable(branch_enable),

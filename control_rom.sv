@@ -91,8 +91,8 @@ begin
             ctrl.mem_write = 1'b1;
 		end
 		op_br: begin
-			brmux_sel = 1'b1;
-			load_pc = 1'b1;
+			ctrl.brmux_sel = 1'b1;
+			ctrl.load_pc = 1'b1;
 		end
 		/* ... other opcodes ... */
 		default: begin

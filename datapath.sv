@@ -8,7 +8,7 @@ module datapath
     input clk,
 
     /* control signals */
-    input load_pc,
+   /* input load_pc,
     input load_ir,
     input load_regfile,
     input load_mar,
@@ -24,7 +24,7 @@ module datapath
     input [1:0] marmux_sel,
     input mdrmux_sel,
     input offsetaddermux_sel,
-    input offset6mux_sel,
+    input offset6mux_sel,*/
     input lc3b_aluop aluop,
     output lc3b_opcode opcode,
     output logic branch_enable,
@@ -41,6 +41,8 @@ module datapath
 );
 
 /* declare internal signals */
+logic global_load;
+
 lc3b_reg sr1;
 lc3b_reg sr2;
 lc3b_reg dest;
