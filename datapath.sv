@@ -71,6 +71,7 @@ lc3b_word regfile_filter_out;
 lc3b_word stb_filter_out;
 lc3b_word zext4_out;
 lc3b_word pcmux_out;
+lc3b_word brmux_out;
 lc3b_word alumux_out;
 lc3b_word regfilemux_out;
 lc3b_word marmux_out;
@@ -309,7 +310,7 @@ register pc
 (
     .clk(clk),
     .load(1'b1),
-    .in(pcmux_out),
+    .in(brmux_out),
     .out(instr_address)
 );
 
@@ -541,12 +542,23 @@ mux2 #(.width(3)) dest_mux
  */
 mux4 pc_mux
 (
-    .sel(ctrl_mem.pcmux_sel),
+    .sel(ctrl_wr.pcmux_sel),
     .a(pc_plus2_out),
     .b(offsetadderReg_out),      //changes for trans reg
     .c(sr1reg2_out),            //changed to trans reg
     .d(regfile_filter_out),
     .f(pcmux_out)
+);
+
+/*
+ * Branch mux
+ */
+mux2 br_mux
+(
+    .sel((ctrl_mem.opcode == op_br) & branch_enable),
+    .a(pcmux_out), 
+    .b(offsetadderReg_out),
+    .f(brmux_out)
 );
 
 /*

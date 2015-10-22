@@ -19,6 +19,7 @@ begin
     ctrl.regfile_filter_enable = 1'b0;
     ctrl.stb_filter_enable = 1'b0;
     ctrl.pcmux_sel = 2'b00;
+    ctrl.brmux_sel = 1'b0;
     ctrl.storemux_sel = 0;
     ctrl.destmux_sel = 0;
     ctrl.alumux_sel = 2'b00;
@@ -83,13 +84,16 @@ begin
 
             /* MDR <= SR */
             // PASS SR TO MDR SOMEHOW
-            ctrl.storemux_sel = 1;
-            ctrl.load_mdr = 1;
+            ctrl.storemux_sel = 1'b1;
+            ctrl.load_mdr = 1'b1;
 
             /* M[MAR] <= MDR */
-            ctrl.mem_write = 1;
+            ctrl.mem_write = 1'b1;
 		end
-
+		op_br: begin
+			brmux_sel = 1'b1;
+			load_pc = 1'b1;
+		end
 		/* ... other opcodes ... */
 		default: begin
 			ctrl = 0; /* Unknown opcode, set control word to zero */

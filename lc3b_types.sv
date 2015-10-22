@@ -62,6 +62,7 @@ typedef struct packed {
     logic regfile_filter_enable;
     logic stb_filter_enable ;
     logic [1:0] pcmux_sel;
+    logic brmux_sel;
     logic storemux_sel;
     logic destmux_sel;
     logic [1:0] alumux_sel;
