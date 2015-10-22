@@ -45,8 +45,15 @@ lc3b_reg sr2;
 lc3b_reg dest;
 lc3b_reg storemux_out;
 lc3b_reg destmux_out;
+
 lc3b_word sr1_out;
+lc3b_word sr1reg1_out;
+lc3b_word sr1reg2_out;
+
 lc3b_word sr2_out;
+lc3b_word sr2reg1_out;
+lc3b_word sr2reg2_out;
+
 lc3b_offset4 offset4;
 lc3b_offset5 offset5;
 lc3b_offset6 offset6;
@@ -66,19 +73,31 @@ lc3b_word pcmux_out;
 lc3b_word alumux_out;
 lc3b_word regfilemux_out;
 lc3b_word marmux_out;
-lc3b_word mdrmux_out;
-lc3b_word offsetadder_mux_out;
 
-lc3b_word alu_out1;
-lc3b_word alu_out2;
+lc3b_word mdrmux_out;
+lc3b_word mdr_out;
+
+lc3b_word alu_out;
+lc3b_word aluReg_out;
 lc3b_word dataReg_out;
 
-lc3b_word pc_out1;
-lc3b_word pc_out2;
-lc3b_word pc_out3;
-lc3b_word pc_out4;
+lc3b_word pc_out;
+lc3b_word pcReg_out1;
+lc3b_word pcReg_out2;
+lc3b_word pcReg_out3;
+lc3b_word pcReg_out4;
 
+lc3b_word ir_out;
+lc3b_word irReg_out;
+
+lc3b_reg writeReg1_out;
+lc3b_reg writeReg2_out;
+lc3b_reg writeReg3_out;
+
+lc3b_word offsetadder_mux_out;
 lc3b_word offsetadder_out;
+lc3b_word offsetadderReg_out;
+
 lc3b_word offset6mux_out;
 lc3b_word pc_plus2_out;
 lc3b_nzp gencc_out;
@@ -109,7 +128,8 @@ ir ir_module
     .offset11(offset11),
     .d_enable(d_enable),
     .imm_enable(imm_enable),
-    .jsr_enable(jsr_enable)
+    .jsr_enable(jsr_enable),
+    .out(ir_out)
 );
 
 /*
@@ -120,7 +140,7 @@ alu alu_module
     .aluop(aluop),
     .a(stb_filter_out),
     .b(alumux_out),
-    .f(alu_out1)
+    .f(alu_out)
 );
 
 /*
@@ -133,7 +153,7 @@ regfile regfile_module
     .in(regfile_filter_out),
     .src_a(storemux_out[2:0]),
     .src_b(sr2),
-    .dest(destmux_out),
+    .dest(writeReg3_out),           //changed to trans reg
     .reg_a(sr1_out),
     .reg_b(sr2_out)
 );
@@ -143,7 +163,7 @@ regfile regfile_module
  */
 sext #(.width(5)) sext5
 (
-    .in(offset5),
+    .in(irReg_out[4:0]),        //offset5
     .out(sext5_out)
 );
 
@@ -152,7 +172,7 @@ sext #(.width(5)) sext5
  */
 sext #(.width(6)) sext6
 (
-    .in(offset6),
+    .in(irReg_out[5:0]),        //offset6
     .out(sext6_out)
 );
 
@@ -161,7 +181,7 @@ sext #(.width(6)) sext6
  */
 adj #(.width(6)) adj6
 (
-    .in(offset6),
+    .in(irReg_out[5:0]),        //offset6
     .out(adj6_out)
 );
 
@@ -170,7 +190,7 @@ adj #(.width(6)) adj6
  */
 adj #(.width(9)) adj9
 (
-    .in(offset9),
+    .in(irReg_out[9:0]),        //offset9
     .out(adj9_out)
 );
 
@@ -179,7 +199,7 @@ adj #(.width(9)) adj9
  */
 adj #(.width(11)) adj11
 (
-    .in(offset11),
+    .in(irReg_out[10:0]),       //offset11
     .out(adj11_out)
 );
 
@@ -188,7 +208,7 @@ adj #(.width(11)) adj11
  */
 zadj #(.width(8)) zadj8
 (
-    .in(trapvect8),
+    .in(irReg_out[7:0]),        //trapvect8
     .out(zadj8_out)
 );
 
@@ -210,7 +230,7 @@ stb_filter stb_filter_module
 (
     .filter_enable(stb_filter_enable),
     .high_byte_enable(mem_address[0]),
-    .in(sr1_out),
+    .in(sr1reg1_out),               //changed to trans reg
     .out(stb_filter_out)
 );
 
@@ -219,7 +239,7 @@ stb_filter stb_filter_module
  */
 zext #(.width(4)) shift_zext
 (
-    .in(offset4),
+    .in(irReg_out[3:0]),        //offset4
     .out(zext4_out)
 );
 
@@ -229,7 +249,7 @@ zext #(.width(4)) shift_zext
 adder offset_adder
 (
     .a(offsetadder_mux_out),
-    .b(pc_out),
+    .b(pcReg_out2),
     .out(offsetadder_out)
 );
 
@@ -270,12 +290,12 @@ gencc gencc_module
 /*
  * PC
  */
-register pc1
+register pc
 (
     .clk(clk),
     .load(load_pc),
     .in(pcmux_out),
-    .out(pc_out1)
+    .out(pc_out)
 );
 
 /*
@@ -297,7 +317,7 @@ register mdr
     .clk(clk),
     .load(load_mdr),
     .in(mdrmux_out),
-    .out(mem_wdata)
+    .out(mdr_out)           //changed for trans reg
 );
 
 /*
@@ -315,48 +335,57 @@ register #(.width(3)) cc
 /**************************************
  * TRANSITION Registers               *
  **************************************/
-register pc2
+
+register pcreg1
 (
     .clk(clk),
-    .load(load_pc2),                                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NEEED TO CHANGE LOAD LOGIC FOR EVERYTHING!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    .in(pc_out1),
-    .out(pc_out2)
+    .load(global_load),                  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NEEED TO CHANGE LOAD LOGIC FOR EVERYTHING!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    .in(pc_plus2_out),
+    .out(pcReg_out1)
 );
-register pc3
+
+register pcreg2
 (
     .clk(clk),
-    .load(load_pc3),
-    .in(pc_out2),
-    .out(pc_out3)
+    .load(global_load),                       
+    .in(pcReg_out1),
+    .out(pcReg_out2)
 );
-register pc4
+register pcreg3
 (
     .clk(clk),
-    .load(load_pc4),
-    .in(pc_out3),
-    .out(pc_out4)
+    .load(global_load),
+    .in(pcReg_out2),
+    .out(pcReg_out3)
+);
+register pcreg4
+(
+    .clk(clk),
+    .load(global_load),
+    .in(pcReg_out3),
+    .out(pcReg_out4)
 );
 
 register alu
 (
     .clk(clk),
-    .load(load_alu),
-    .in(alu_out1),
-    .out(alu_out2)
+    .load(global_load),
+    .in(alu_out),
+    .out(aluReg_out)
 );
 
 register dataReg
 (
     .clk(clk),
-    .load(load_dataReg),
-    .in(alu_out2),
+    .load(global_load),
+    .in(aluReg_out),
     .out(dataReg_out)
 );
 
 register ctrlword1
 (
     .clk(clk),
-    .load(load_opcode1),
+    .load(global_load),
     .in(opcode),
     .out(opcode_out1)
 );
@@ -364,7 +393,7 @@ register ctrlword1
 register ctrlword2
 (
     .clk(clk),
-    .load(load_opcode2),
+    .load(global_load),
     .in(opcode),
     .out(opcode_out1)
 );
@@ -372,12 +401,100 @@ register ctrlword2
 register ctrlword3
 (
     .clk(clk),
-    .load(load_opcode3),
+    .load(global_load),
     .in(opcode),
     .out(opcode_out1)
 );
 
-//insert IR reg, destmux reg(write reg 1,2,3), SR1 reg 1 and 2, and MDR reg
+register irReg
+(
+    .clk(clk),
+    .load(global_load),
+    .in(ir_out),
+    .out(irReg_out)
+);
+
+register writeReg1
+(
+    .clk(clk),
+    .load(global_load),
+    .in(destmux_out),
+    .out(writeReg1_out)
+);
+
+register writeReg2
+(
+    .clk(clk),
+    .load(global_load),
+    .in(writeReg1_out),
+    .out(writeReg2_out)
+);
+
+register writeReg3
+(
+    .clk(clk),
+    .load(global_load),
+    .in(writeReg2_out),
+    .out(writeReg3_out)
+);
+
+register SR1Reg1
+(
+    .clk(clk),
+    .load(global_load),
+    .in(sr1_out),
+    .out(sr1reg1_out)
+);
+
+register SR1Reg2
+(
+    .clk(clk),
+    .load(global_load),
+    .in(sr1reg1_out),
+    .out(sr1reg2_out)
+);
+
+register SR2Reg1
+(
+    .clk(clk),
+    .load(global_load),
+    .in(sr2_out),
+    .out(sr2reg1_out)
+);
+
+register SR2Reg2
+(
+    .clk(clk),
+    .load(global_load),
+    .in(sr2reg1_out),
+    .out(sr2reg2_out)
+);
+
+register MDRReg
+(
+    .clk(clk),
+    .load(global_load),
+    .in(mdr_out),
+    .out(mem_wdata)
+);
+
+register TEXTReg
+(
+    .clk(clk),
+    .load(global_load),
+    .in(zadj8_out),
+    .out(textreg_out)
+);
+
+register offsetadderReg
+(
+    .clk(clk),
+    .load(global_load),
+    .in(offsetadder_out),
+    .out(offsetadderReg_out)
+);
+
+
 /**************************************
  * Multiplexers                       *
  **************************************/
@@ -411,8 +528,8 @@ mux4 pc_mux
 (
     .sel(pcmux_sel),
     .a(pc_plus2_out),
-    .b(offsetadder_out),
-    .c(sr1_out),
+    .b(offsetadderReg_out),      //changes for trans reg
+    .c(sr1reg2_out),            //changed to trans reg
     .d(regfile_filter_out),
     .f(pcmux_out)
 );
@@ -423,7 +540,7 @@ mux4 pc_mux
 mux4 alu_mux
 (
     .sel(alumux_sel),
-    .a(sr2_out),
+    .a(sr2reg1_out),         //changed for trans reg
     .b(offset6mux_out),
     .c(sext5_out),
     .d(zext4_out),
@@ -438,8 +555,8 @@ mux4 regfile_mux
     .sel(regfilemux_sel),
     .a(dataReg_out),       //changes for trans reg
     .b(mem_wdata),
-    .c(offsetadder_out),
-    .d(pc_out4),            //changed to trans reg
+    .c(offsetadderReg_out), //changes for trans reg
+    .d(pcReg_out4),            //changed to trans reg
     .f(regfilemux_out)
 );
 
@@ -449,10 +566,10 @@ mux4 regfile_mux
 mux4 mar_mux
 (
     .sel(marmux_sel),
-    .a(alu_out),
-    .b(pc_out),
+    .a(aluReg_out),           //changed for trans reg
+    .b(pcReg_out3),                //changed for trans reg
     .c(regfile_filter_out),
-    .d(zadj8_out),
+    .d(textreg_out),            //changed for trans reg
     .f(marmux_out)
 );
 
@@ -462,7 +579,7 @@ mux4 mar_mux
 mux2 mdr_mux
 (
     .sel(mdrmux_sel),
-    .a(alu_out),
+    .a(sr2reg2_out),         //changed for trans reg
     .b(mem_rdata),
     .f(mdrmux_out)
 );
