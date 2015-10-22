@@ -19,7 +19,8 @@ module ir
     output lc3b_offset11 offset11,
     output logic d_enable,
     output logic imm_enable,
-    output logic jsr_enable
+    output logic jsr_enable,
+    output lc3b_word out
 );
 
 
@@ -51,6 +52,7 @@ begin
     d_enable   = data[4];
     imm_enable = data[5];
     jsr_enable = data[11];
+    out = data;
 end
 
 endmodule : ir
