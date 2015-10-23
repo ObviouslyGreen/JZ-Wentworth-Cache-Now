@@ -1,5 +1,5 @@
 /*
- * Latch module (provided)
+ * Latch module
  */
 module reg_latch #(parameter width = 16)
 (
