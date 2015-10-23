@@ -217,6 +217,8 @@
 # Loading work.mux2
 # Loading work.mux4
 # Loading work.magic_memory_dp
+# ** Warning: (vsim-3015) /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/datapath.sv(457): [PCDPC] - Port size (16 or 16) does not match connection size (1) for port 'out'. The port definition is at: /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/register.sv(9).
+#         Region: /mp3_tb/dut/datapath_module/irReg1
 # 
 # add wave *
 # view structure
@@ -264,3 +266,5 @@ restart -f; run 10000ns
 # Loading work.mux2
 # Loading work.mux4
 # Loading work.magic_memory_dp
+# ** Warning: (vsim-3015) /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/datapath.sv(457): [PCDPC] - Port size (16 or 16) does not match connection size (1) for port 'out'. The port definition is at: /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/register.sv(9).
+#         Region: /mp3_tb/dut/datapath_module/irReg1

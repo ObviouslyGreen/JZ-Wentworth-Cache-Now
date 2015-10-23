@@ -22,7 +22,7 @@ Z6 !s92 -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now -O0
 !s100 M[Sf761^mZQz:^b5HK2QU2
 !s105 adder_sv_unit
 !s85 0
-!s108 1445553732.896996
+!s108 1445563018.659492
 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adder.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adder.sv|
 !s101 -O0
@@ -41,7 +41,7 @@ Z8 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adj.sv
 Z9 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adj.sv
 L0 6
 R4
-Z10 !s108 1445553735.166463
+Z10 !s108 1445563021.307289
 Z11 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adj.sv|
 Z12 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adj.sv|
 R5
@@ -90,7 +90,7 @@ Z13 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/alu.sv
 Z14 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/alu.sv
 L0 3
 R4
-Z15 !s108 1445553735.386158
+Z15 !s108 1445563021.515006
 Z16 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/alu.sv|
 Z17 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/alu.sv|
 R5
@@ -139,7 +139,7 @@ Z19 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/control_rom.sv
 Z20 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/control_rom.sv
 L0 2
 R4
-Z21 !s108 1445553733.678588
+Z21 !s108 1445563019.996865
 Z22 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/control_rom.sv|
 Z23 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/control_rom.sv|
 R5
@@ -188,7 +188,7 @@ Z25 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ctrl_register.sv
 Z26 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ctrl_register.sv
 L0 6
 R4
-Z27 !s108 1445553733.506280
+Z27 !s108 1445563019.746264
 Z28 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ctrl_register.sv|
 Z29 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ctrl_register.sv|
 R5
@@ -226,25 +226,25 @@ vdatapath
 R1
 R7
 DXx4 work 16 datapath_sv_unit 0 22 71ha7Y_VQH?K7WVzPY:V43
-VGim37>^YJg3J9nTBjTQ`g1
+VzURkf]ghF13KENIIFL1fb1
 r1
 31
-IOU?lBf;]K4^bKT=1g9E220
+IV?J4HLUg73EdVzPm7;]W20
 S1
 R2
-Z30 w1445553502
+Z30 w1445562892
 Z31 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/datapath.sv
 Z32 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/datapath.sv
 L0 6
 R4
-Z33 !s108 1445553735.556556
+Z33 !s108 1445563021.673766
 Z34 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/datapath.sv|
 Z35 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/datapath.sv|
 R5
 R6
 !s85 0
 !i10b 1
-!s100 57DTg5lR6MJOE5:^JMbJ]2
+!s100 _^21f;g?AGVd<<M5=bNh?0
 !s105 datapath_sv_unit
 !s101 -O0
 Xdatapath_sv_unit
@@ -286,7 +286,7 @@ Z36 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/gencc.sv
 Z37 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/gencc.sv
 L0 6
 R4
-Z38 !s108 1445553735.736849
+Z38 !s108 1445563021.853936
 Z39 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/gencc.sv|
 Z40 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/gencc.sv|
 R5
@@ -335,7 +335,7 @@ Z42 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ir.sv
 Z43 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ir.sv
 L0 7
 R4
-Z44 !s108 1445553735.915428
+Z44 !s108 1445563022.065977
 Z45 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ir.sv|
 Z46 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ir.sv|
 R5
@@ -387,7 +387,7 @@ R6
 !i10b 1
 !s100 FQNIk206JS9>]<JT>E?@:2
 !s85 0
-!s108 1445553733.198728
+!s108 1445563018.995013
 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/lc3b_types.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/lc3b_types.sv|
 !s101 -O0
@@ -408,7 +408,7 @@ R4
 r1
 !s85 0
 31
-!s108 1445553737.238546
+!s108 1445563022.666269
 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/magic_memory_dp.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/magic_memory_dp.sv|
 !s101 -O0
@@ -421,22 +421,22 @@ DXx4 work 11 mp3_sv_unit 0 22 izCJ=<OKDoBcJei`6567H1
 VOYbUj@:JeBoP13^9i[h]c3
 r1
 31
-Ii6SjYD19RgOeagTIcY@GZ1
+I_Wm`Q27mYb9GC2<[=o=_L1
 S1
 R2
-Z47 w1445552419
+Z47 w1445554838
 Z48 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mp3.sv
 Z49 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mp3.sv
 L0 6
 R4
-Z50 !s108 1445553736.098885
+Z50 !s108 1445563022.234392
 Z51 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mp3.sv|
 Z52 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mp3.sv|
 R5
 R6
 !s85 0
 !i10b 1
-!s100 K5^nc3MgFV?KVb4g<BlKS0
+!s100 B@5kXa6;DzT`K<JYJ9k;Z3
 !s105 mp3_sv_unit
 !s101 -O0
 Xmp3_sv_unit
@@ -482,7 +482,7 @@ R6
 !s100 2UbDg4i^lDD:B?F`MfOa^2
 !s105 mp3_tb_sv_unit
 !s85 0
-!s108 1445553737.108501
+!s108 1445563022.565766
 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mp3_tb.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mp3_tb.sv|
 !s101 -O0
@@ -505,7 +505,7 @@ R6
 !s100 `eQnj>T_I``mhQk=daO4I2
 !s105 mux2_sv_unit
 !s85 0
-!s108 1445553733.049208
+!s108 1445563018.774374
 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mux2.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mux2.sv|
 !s101 -O0
@@ -528,7 +528,7 @@ R6
 !s100 Rd=YIVfh2Tmj;b6a[3?Y03
 !s105 mux4_sv_unit
 !s85 0
-!s108 1445553732.679640
+!s108 1445563018.407139
 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mux4.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mux4.sv|
 !s101 -O0
@@ -551,7 +551,7 @@ R6
 !s100 ^[o^KP]iMW:4W]<oT]0Xd1
 !s105 nzp_comparator_sv_unit
 !s85 0
-!s108 1445553732.795962
+!s108 1445563018.543902
 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/nzp_comparator.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/nzp_comparator.sv|
 !s101 -O0
@@ -574,7 +574,7 @@ R6
 !s100 GkBjf;:b:Qd_OzYiWIE2j3
 !s105 plus2_sv_unit
 !s85 0
-!s108 1445553733.298251
+!s108 1445563019.097380
 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/plus2.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/plus2.sv|
 !s101 -O0
@@ -593,7 +593,7 @@ Z54 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile.sv
 Z55 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile.sv
 L0 7
 R4
-Z56 !s108 1445553736.908117
+Z56 !s108 1445563022.397838
 Z57 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile.sv|
 Z58 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile.sv|
 R5
@@ -618,7 +618,7 @@ Z59 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile_filter.sv
 Z60 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile_filter.sv
 L0 6
 R4
-Z61 !s108 1445553734.067083
+Z61 !s108 1445563020.496234
 Z62 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile_filter.sv|
 Z63 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile_filter.sv|
 R5
@@ -695,7 +695,7 @@ R6
 !s100 3Zg5Xh?6D75hHBnWWfg>Y3
 !s105 register_sv_unit
 !s85 0
-!s108 1445553733.399637
+!s108 1445563019.296751
 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/register.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/register.sv|
 !s101 -O0
@@ -714,7 +714,7 @@ Z64 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/sext.sv
 Z65 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/sext.sv
 L0 6
 R4
-Z66 !s108 1445553735.007742
+Z66 !s108 1445563021.123887
 Z67 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/sext.sv|
 Z68 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/sext.sv|
 R5
@@ -763,7 +763,7 @@ Z69 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/stb_filter.sv
 Z70 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/stb_filter.sv
 L0 6
 R4
-Z71 !s108 1445553733.877465
+Z71 !s108 1445563020.235841
 Z72 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/stb_filter.sv|
 Z73 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/stb_filter.sv|
 R5
@@ -812,7 +812,7 @@ Z74 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zadj.sv
 Z75 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zadj.sv
 L0 6
 R4
-Z76 !s108 1445553734.639575
+Z76 !s108 1445563020.726535
 Z77 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zadj.sv|
 Z78 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zadj.sv|
 R5
@@ -861,7 +861,7 @@ Z79 8/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zext.sv
 Z80 F/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zext.sv
 L0 6
 R4
-Z81 !s108 1445553734.808870
+Z81 !s108 1445563020.944742
 Z82 !s107 /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zext.sv|
 Z83 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now|/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zext.sv|
 R5

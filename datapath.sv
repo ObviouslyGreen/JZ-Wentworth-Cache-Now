@@ -34,6 +34,9 @@ module datapath
 
     /* declare more ports here */
     input lc3b_word mem_rdata,
+    output logic mem_read,
+    output logic mem_write,
+    output lc3b_mem_wmask mem_byte_enable,
     output lc3b_word mem_wdata,
     output lc3b_word mem_address,
     input lc3b_word instr_rdata,
@@ -117,6 +120,13 @@ lc3b_control_word ctrl;
 lc3b_control_word ctrl_exec;
 lc3b_control_word ctrl_mem;
 lc3b_control_word ctrl_wb;
+
+
+always_comb
+begin
+    mem_read = ctrl_mem.mem_read;
+    mem_write = ctrl_mem.mem_write;
+end
 /**************************************
  * User modules                       *
  **************************************/
@@ -335,15 +345,15 @@ register mar
 
 /*
  * MDR
- */
+ *//*
 register mdr
 (
     .clk(clk),
     .load(ctrl_mem.load_mdr),
     .in(mdrmux_out),
-    .out(mdr_out)           //changed for trans reg
+    .out(mem_wdata)           //changed for trans reg
 );
-
+*/
 /*
  * CC
  */
@@ -494,14 +504,6 @@ register SR2Reg2
     .out(sr2reg2_out)
 );
 
-register MDRReg
-(
-    .clk(clk),
-    .load(global_load),
-    .in(mdr_out),
-    .out(mem_wdata)
-);
-
 register TEXTReg
 (
     .clk(clk),
@@ -616,7 +618,7 @@ mux2 mdr_mux
     .sel(ctrl_mem.mdrmux_sel),
     .a(sr2reg2_out),         //changed for trans reg
     .b(mem_rdata),
-    .f(mdrmux_out)
+    .f(mem_wdata)
 );
 
 /*

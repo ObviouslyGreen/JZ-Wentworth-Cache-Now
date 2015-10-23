@@ -146,7 +146,7 @@ datapath datapath_module
     .mem_rdata(mem_rdata),
     .mem_read(mem_read),
     .mem_write(mem_write),
-    .mem_byte_enable(mem_byte_enable),
+    .mem_byte_enable(mem_byte_enable)
     .mem_wdata(mem_wdata),
     .mem_address(mem_address),
     .instr_rdata(instr_rdata),
