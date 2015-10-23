@@ -198,7 +198,7 @@ regfile regfile_module
     .src_b(storemux_out),
     .dest(writeReg3_out),           //changed to trans reg
     .reg_a(sr1_out),
-    .reg_b(sr2_out),
+    .reg_b(sr2_out)
 );
 
 /*
