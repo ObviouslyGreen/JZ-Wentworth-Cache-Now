@@ -1,4 +1,3 @@
-# ERROR: No extended dataflow license exists
 # do mp3_run_msim_rtl_verilog.do 
 # if {[file exists rtl_work]} {
 # 	vdel -lib rtl_work -all

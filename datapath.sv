@@ -118,6 +118,10 @@ lc3b_nzp gencc_out;
 lc3b_nzp cc_out;
 
 lc3b_word mem_data_reg_out;
+lc3b_word store_reg_out;
+lc3b_word store_reg_reg1_out;
+lc3b_word store_reg_reg2_out;
+lc3b_word store_reg_reg3_out;
 
 lc3b_control_word ctrl;
 lc3b_control_word ctrl_dec;
@@ -131,7 +135,7 @@ always_comb
 begin
     mem_read = ctrl_mem.mem_read;
     mem_write = ctrl_mem.mem_write;
-    is_nop = instr_rdata == 16'b0;
+    is_nop = ir_out == 16'b0;
 end
 /**************************************
  * User modules                       *
@@ -192,11 +196,12 @@ regfile regfile_module
     .clk(clk),
     .load(ctrl_wb.load_regfile),
     .in(regfile_filter_out),
-    .src_a(storemux_out[2:0]),
+    .src_a(storemux_out),
     .src_b(sr2),
     .dest(writeReg3_out),           //changed to trans reg
     .reg_a(sr1_out),
-    .reg_b(sr2_out)
+    .reg_b(sr2_out),
+    .reg_c(store_reg_out)
 );
 
 /*
@@ -352,15 +357,15 @@ reg_latch mar
 
 /*
  * MDR
- *//*
-register mdr
+ */
+reg_latch mdr
 (
     .clk(clk),
     .load(ctrl_mem.load_mdr),
     .in(mdrmux_out),
     .out(mem_wdata)           //changed for trans reg
 );
-*/
+
 /*
  * CC
  */
@@ -512,6 +517,30 @@ register SR2Reg2
     .out(sr2reg2_out)
 );
 
+register store_reg_reg1
+(
+    .clk(clk),
+    .load(global_load),
+    .in(store_reg_out),
+    .out(store_reg_reg1_out)
+);
+
+register store_reg_reg2
+(
+    .clk(clk),
+    .load(global_load),
+    .in(store_reg_reg1_out),
+    .out(store_reg_reg2_out)
+);
+
+register store_reg_reg3
+(
+    .clk(clk),
+    .load(global_load),
+    .in(store_reg_reg2_out),
+    .out(store_reg_reg3_out)
+);
+
 register TEXTReg
 (
     .clk(clk),
@@ -579,7 +608,7 @@ mux4 pc_mux
  */
 mux2 br_mux
 (
-    .sel((ctrl_mem.brmux_sel) && branch_enable),
+    .sel((ctrl_mem.brmux_sel) & branch_enable),
     .a(pcmux_out), 
     .b(offsetadderReg_out),
     .f(brmux_out)
@@ -630,9 +659,9 @@ mux4 mar_mux
 mux2 mdr_mux
 (
     .sel(ctrl_mem.mdrmux_sel),
-    .a(sr2reg2_out),         //changed for trans reg
+    .a(store_reg_reg3_out),         //changed for trans reg
     .b(mem_rdata),
-    .f(mem_wdata)
+    .f(mdrmux_out)
 );
 
 /*
