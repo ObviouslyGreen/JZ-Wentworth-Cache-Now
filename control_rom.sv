@@ -43,7 +43,7 @@ begin
             if (imm_enable == 1'b1)
             begin
                 /* DR <= A & SEXT(IR[4:0]) */
-                ctrl.alumux_sel = 2'b11;
+                ctrl.alumux_sel = 2'b10;
             end
         end
         op_and: begin
@@ -53,7 +53,7 @@ begin
             if (imm_enable == 1'b1)
             begin
                 /* DR <= A & SEXT(IR[4:0]) */
-                ctrl.alumux_sel = 2'b11;
+                ctrl.alumux_sel = 2'b10;
             end
         end
         op_not: begin

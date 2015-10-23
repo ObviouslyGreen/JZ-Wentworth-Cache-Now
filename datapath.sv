@@ -45,6 +45,7 @@ module datapath
 
 /* declare internal signals */
 logic global_load;
+
 initial
 begin
     global_load = 1'b1;
@@ -135,7 +136,7 @@ always_comb
 begin
     mem_read = ctrl_mem.mem_read;
     mem_write = ctrl_mem.mem_write;
-    is_nop = ir_out == 16'b0;
+    is_nop = (ir_out == 16'b0);
 end
 /**************************************
  * User modules                       *

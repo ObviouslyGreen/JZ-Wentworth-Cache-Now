@@ -16,7 +16,11 @@
 // PROGRAM "Quartus II 32-bit"
 // VERSION "Version 13.1.4 Build 182 03/12/2014 SJ Full Version"
 
+<<<<<<< HEAD
 // DATE "10/23/2015 00:49:16"
+=======
+// DATE "10/23/2015 00:08:49"
+>>>>>>> 72acc8b2a91d4347cc54e51ce91908a05422bd6f
 
 // 
 // Device: Altera EP3SE50F780C2 Package FBGA780
