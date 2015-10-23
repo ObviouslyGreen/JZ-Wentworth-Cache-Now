@@ -5,6 +5,7 @@ if {[file exists rtl_work]} {
 vlib rtl_work
 vmap work rtl_work
 
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/reg_latch.sv}
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mux4.sv}
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/nzp_comparator.sv}
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adder.sv}

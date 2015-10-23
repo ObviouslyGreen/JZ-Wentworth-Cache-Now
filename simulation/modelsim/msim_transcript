@@ -1,3 +1,4 @@
+# ERROR: No extended dataflow license exists
 # do mp3_run_msim_rtl_verilog.do 
 # if {[file exists rtl_work]} {
 # 	vdel -lib rtl_work -all
@@ -9,6 +10,12 @@
 # ** Warning: Copied /software/altera/13.1/modelsim_ase/linuxaloem/../modelsim.ini to modelsim.ini.
 #          Updated modelsim.ini.
 # 
+# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/reg_latch.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module reg_latch
+# 
+# Top level modules:
+# 	reg_latch
 # vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mux4.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling module mux4
@@ -212,13 +219,12 @@
 # Loading work.gencc_sv_unit
 # Loading work.gencc
 # Loading work.register
+# Loading work.reg_latch
 # Loading work.ctrl_register_sv_unit
 # Loading work.ctrl_register
 # Loading work.mux2
 # Loading work.mux4
 # Loading work.magic_memory_dp
-# ** Warning: (vsim-3015) /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/datapath.sv(457): [PCDPC] - Port size (16 or 16) does not match connection size (1) for port 'out'. The port definition is at: /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/register.sv(9).
-#         Region: /mp3_tb/dut/datapath_module/irReg1
 # 
 # add wave *
 # view structure
@@ -227,7 +233,7 @@
 # .main_pane.objects.interior.cs.body.tree
 # run 200 ns
 do wave.do
-restart -f; run 10000ns
+restart -f; run 5000ns
 # Loading sv_std.std
 # Loading work.mp3_tb
 # Loading work.lc3b_types
@@ -261,10 +267,9 @@ restart -f; run 10000ns
 # Loading work.gencc_sv_unit
 # Loading work.gencc
 # Loading work.register
+# Loading work.reg_latch
 # Loading work.ctrl_register_sv_unit
 # Loading work.ctrl_register
 # Loading work.mux2
 # Loading work.mux4
 # Loading work.magic_memory_dp
-# ** Warning: (vsim-3015) /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/datapath.sv(457): [PCDPC] - Port size (16 or 16) does not match connection size (1) for port 'out'. The port definition is at: /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/register.sv(9).
-#         Region: /mp3_tb/dut/datapath_module/irReg1

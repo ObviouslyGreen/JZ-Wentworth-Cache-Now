@@ -1,4 +1,5 @@
 vendor_name = ModelSim
+source_file = 1, /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/reg_latch.sv
 source_file = 1, /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/magic_memory_dp.sv
 source_file = 1, /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ctrl_register.sv
 source_file = 1, /home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/control_rom.sv

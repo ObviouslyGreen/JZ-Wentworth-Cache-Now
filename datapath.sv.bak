@@ -100,7 +100,6 @@ lc3b_word pcReg_out4;
 
 lc3b_word ir_out;
 lc3b_word irReg_out;
-lc3b_word irReg1_out;
 
 lc3b_reg writeReg1_out;
 lc3b_reg writeReg2_out;
@@ -117,21 +116,17 @@ lc3b_word pc_plus2_out;
 lc3b_nzp gencc_out;
 lc3b_nzp cc_out;
 
-lc3b_word mem_data_reg_out;
-
 lc3b_control_word ctrl;
 lc3b_control_word ctrl_dec;
 lc3b_control_word ctrl_exec;
 lc3b_control_word ctrl_mem;
 lc3b_control_word ctrl_wb;
 
-logic is_nop;
 
 always_comb
 begin
     mem_read = ctrl_mem.mem_read;
     mem_write = ctrl_mem.mem_write;
-    is_nop = instr_rdata == 16'b0;
 end
 /**************************************
  * User modules                       *
@@ -144,7 +139,7 @@ ir ir_module
 (
     .clk(clk),
     .load(1'b1),
-    .in(instr_rdata),
+    .in(irReg1_out),
     .opcode(opcode),
     .dest(dest),
     .src1(sr1),
@@ -167,9 +162,8 @@ ir ir_module
 
 control_rom control_rom_module
 (
-    .opcode(opcode),
+    .opcode(lc3b_opcode'(irReg1_out[15:12])),
     .imm_enable(imm_enable),
-    .is_nop(is_nop),
     .ctrl(ctrl)
 );
 
@@ -310,7 +304,7 @@ plus2 plus2_module
 nzp_comparator cccomp
 (
     .nzp(cc_out),
-    .ir_nzp(writeReg2_out),
+    .ir_nzp(dest),
     .branch_enable(branch_enable)
 );
 
@@ -342,7 +336,7 @@ register pc
 /*
  * MAR
  */
-reg_latch mar
+register mar
 (
     .clk(clk),
     .load(ctrl_mem.load_mar),
@@ -428,10 +422,18 @@ ctrl_register ctrlword1
     .clk(clk),
     .load(global_load),
     .in(ctrl),
-    .out(ctrl_exec)
+    .out(ctrl_dec)
 );
 
 ctrl_register ctrlword2
+(
+    .clk(clk),
+    .load(global_load),
+    .in(ctrl_dec),
+    .out(ctrl_exec)
+);
+
+ctrl_register ctrlword3
 (
     .clk(clk),
     .load(global_load),
@@ -439,7 +441,7 @@ ctrl_register ctrlword2
     .out(ctrl_mem)
 );
 
-ctrl_register ctrlword3
+ctrl_register ctrlword4
 (
     .clk(clk),
     .load(global_load),
@@ -447,6 +449,13 @@ ctrl_register ctrlword3
     .out(ctrl_wb)
 );
 
+register irReg
+(
+    .clk(clk),
+    .load(global_load),
+    .in(instr_rdata),
+    .out(irReg1_out)
+);
 
 register irReg
 (
@@ -528,13 +537,7 @@ register offsetadderReg
     .out(offsetadderReg_out)
 );
 
-register mem_data_reg_shit_poop
-(
-    .clk(clk),
-    .load(global_load),
-    .in(mem_wdata),
-    .out(mem_data_reg_out)
-);
+
 /**************************************
  * Multiplexers                       *
  **************************************/
@@ -579,7 +582,7 @@ mux4 pc_mux
  */
 mux2 br_mux
 (
-    .sel((ctrl_mem.brmux_sel) && branch_enable),
+    .sel((ctrl_mem.opcode == op_br) & branch_enable),
     .a(pcmux_out), 
     .b(offsetadderReg_out),
     .f(brmux_out)
@@ -605,7 +608,7 @@ mux4 regfile_mux
 (
     .sel(ctrl_wb.regfilemux_sel),
     .a(dataReg_out),       //changes for trans reg
-    .b(mem_data_reg_out),
+    .b(mem_wdata),
     .c(offsetadderReg_out), //changes for trans reg
     .d(pcReg_out4),            //changed to trans reg
     .f(regfilemux_out)
