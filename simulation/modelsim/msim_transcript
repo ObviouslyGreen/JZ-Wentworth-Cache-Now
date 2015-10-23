@@ -1,4 +1,3 @@
-# ERROR: No extended dataflow license exists
 # do mp3_run_msim_rtl_verilog.do 
 # if {[file exists rtl_work]} {
 # 	vdel -lib rtl_work -all
@@ -10,55 +9,55 @@
 # ** Warning: Copied /software/altera/13.1/modelsim_ase/linuxaloem/../modelsim.ini to modelsim.ini.
 #          Updated modelsim.ini.
 # 
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/reg_latch.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/reg_latch.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling module reg_latch
 # 
 # Top level modules:
 # 	reg_latch
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mux4.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/mux4.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling module mux4
 # 
 # Top level modules:
 # 	mux4
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/nzp_comparator.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/nzp_comparator.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling module nzp_comparator
 # 
 # Top level modules:
 # 	nzp_comparator
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adder.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/adder.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling module adder
 # 
 # Top level modules:
 # 	adder
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mux2.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/mux2.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling module mux2
 # 
 # Top level modules:
 # 	mux2
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/lc3b_types.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/lc3b_types.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package lc3b_types
 # 
 # Top level modules:
 # 	--none--
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/plus2.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/plus2.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling module plus2
 # 
 # Top level modules:
 # 	plus2
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/register.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/register.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling module register
 # 
 # Top level modules:
 # 	register
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ctrl_register.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/ctrl_register.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package ctrl_register_sv_unit
 # -- Importing package lc3b_types
@@ -66,7 +65,7 @@
 # 
 # Top level modules:
 # 	ctrl_register
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/control_rom.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/control_rom.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package control_rom_sv_unit
 # -- Importing package lc3b_types
@@ -74,7 +73,7 @@
 # 
 # Top level modules:
 # 	control_rom
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/stb_filter.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/stb_filter.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package stb_filter_sv_unit
 # -- Importing package lc3b_types
@@ -82,7 +81,7 @@
 # 
 # Top level modules:
 # 	stb_filter
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile_filter.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/regfile_filter.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package regfile_filter_sv_unit
 # -- Importing package lc3b_types
@@ -90,7 +89,7 @@
 # 
 # Top level modules:
 # 	regfile_filter
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zadj.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/zadj.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package zadj_sv_unit
 # -- Importing package lc3b_types
@@ -98,7 +97,7 @@
 # 
 # Top level modules:
 # 	zadj
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/zext.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/zext.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package zext_sv_unit
 # -- Importing package lc3b_types
@@ -106,7 +105,7 @@
 # 
 # Top level modules:
 # 	zext
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/sext.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/sext.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package sext_sv_unit
 # -- Importing package lc3b_types
@@ -114,7 +113,7 @@
 # 
 # Top level modules:
 # 	sext
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adj.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/adj.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package adj_sv_unit
 # -- Importing package lc3b_types
@@ -122,7 +121,7 @@
 # 
 # Top level modules:
 # 	adj
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/alu.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/alu.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package alu_sv_unit
 # -- Importing package lc3b_types
@@ -130,7 +129,7 @@
 # 
 # Top level modules:
 # 	alu
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/datapath.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/datapath.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package datapath_sv_unit
 # -- Importing package lc3b_types
@@ -138,7 +137,7 @@
 # 
 # Top level modules:
 # 	datapath
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/gencc.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/gencc.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package gencc_sv_unit
 # -- Importing package lc3b_types
@@ -146,7 +145,7 @@
 # 
 # Top level modules:
 # 	gencc
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ir.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/ir.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package ir_sv_unit
 # -- Importing package lc3b_types
@@ -154,7 +153,7 @@
 # 
 # Top level modules:
 # 	ir
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mp3.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/mp3.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package mp3_sv_unit
 # -- Importing package lc3b_types
@@ -162,7 +161,7 @@
 # 
 # Top level modules:
 # 	mp3
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/regfile.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/regfile.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling package regfile_sv_unit
 # -- Importing package lc3b_types
@@ -171,13 +170,13 @@
 # Top level modules:
 # 	regfile
 # 
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mp3_tb.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/mp3_tb.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling module mp3_tb
 # 
 # Top level modules:
 # 	mp3_tb
-# vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/magic_memory_dp.sv}
+# vlog -sv -work work +incdir+/home/syao6/ece411/J.Z.-Wentworth-Cache-Now {/home/syao6/ece411/J.Z.-Wentworth-Cache-Now/magic_memory_dp.sv}
 # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 # -- Compiling module magic_memory_dp
 # 
@@ -233,7 +232,7 @@
 # .main_pane.objects.interior.cs.body.tree
 # run 200 ns
 do wave.do
-restart -f; run 5000ns
+restart -f; run 2000ns
 # Loading sv_std.std
 # Loading work.mp3_tb
 # Loading work.lc3b_types
