@@ -119,10 +119,6 @@ lc3b_nzp gencc_out;
 lc3b_nzp cc_out;
 
 lc3b_word mem_data_reg_out;
-lc3b_word store_reg_out;
-lc3b_word store_reg_reg1_out;
-lc3b_word store_reg_reg2_out;
-lc3b_word store_reg_reg3_out;
 
 lc3b_control_word ctrl;
 lc3b_control_word ctrl_dec;
@@ -136,6 +132,7 @@ always_comb
 begin
     mem_read = ctrl_mem.mem_read;
     mem_write = ctrl_mem.mem_write;
+    mem_byte_enable = ctrl_mem.mem_byte_enable;
     is_nop = (ir_out == 16'b0);
 end
 /**************************************
@@ -197,12 +194,11 @@ regfile regfile_module
     .clk(clk),
     .load(ctrl_wb.load_regfile),
     .in(regfile_filter_out),
-    .src_a(storemux_out),
-    .src_b(sr2),
+    .src_a(sr1),
+    .src_b(storemux_out),
     .dest(writeReg3_out),           //changed to trans reg
     .reg_a(sr1_out),
     .reg_b(sr2_out),
-    .reg_c(store_reg_out)
 );
 
 /*
@@ -518,30 +514,6 @@ register SR2Reg2
     .out(sr2reg2_out)
 );
 
-register store_reg_reg1
-(
-    .clk(clk),
-    .load(global_load),
-    .in(store_reg_out),
-    .out(store_reg_reg1_out)
-);
-
-register store_reg_reg2
-(
-    .clk(clk),
-    .load(global_load),
-    .in(store_reg_reg1_out),
-    .out(store_reg_reg2_out)
-);
-
-register store_reg_reg3
-(
-    .clk(clk),
-    .load(global_load),
-    .in(store_reg_reg2_out),
-    .out(store_reg_reg3_out)
-);
-
 register TEXTReg
 (
     .clk(clk),
@@ -575,7 +547,7 @@ register mem_data_reg_shit_poop
 mux2 #(.width(3)) store_mux
 (
     .sel(ctrl.storemux_sel),
-    .a(sr1),
+    .a(sr2),
     .b(dest),
     .f(storemux_out)
 );
@@ -660,7 +632,7 @@ mux4 mar_mux
 mux2 mdr_mux
 (
     .sel(ctrl_mem.mdrmux_sel),
-    .a(store_reg_reg3_out),         //changed for trans reg
+    .a(sr2reg2_out),         //changed for trans reg
     .b(mem_rdata),
     .f(mdrmux_out)
 );

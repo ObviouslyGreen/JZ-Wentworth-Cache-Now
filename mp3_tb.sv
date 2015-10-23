@@ -86,7 +86,7 @@ magic_memory_dp memory
     /* Instruction Memory */
     .read_a(instr_read),
     .write_a(instr_write),
-    .wmask_a(),
+    .wmask_a(instr_mem_byte_enable),
     .address_a(instr_address),
     .wdata_a(instr_wdata),
     .resp_a(instr_resp),

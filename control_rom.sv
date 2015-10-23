@@ -85,7 +85,7 @@ begin
 
             /* MDR <= SR */
             // PASS SR TO MDR SOMEHOW
-            //ctrl.storemux_sel = 1'b1;
+            ctrl.storemux_sel = 1'b1;
             ctrl.load_mdr = 1'b1;
 
             /* M[MAR] <= MDR */

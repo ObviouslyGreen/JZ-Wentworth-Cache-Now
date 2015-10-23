@@ -17,15 +17,15 @@ module mp3
 
     input mem_resp,
     input lc3b_word mem_rdata,
-    output mem_read,
-    output mem_write,
+    output logic mem_read,
+    output logic mem_write,
     output lc3b_mem_wmask mem_byte_enable,
     output lc3b_word mem_address,
     output lc3b_word mem_wdata,
     input instr_resp,
     input lc3b_word instr_rdata,
-    output instr_read,
-    output instr_write,
+    output logic instr_read,
+    output logic instr_write,
     output lc3b_mem_wmask instr_mem_byte_enable,
     output lc3b_word instr_address,
     output lc3b_word instr_wdata
@@ -35,7 +35,7 @@ module mp3
 assign instr_wdata = 0;
 assign instr_write = 1'b0;
 assign instr_read = 1'b1;
-assign instr_mem_byte_enable = 2'b00;
+assign instr_mem_byte_enable = 2'b11;
 
 /* declare internal signals */
 /*logic load_pc;
@@ -61,6 +61,7 @@ logic branch_enable;
 logic d_enable;
 logic imm_enable;
 logic jsr_enable;
+/*
 logic ld_cache;
 logic ld_dirty0;
 logic ld_dirty1;
@@ -80,7 +81,7 @@ lc3b_word cache_rdata;
 logic cache_read;
 logic cache_write;
 lc3b_word cache_address;
-lc3b_word cache_wdata;
+lc3b_word cache_wdata;*/
 
 /* Instantiate MP 2 top level blocks here */
 /*

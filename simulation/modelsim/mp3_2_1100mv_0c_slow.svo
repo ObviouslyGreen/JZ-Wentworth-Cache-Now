@@ -16,11 +16,7 @@
 // PROGRAM "Quartus II 32-bit"
 // VERSION "Version 13.1.4 Build 182 03/12/2014 SJ Full Version"
 
-<<<<<<< HEAD
-// DATE "10/23/2015 00:49:16"
-=======
-// DATE "10/23/2015 00:08:49"
->>>>>>> 72acc8b2a91d4347cc54e51ce91908a05422bd6f
+// DATE "10/23/2015 16:55:50"
 
 // 
 // Device: Altera EP3SE50F780C2 Package FBGA780
@@ -377,7 +373,7 @@ defparam \mem_write~output .shift_series_termination_control = "false";
 
 // Location: IOOBUF_X20_Y0_N2
 stratixiii_io_obuf \mem_byte_enable[0]~output (
-	.i(gnd),
+	.i(vcc),
 	.oe(vcc),
 	.dynamicterminationcontrol(gnd),
 	.seriesterminationcontrol(14'b00000000000000),
@@ -393,7 +389,7 @@ defparam \mem_byte_enable[0]~output .shift_series_termination_control = "false";
 
 // Location: IOOBUF_X0_Y29_N64
 stratixiii_io_obuf \mem_byte_enable[1]~output (
-	.i(gnd),
+	.i(vcc),
 	.oe(vcc),
 	.dynamicterminationcontrol(gnd),
 	.seriesterminationcontrol(14'b00000000000000),
@@ -953,7 +949,7 @@ defparam \instr_write~output .shift_series_termination_control = "false";
 
 // Location: IOOBUF_X13_Y0_N20
 stratixiii_io_obuf \instr_mem_byte_enable[0]~output (
-	.i(gnd),
+	.i(vcc),
 	.oe(vcc),
 	.dynamicterminationcontrol(gnd),
 	.seriesterminationcontrol(14'b00000000000000),
@@ -969,7 +965,7 @@ defparam \instr_mem_byte_enable[0]~output .shift_series_termination_control = "f
 
 // Location: IOOBUF_X7_Y0_N113
 stratixiii_io_obuf \instr_mem_byte_enable[1]~output (
-	.i(gnd),
+	.i(vcc),
 	.oe(vcc),
 	.dynamicterminationcontrol(gnd),
 	.seriesterminationcontrol(14'b00000000000000),
