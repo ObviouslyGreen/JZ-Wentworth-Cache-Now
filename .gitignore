@@ -2,9 +2,9 @@
 db/
 incremental_db/
 output_files/
-simulation/
+simulation/*
+!simulation/modelsim
+simulation/modelsim/*
+!simulation/modelsim/*.do
 *.bak
-
-# Keep these files
-!simulation/modelsim/wave.do
 
