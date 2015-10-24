@@ -5,7 +5,6 @@ if {[file exists rtl_work]} {
 vlib rtl_work
 vmap work rtl_work
 
-vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/reg_latch.sv}
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/mux4.sv}
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/nzp_comparator.sv}
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/adder.sv}
@@ -13,6 +12,7 @@ vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/lc3b_types.sv}
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/plus2.sv}
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/register.sv}
+vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ctrl_register_mem.sv}
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/ctrl_register.sv}
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/control_rom.sv}
 vlog -sv -work work +incdir+/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now {/home/mychen5/ece411/J.Z.-Wentworth-Cache-Now/stb_filter.sv}

@@ -126,12 +126,12 @@ lc3b_control_word ctrl_exec;
 lc3b_control_word ctrl_mem;
 lc3b_control_word ctrl_wb;
 
+logic ctrl_register_mem_write;
+logic ctrl_register_mem_read;
 logic is_nop;
 
 always_comb
 begin
-    mem_read = ctrl_mem.mem_read;
-    mem_write = ctrl_mem.mem_write;
     mem_byte_enable = ctrl_mem.mem_byte_enable;
     is_nop = (ir_out == 16'b0);
 end
@@ -344,10 +344,10 @@ register pc
 /*
  * MAR
  */
-reg_latch mar
+register mar
 (
     .clk(clk),
-    .load(ctrl_mem.load_mar),
+    .load(ctrl_exec.load_mar),
     .in(marmux_out),
     .out(mem_address)
 );
@@ -355,12 +355,12 @@ reg_latch mar
 /*
  * MDR
  */
-reg_latch mdr
+register mdr
 (
     .clk(clk),
     .load(ctrl_mem.load_mdr),
-    .in(mdrmux_out),
-    .out(mem_wdata)           //changed for trans reg
+    .in(mem_rdata),
+    .out(mem_data_reg_out)
 );
 
 /*
@@ -433,12 +433,14 @@ ctrl_register ctrlword1
     .out(ctrl_exec)
 );
 
-ctrl_register ctrlword2
+ctrl_register_mem ctrlword2
 (
     .clk(clk),
     .load(global_load),
     .in(ctrl_exec),
-    .out(ctrl_mem)
+    .out(ctrl_mem),
+    .read(mem_read),
+    .write(mem_write)
 );
 
 ctrl_register ctrlword3
@@ -448,7 +450,6 @@ ctrl_register ctrlword3
     .in(ctrl_mem),
     .out(ctrl_wb)
 );
-
 
 register irReg
 (
@@ -511,15 +512,7 @@ register SR2Reg2
     .clk(clk),
     .load(global_load),
     .in(sr2reg1_out),
-    .out(sr2reg2_out)
-);
-
-register TEXTReg
-(
-    .clk(clk),
-    .load(global_load),
-    .in(zadj8_out),
-    .out(textreg_out)
+    .out(mem_wdata)
 );
 
 register offsetadderReg
@@ -530,13 +523,6 @@ register offsetadderReg
     .out(offsetadderReg_out)
 );
 
-register mem_data_reg_shit_poop
-(
-    .clk(clk),
-    .load(global_load),
-    .in(mem_wdata),
-    .out(mem_data_reg_out)
-);
 /**************************************
  * Multiplexers                       *
  **************************************/
@@ -618,23 +604,12 @@ mux4 regfile_mux
  */
 mux4 mar_mux
 (
-    .sel(ctrl_mem.marmux_sel),
-    .a(aluReg_out),           //changed for trans reg
-    .b(pcReg_out3),                //changed for trans reg
+    .sel(ctrl_exec.marmux_sel),
+    .a(alu_out),           //changed for trans reg
+    .b(pcReg_out2),                //changed for trans reg
     .c(regfile_filter_out),
-    .d(textreg_out),            //changed for trans reg
+    .d(zadj8_out),            //changed for trans reg
     .f(marmux_out)
-);
-
-/*
- * MDR mux
- */
-mux2 mdr_mux
-(
-    .sel(ctrl_mem.mdrmux_sel),
-    .a(sr2reg2_out),         //changed for trans reg
-    .b(mem_rdata),
-    .f(mdrmux_out)
 );
 
 /*
