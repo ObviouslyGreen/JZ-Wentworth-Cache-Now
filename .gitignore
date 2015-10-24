@@ -1,17 +1,8 @@
-# Ignore everything
-*
-
-# Allowed files and directories
-!.gitignore
-!.gitattributes
-!README.md
-!spec/
-
-# Allowed file types
-!*.sv
-!*.do
-!*.sdc
-!*.qpf
-!*.qsf
-!*.rpt
+# Ignore generated files
+db/
+incremental_db/
+output_files/
+simulation/modelsim/
+!simulation/modelsim/*.do
+*.bak
 
