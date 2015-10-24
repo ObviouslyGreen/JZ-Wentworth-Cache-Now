@@ -1,10 +1,17 @@
-# Keep these files
-!simulation/modelsim/wave.do
+# Ignore everything
+*
 
-# Ignore generated files
-db/*
-incremental_db/*
-output_files/*
-simulation/modelsim/*
-*.bak
+# Allowed files and directories
+!.gitignore
+!.gitattributes
+!README.md
+!spec/
+
+# Allowed file types
+!*.sv
+!*.do
+!*.sdc
+!*.qpf
+!*.qsf
+!*.rpt
 
