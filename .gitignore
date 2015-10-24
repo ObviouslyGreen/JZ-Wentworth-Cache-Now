@@ -2,7 +2,9 @@
 db/
 incremental_db/
 output_files/
-simulation/modelsim/
+simulation/*
+!simulation/modelsim
+simulation/modelsim/*
 !simulation/modelsim/*.do
 *.bak
 
