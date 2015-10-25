@@ -54,8 +54,8 @@ logic [1:0] regfilemux_sel;
 logic [1:0] marmux_sel;
 logic mdrmux_sel;
 logic offsetaddermux_sel;
-logic offset6mux_sel;*/
-lc3b_aluop aluop;
+logic offset6mux_sel;
+lc3b_aluop aluop;*/
 lc3b_opcode opcode;
 logic branch_enable;
 logic d_enable;
@@ -137,8 +137,8 @@ datapath datapath_module
     .marmux_sel(marmux_sel),
     .mdrmux_sel(mdrmux_sel),
     .offsetaddermux_sel(offsetaddermux_sel),
-    .offset6mux_sel(offset6mux_sel),*/
-    .aluop(aluop),
+    .offset6mux_sel(offset6mux_sel),
+    .aluop(aluop),*/
     .opcode(opcode),
     .branch_enable(branch_enable),
     .d_enable(d_enable),
