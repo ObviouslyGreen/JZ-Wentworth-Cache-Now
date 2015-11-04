@@ -3,7 +3,6 @@ import lc3b_types::*;
 module arbiter_control
 (
 	input clk,
-
 	input i_mem_read,
 	input d_mem_read,
 	input d_mem_write,
