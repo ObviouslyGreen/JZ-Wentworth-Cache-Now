@@ -3,9 +3,9 @@ import lc3b_types::*;
 module arbiter_control
 (
 	input clk,
-	input i_mem_read,
-	input d_mem_read,
-	input d_mem_write,
+	input i_pmem_read,
+	input d_pmem_read,
+	input d_pmem_write,
 	input l2_mem_resp,
 	output logic i_mem_resp,
 	output logic d_mem_resp,
