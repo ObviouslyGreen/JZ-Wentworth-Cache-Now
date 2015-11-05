@@ -15,7 +15,7 @@ module l1_cache
     output logic pmem_write,
     output lc3b_word mem_rdata,
     output lc3b_word pmem_address,
-    output lc3b_mem_data pmem_wdata,
+    output lc3b_mem_data pmem_wdata
 );
 
 logic ld_cache;

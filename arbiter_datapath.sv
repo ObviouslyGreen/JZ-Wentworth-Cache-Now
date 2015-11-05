@@ -35,7 +35,7 @@ mux2 #(.width(1)) mem_wrte_mux
     .f(l2_mem_write)
 );
 
-mux2 #(.width(128)) mem_read_mux
+mux2 #(.width(128)) mem_wdata_mux
 (
     .sel(arbiter_sel),
     .a(i_pmem_wdata),

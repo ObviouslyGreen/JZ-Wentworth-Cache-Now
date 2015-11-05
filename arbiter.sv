@@ -1,6 +1,6 @@
 import lc3b_types::*; 
 
-module arbiter_datapath
+module arbiter
 (
     input l2_mem_resp,
     input i_pmem_read,
@@ -17,12 +17,16 @@ module arbiter_datapath
     output logic l2_mem_read, 
     output logic l2_mem_write,
     output lc3b_word l2_mem_address,
-    output lc3b_mem_data l2_mem_write,
     output lc3b_mem_data l2_mem_rdata_out,
     output lc3b_mem_data l2_mem_wdata
 );
 
 logic arbiter_sel;
+
+always_comb
+begin
+    l2_mem_rdata_out = l2_mem_rdata_in;
+end
 
 arbiter_datapath arbiter_datapath
 (
@@ -50,9 +54,7 @@ arbiter_control arbiter_control
     .l2_mem_resp(l2_mem_resp),
     .i_pmem_resp(i_pmem_resp),
     .d_pmem_resp(d_pmem_resp),
-    .l2_mem_read(l2_mem_read),
-    .l2_mem_write(l2_mem_write),
     .arbiter_sel(arbiter_sel)
 );
 
-endmodule : arbiter_datapath
+endmodule : arbiter

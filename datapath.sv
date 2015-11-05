@@ -40,6 +40,9 @@ module datapath
     output lc3b_word mem_wdata,
     output lc3b_word mem_address,
     input lc3b_word instr_rdata,
+    output logic instr_read,
+    output logic instr_write,
+    output lc3b_word instr_wdata,
     output lc3b_word instr_address
 );
 
@@ -49,6 +52,9 @@ logic global_load;
 initial
 begin
     global_load = 1'b1;
+    instr_read = 1'b1;
+    instr_write = 1'b0;
+    instr_wdata = 16'b0000000000000000;
 end
 
 lc3b_reg sr1;
