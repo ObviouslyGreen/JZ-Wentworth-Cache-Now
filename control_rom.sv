@@ -114,6 +114,7 @@ begin
             ctrl.mdrmux_sel = 1'b1;
             ctrl.load_mdr = 1'b1;
             ctrl.mem_read = 1'b1;
+            ctrl.offset6mux_sel = 1'b1;
 
             /* DR <= ZEXT(MDR[7:0]) */
             ctrl.regfilemux_sel = 2'b01;
@@ -131,6 +132,7 @@ begin
             ctrl.storemux_sel = 1'b1;
             ctrl.stb_filter_enable = 1'b1;
             ctrl.load_mdr = 1'b1;
+            ctrl.offset6mux_sel = 1'b1;
 
             /* M[MAR] <= MDR */
             ctrl.mem_byte_enable = (stb_high_enable) ? 2'b10 : 2'b01;

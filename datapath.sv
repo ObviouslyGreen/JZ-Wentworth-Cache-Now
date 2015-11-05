@@ -378,13 +378,13 @@ register mdr
 /*
  * Flip flop to count mem accesses for indirect instructions
  */
-/*register indirect_ff
+register indirect_ff
 (
     .clk(clk),
     .load(d_mem_resp && ctrl_mem.indirect_enable),
     .in(~indirect_ff_out),
     .out(indirect_ff_out)
-);*/
+);
 
 /*
  * CC
