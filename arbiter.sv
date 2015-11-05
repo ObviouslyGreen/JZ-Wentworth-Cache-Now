@@ -2,6 +2,7 @@ import lc3b_types::*;
 
 module arbiter
 (
+    input clk,
     input l2_mem_resp,
     input i_pmem_read,
     input i_pmem_write, 

@@ -14,7 +14,7 @@ module datapath
     input load_mar,
     input load_mdr,
     input load_cc,
-    input regfile_filter_enable,
+    input regfile_filter_enable,    
     input stb_filter_enable,
     input [1:0] pcmux_sel,
     input storemux_sel,
@@ -25,14 +25,17 @@ module datapath
     input mdrmux_sel,
     input offsetaddermux_sel,
     input offset6mux_sel,
-    input lc3b_aluop aluop,*/
-    output lc3b_opcode opcode,
+    input lc3b_aluop aluop,
+    output lc3b_opcode opcode,*/
     output logic branch_enable,
     output logic d_enable,
     output logic imm_enable,
     output logic jsr_enable,
 
     /* declare more ports here */
+    input d_mem_resp,
+    input i_mem_resp,
+    input mem_request,
     input lc3b_word mem_rdata,
     output logic mem_read,
     output logic mem_write,
@@ -51,11 +54,12 @@ logic global_load;
 
 initial
 begin
-    global_load = 1'b1;
     instr_read = 1'b1;
     instr_write = 1'b0;
     instr_wdata = 16'b0000000000000000;
 end
+
+lc3b_opcode opcode;
 
 lc3b_reg sr1;
 lc3b_reg sr2;
@@ -99,7 +103,6 @@ lc3b_word alu_out;
 lc3b_word aluReg_out;
 lc3b_word dataReg_out;
 
-lc3b_word pc_out;
 lc3b_word pcReg_out1;
 lc3b_word pcReg_out2;
 lc3b_word pcReg_out3;
@@ -140,6 +143,7 @@ always_comb
 begin
     mem_byte_enable = ctrl_mem.mem_byte_enable;
     is_nop = (ir_out == 16'b0);
+    global_load = i_mem_resp & (d_mem_resp | ~mem_request);
 end
 /**************************************
  * User modules                       *
@@ -342,7 +346,7 @@ gencc gencc_module
 register pc
 (
     .clk(clk),
-    .load(1'b1),
+    .load(global_load),
     .in(brmux_out),
     .out(instr_address)
 );

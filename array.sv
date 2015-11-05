@@ -13,7 +13,7 @@ module array #(parameter width = 128)
 );
 
 
-logic [width-1:0] data [7:0];
+logic [width-1:0] data [7:0] /* synthesis ramstyle = "logic" */;
 
 /* Initialize array */
 initial

@@ -16,7 +16,7 @@ module mp3
     output lc3b_mem_data pmem_wdata
 
     /*input mem_resp,
-    input lc3b_word mem_rdata,
+    input lc3b_word mem_rdata, 
     output logic mem_read,
     output logic mem_write,
     output lc3b_mem_wmask mem_byte_enable,
@@ -38,12 +38,13 @@ assign i_mem_read = 1'b1;
 assign i_mem_mem_byte_enable = 2'b11;*/
 
 /* declare internal signals */
-lc3b_opcode opcode;
 logic branch_enable;
 logic d_enable;
 logic imm_enable;
 logic jsr_enable;
 
+logic i_pmem_read;
+logic i_pmem_write;
 logic i_mem_read;
 logic i_mem_write;
 logic i_mem_resp;
@@ -55,6 +56,8 @@ lc3b_word i_mem_wdata;
 lc3b_word i_pmem_address;
 lc3b_mem_data i_pmem_wdata;
 
+logic d_pmem_read;
+logic d_pmem_write;
 logic d_mem_read;
 logic d_mem_write;
 logic d_mem_resp;
@@ -79,12 +82,14 @@ lc3b_mem_data arbiter_rdata_out;
 datapath datapath_module
 (
     .clk(clk),
-    .opcode(opcode),
     .branch_enable(branch_enable),
     .d_enable(d_enable),
     .imm_enable(imm_enable),
     .jsr_enable(jsr_enable),
     //Change mem signals for l1 split cache
+    .i_mem_resp(i_mem_resp),
+    .d_mem_resp(d_mem_resp),
+    .mem_request(pmem_read | pmem_write),
     .mem_rdata(d_mem_rdata),
     .mem_read(d_mem_read),
     .mem_write(d_mem_write),
@@ -136,6 +141,7 @@ l1_cache d_cache
 
 arbiter arbiter
 (
+    .clk(clk),
     .l2_mem_resp(pmem_resp),
     .i_pmem_read(i_pmem_read),
     .i_pmem_write(i_pmem_write), 

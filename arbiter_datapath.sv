@@ -18,7 +18,6 @@ module arbiter_datapath
 	output lc3b_word l2_mem_address
 );
 
-
 mux2 #(.width(1)) mem_read_mux
 (
     .sel(arbiter_sel),
