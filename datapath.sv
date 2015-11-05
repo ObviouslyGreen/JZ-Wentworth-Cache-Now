@@ -24,8 +24,8 @@ module datapath
     input [1:0] marmux_sel,
     input mdrmux_sel,
     input offsetaddermux_sel,
-    input offset6mux_sel,*/
-    input lc3b_aluop aluop,
+    input offset6mux_sel,
+    input lc3b_aluop aluop,*/
     output lc3b_opcode opcode,
     output logic branch_enable,
     output logic d_enable,
