@@ -138,6 +138,7 @@ logic ctrl_register_mem_write;
 logic ctrl_register_mem_read;
 logic is_nop;
 logic indirect_ff_out;
+lc3b_word indirect_marmux_out;
 
 always_comb
 begin
@@ -639,7 +640,7 @@ mux4 mar_mux
  */
 mux2 indirect_mar_mux
 (
-    .sel(), //change this you fk
+    .sel(indirect_ff_out), //change this you fk
     .a(alu_out),
     .b(mem_rdata),
     .f(indirect_marmux_out)
