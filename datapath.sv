@@ -35,7 +35,6 @@ module datapath
     /* declare more ports here */
     input d_mem_resp,
     input i_mem_resp,
-    input mem_request,
     input lc3b_word mem_rdata,
     output logic mem_read,
     output logic mem_write,
@@ -143,7 +142,7 @@ always_comb
 begin
     mem_byte_enable = ctrl_mem.mem_byte_enable;
     is_nop = (ir_out == 16'b0);
-    global_load = i_mem_resp & (d_mem_resp | ~mem_request);
+    global_load = i_mem_resp & (d_mem_resp | ~(ctrl_mem.mem_read | ctrl_mem.mem_write));
 end
 /**************************************
  * User modules                       *
@@ -155,7 +154,7 @@ end
 ir ir_module
 (
     .clk(clk),
-    .load(1'b1),
+    .load(global_load),
     .in(instr_rdata),
     .opcode(opcode),
     .dest(dest),
@@ -357,7 +356,7 @@ register pc
 register mar
 (
     .clk(clk),
-    .load(ctrl_exec.load_mar),
+    .load(global_load & ctrl_exec.load_mar),
     .in(marmux_out),
     .out(mem_address)
 );
@@ -368,7 +367,7 @@ register mar
 register mdr
 (
     .clk(clk),
-    .load(ctrl_mem.load_mdr),
+    .load(global_load & ctrl_mem.load_mdr),
     .in(mem_rdata),
     .out(mem_data_reg_out)
 );

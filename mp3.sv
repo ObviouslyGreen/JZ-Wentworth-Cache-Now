@@ -89,7 +89,6 @@ datapath datapath_module
     //Change mem signals for l1 split cache
     .i_mem_resp(i_mem_resp),
     .d_mem_resp(d_mem_resp),
-    .mem_request(pmem_read | pmem_write),
     .mem_rdata(d_mem_rdata),
     .mem_read(d_mem_read),
     .mem_write(d_mem_write),
@@ -126,7 +125,7 @@ l1_cache d_cache
     .clk(clk),
     .mem_read(d_mem_read),
     .mem_write(d_mem_write),
-    .pmem_resp(i_pmem_resp),
+    .pmem_resp(d_pmem_resp),
     .mem_byte_enable(d_mem_byte_enable),
     .mem_wdata(d_mem_wdata),
     .mem_address(d_mem_address),
