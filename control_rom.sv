@@ -33,6 +33,7 @@ begin
     ctrl.aluop = alu_add;
     ctrl.mem_read = 1'b0;
     ctrl.mem_write = 1'b0;
+    ctrl.indirect_enable = 1'b0;
     ctrl.mem_byte_enable = 2'b11;
 
     /* Assign control signals based on opcode */
@@ -134,6 +135,25 @@ begin
             /* M[MAR] <= MDR */
             ctrl.mem_byte_enable = (stb_high_enable) ? 2'b10 : 2'b01;
             ctrl.mem_write = 1'b1;
+        end
+        op_ldi: begin
+            ctrl.indirect_enable = 1'b1;
+
+            /* calc_addr */
+            ctrl.aluop = alu_add;
+            ctrl.alumux_sel = 2'b01;
+            ctrl.load_mar = 1'b1;
+
+            /* MDR <= M[MAR] */
+            ctrl.mdrmux_sel = 1'b1;
+            ctrl.load_mdr = 1'b1;
+            ctrl.mem_read = 1'b1;
+
+            /* DR <= MDR */
+            ctrl.regfilemux_sel = 2'b01;
+            ctrl.load_cc = 1;
+            ctrl.load_regfile = 1;
+
         end
         /* ... other opcodes ... */
         default: begin

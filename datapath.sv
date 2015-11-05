@@ -137,6 +137,7 @@ lc3b_control_word ctrl_wb;
 logic ctrl_register_mem_write;
 logic ctrl_register_mem_read;
 logic is_nop;
+logic indirect_ff_out;
 
 always_comb
 begin
@@ -372,6 +373,17 @@ register mdr
     .in(mem_rdata),
     .out(mem_data_reg_out)
 );
+
+/*
+ * Flip flop to count mem accesses for indirect instructions
+ */
+/*register indirect_ff
+(
+    .clk(clk),
+    .load(d_mem_resp && ctrl_mem.indirect_enable),
+    .in(~indirect_ff_out),
+    .out(indirect_ff_out)
+);*/
 
 /*
  * CC
@@ -615,11 +627,22 @@ mux4 regfile_mux
 mux4 mar_mux
 (
     .sel(ctrl_exec.marmux_sel),
-    .a(alu_out),           //changed for trans reg
+    .a(indirect_marmux_out),           //changed for trans reg
     .b(pcReg_out2),                //changed for trans reg
     .c(regfile_filter_out),
     .d(zadj8_out),            //changed for trans reg
     .f(marmux_out)
+);
+
+/*
+ * Indirect MAR mux
+ */
+mux2 indirect_mar_mux
+(
+    .sel(), //change this you fk
+    .a(alu_out),
+    .b(mem_rdata),
+    .f(indirect_marmux_out)
 );
 
 /*

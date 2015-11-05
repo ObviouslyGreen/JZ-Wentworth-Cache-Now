@@ -74,6 +74,7 @@ typedef struct packed {
     logic offset6mux_sel;    
     logic mem_read;
     logic mem_write;
+    logic indirect_enable;
     lc3b_mem_wmask mem_byte_enable;
 } lc3b_control_word;
 
