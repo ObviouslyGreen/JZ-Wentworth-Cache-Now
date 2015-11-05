@@ -46,12 +46,12 @@ always #5 clk = ~clk;
 mp3 dut
 (
     .clk,
-    .pmem_resp,
-    .pmem_rdata,
-    .pmem_read,
-    .pmem_write,
-    .pmem_address,
-    .pmem_wdata,
+    .pmem_resp(pmem_resp),
+    .pmem_rdata(pmem_rdata),
+    .pmem_read(pmem_read),
+    .pmem_write(pmem_write),
+    .pmem_address(pmem_address),
+    .pmem_wdata(pmem_wdata)
 );
 
 physical_memory memory
@@ -65,28 +65,5 @@ physical_memory memory
     .rdata(pmem_rdata)
 );
 
-/*
-magic_memory_dp memory
-(
-    .clk,
-
-    /* Instruction Memory */
-    .read_a(instr_read),
-    .write_a(instr_write),
-    .wmask_a(instr_mem_byte_enable),
-    .address_a(instr_address),
-    .wdata_a(instr_wdata),
-    .resp_a(instr_resp),
-    .rdata_a(instr_rdata),
-
-    /* Yes */
-    .read_b(mem_read),
-    .write_b(mem_write),
-    .wmask_b(mem_byte_enable),
-    .address_b(mem_address),
-    .wdata_b(mem_wdata),
-    .resp_b(mem_resp),
-    .rdata_b(mem_rdata)
-);/*
-
 endmodule : mp3_tb
+

@@ -98,6 +98,12 @@ begin
                 ctrl.load_pc = 1'b1;
             end
         end
+        /*
+        op_jmp: begin
+            ctrl.pcmux_sel = 2'b11;
+            ctrl.load_pc = 1;
+        end
+        */
         /* ... other opcodes ... */
         default: begin
             ctrl = 0; /* Unknown opcode, set control word to zero */

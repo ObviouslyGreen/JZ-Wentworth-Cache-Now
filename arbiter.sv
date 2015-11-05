@@ -1,4 +1,4 @@
-import lc3b_types::*; 
+import lc3b_types::*;
 
 module arbiter
 (

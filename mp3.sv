@@ -113,7 +113,7 @@ l1_cache i_cache
     .pmem_write(i_pmem_write),
     .mem_rdata(i_mem_rdata),
     .pmem_address(i_pmem_address),
-    .pmem_wdata(i_pmem_wdata),
+    .pmem_wdata(i_pmem_wdata)
 );
 
 l1_cache d_cache
@@ -131,7 +131,7 @@ l1_cache d_cache
     .pmem_write(d_pmem_write),
     .mem_rdata(d_mem_rdata),
     .pmem_address(d_pmem_address),
-    .pmem_wdata(d_pmem_wdata),
+    .pmem_wdata(d_pmem_wdata)
 );
 
 arbiter arbiter
