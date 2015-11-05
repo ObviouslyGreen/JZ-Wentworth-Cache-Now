@@ -3,6 +3,7 @@ module control_rom
 (
     input lc3b_opcode opcode,
     input imm_enable,
+    input stb_high_enable,
     input is_nop,
     output lc3b_control_word ctrl
 );
@@ -98,12 +99,42 @@ begin
                 ctrl.load_pc = 1'b1;
             end
         end
-        /*
         op_jmp: begin
             ctrl.pcmux_sel = 2'b11;
             ctrl.load_pc = 1;
         end
-        */
+        op_ldb: begin
+            /* calc_addr */
+            ctrl.aluop = alu_add;
+            ctrl.alumux_sel = 2'b01;
+            ctrl.load_mar = 1'b1;
+
+            /* MDR <= M[MAR] */
+            ctrl.mdrmux_sel = 1'b1;
+            ctrl.load_mdr = 1'b1;
+            ctrl.mem_read = 1'b1;
+
+            /* DR <= ZEXT(MDR[7:0]) */
+            ctrl.regfilemux_sel = 2'b01;
+            ctrl.regfile_filter_enable = 1'b1;
+            ctrl.load_regfile = 1'b1;
+            ctrl.load_cc = 1'b1;
+        end
+        op_stb: begin
+            /* calc_addr */
+            ctrl.aluop = alu_add;
+            ctrl.alumux_sel = 2'b01;
+            ctrl.load_mar = 1'b1;
+
+            /* MDR <= SR */
+            ctrl.storemux_sel = 1'b1;
+            ctrl.stb_filter_enable = 1'b1;
+            ctrl.load_mdr = 1'b1;
+
+            /* M[MAR] <= MDR */
+            ctrl.mem_byte_enable = (stb_high_enable) ? 2'b10 : 2'b01;
+            ctrl.mem_write = 1'b1;
+        end
         /* ... other opcodes ... */
         default: begin
             ctrl = 0; /* Unknown opcode, set control word to zero */

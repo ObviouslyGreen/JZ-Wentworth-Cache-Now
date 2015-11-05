@@ -14,7 +14,7 @@ module datapath
     input load_mar,
     input load_mdr,
     input load_cc,
-    input regfile_filter_enable,    
+    input regfile_filter_enable,
     input stb_filter_enable,
     input [1:0] pcmux_sel,
     input storemux_sel,
@@ -180,6 +180,7 @@ control_rom control_rom_module
 (
     .opcode(opcode),
     .imm_enable(imm_enable),
+    .stb_high_enable(mem_address[0]),
     .is_nop(is_nop),
     .ctrl(ctrl)
 );
@@ -399,7 +400,7 @@ register pcReg1
 register pcReg2
 (
     .clk(clk),
-    .load(global_load),                       
+    .load(global_load),
     .in(pcReg_out1),
     .out(pcReg_out2)
 );
@@ -577,7 +578,7 @@ mux4 pc_mux
 mux2 br_mux
 (
     .sel((ctrl_mem.brmux_sel) & branch_enable),
-    .a(pcmux_out), 
+    .a(pcmux_out),
     .b(offsetadderReg_out),
     .f(brmux_out)
 );
