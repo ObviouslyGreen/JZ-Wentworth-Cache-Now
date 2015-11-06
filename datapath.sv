@@ -128,8 +128,6 @@ lc3b_word pc_plus2_out;
 lc3b_nzp gencc_out;
 lc3b_nzp cc_out;
 
-lc3b_word mem_data_reg_out;
-
 lc3b_control_word ctrl;
 lc3b_control_word ctrl_dec;
 lc3b_control_word ctrl_exec;
@@ -207,7 +205,7 @@ control_rom control_rom_module
 alu alu_module
 (
     .aluop(ctrl_exec.aluop),
-    .a(stb_filter_out),
+    .a(sr1reg1_out),
     .b(alumux_out),
     .f(alu_out)
 );
@@ -296,17 +294,6 @@ regfile_filter regfile_filter_module
  * STB filter
  */
 stb_filter stb_filter_module
-(
-    .filter_enable(ctrl_exec.stb_filter_enable),
-    .high_byte_enable(mem_address[0]),
-    .in(sr1reg1_out),               //changed to trans reg
-    .out(stb_filter_out)
-);
-
-/*
- * STB filter
- */
-stb_filter stb_filter2_module
 (
     .filter_enable(ctrl_mem.stb_filter_enable),
     .high_byte_enable(mem_address[0]),
@@ -409,7 +396,7 @@ register mdr
     .clk(clk),
     .load(global_load & ctrl_mem.load_mdr),
     .in(mem_rdata),
-    .out(mem_data_reg_out)
+    .out(mdr_out)
 );
 
 /*
@@ -611,11 +598,11 @@ mux2 #(.width(3)) dest_mux
  */
 mux4 pc_mux
 (
-    .sel(ctrl_wb.pcmux_sel),
+    .sel(ctrl_mem.pcmux_sel),
     .a(pc_plus2_out),
-    .b(offsetadderReg2_out),      //changes for trans reg
+    .b(offsetadderReg1_out),      //changes for trans reg
     .c(sr1reg2_out),            //changed to trans reg
-    .d(mdr_out),
+    .d(mem_rdata),
     .f(pcmux_out)
 );
 
@@ -650,7 +637,7 @@ mux4 regfile_mux
 (
     .sel(ctrl_wb.regfilemux_sel),
     .a(dataReg_out),       //changes for trans reg
-    .b(mem_data_reg_out),
+    .b(mdr_out),
     .c(offsetadderReg2_out), //changes for trans reg
     .d(pcReg_out4),            //changed to trans reg
     .f(regfilemux_out)

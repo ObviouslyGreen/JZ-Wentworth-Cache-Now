@@ -12,7 +12,7 @@ logic [2:0] result;
 
 always_comb
 begin
-    result = nzp & ir_nzp;
+    result = nzp & ir_nzp | ((nzp == 3'b000) & (ir_nzp == 3'b111));
     if (result)
         branch_enable = 1'b1;
     else
