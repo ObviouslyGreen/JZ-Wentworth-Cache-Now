@@ -4,6 +4,7 @@ module control_rom
     input lc3b_opcode opcode,
     input imm_enable,
     input stb_high_enable,
+    input jsr_enable,
     input is_nop,
     output lc3b_control_word ctrl
 );
@@ -99,6 +100,23 @@ begin
                 ctrl.brmux_sel = 1'b1;
                 ctrl.load_pc = 1'b1;
             end
+        end
+        op_jsr: begin
+            /* R7 <= PC+ */
+            ctrl.destmux_sel = 1;
+            ctrl.regfilemux_sel = 2'b11;
+            ctrl.load_regfile = 1'b1;
+
+            /* PC <= PC + (SEXT(IR[10:0]) << 1) */
+            if(jsr_enable) begin
+                ctrl.offsetaddermux_sel = 1'b1;
+                ctrl.pcmux_sel = 2'b01;
+            end 
+            else begin
+                ctrl.storemux_sel = 0;
+                ctrl.pcmux_sel = 2'b10;
+            end
+            ctrl.load_pc = 1'b1;
         end
         op_jmp: begin
             ctrl.pcmux_sel = 2'b11;

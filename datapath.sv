@@ -117,7 +117,8 @@ lc3b_reg writeReg3_out;
 
 lc3b_word offsetadder_mux_out;
 lc3b_word offsetadder_out;
-lc3b_word offsetadderReg_out;
+lc3b_word offsetadderReg1_out;
+lc3b_word offsetadderReg2_out;
 
 lc3b_word textreg_out;
 
@@ -183,6 +184,7 @@ control_rom control_rom_module
     .opcode(opcode),
     .imm_enable(imm_enable),
     .stb_high_enable(mem_address[0]),
+    .jsr_enable(jsr_enable),
     .is_nop(is_nop),
     .ctrl(ctrl)
 );
@@ -378,7 +380,7 @@ register mdr
 /*
  * Flip flop to count mem accesses for indirect instructions
  */
-register indirect_ff
+register #(1) indirect_ff
 (
     .clk(clk),
     .load(d_mem_resp && ctrl_mem.indirect_enable),
@@ -538,12 +540,20 @@ register SR2Reg2
     .out(mem_wdata)
 );
 
-register offsetadderReg
+register offsetadderReg1
 (
     .clk(clk),
     .load(global_load),
     .in(offsetadder_out),
-    .out(offsetadderReg_out)
+    .out(offsetadderReg1_out)
+);
+
+register offsetadderReg2
+(
+    .clk(clk),
+    .load(global_load),
+    .in(offsetadderReg1_out),
+    .out(offsetadderReg2_out)
 );
 
 /**************************************
@@ -579,7 +589,7 @@ mux4 pc_mux
 (
     .sel(ctrl_wb.pcmux_sel),
     .a(pc_plus2_out),
-    .b(offsetadderReg_out),      //changes for trans reg
+    .b(offsetadderReg2_out),      //changes for trans reg
     .c(sr1reg2_out),            //changed to trans reg
     .d(regfile_filter_out),
     .f(pcmux_out)
@@ -592,7 +602,7 @@ mux2 br_mux
 (
     .sel((ctrl_mem.brmux_sel) & branch_enable),
     .a(pcmux_out),
-    .b(offsetadderReg_out),
+    .b(offsetadderReg1_out),
     .f(brmux_out)
 );
 
@@ -617,7 +627,7 @@ mux4 regfile_mux
     .sel(ctrl_wb.regfilemux_sel),
     .a(dataReg_out),       //changes for trans reg
     .b(mem_data_reg_out),
-    .c(offsetadderReg_out), //changes for trans reg
+    .c(offsetadderReg2_out), //changes for trans reg
     .d(pcReg_out4),            //changed to trans reg
     .f(regfilemux_out)
 );
