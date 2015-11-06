@@ -118,6 +118,7 @@ lc3b_reg writeReg3_out;
 lc3b_word offsetadder_mux_out;
 lc3b_word offsetadder_out;
 lc3b_word offsetadderReg_out;
+lc3b_word offsetadderReg2_out;
 
 lc3b_word textreg_out;
 
@@ -186,6 +187,8 @@ control_rom control_rom_module
 (
     .opcode(opcode),
     .imm_enable(imm_enable),
+    .jsr_enable(jsr_enable),
+    .d_enable(d_enable),
     .stb_high_enable(mem_address[0]),
     .is_nop(is_nop),
     .ctrl(ctrl)
@@ -562,6 +565,14 @@ register offsetadderReg
     .out(offsetadderReg_out)
 );
 
+register offsetadderReg2
+(
+    .clk(clk),
+    .load(global_load),
+    .in(offsetadderReg_out),
+    .out(offsetadderReg2_out)
+);
+
 /**************************************
  * Multiplexers                       *
  **************************************/
@@ -633,7 +644,7 @@ mux4 regfile_mux
     .sel(ctrl_wb.regfilemux_sel),
     .a(dataReg_out),       //changes for trans reg
     .b(mem_data_reg_out),
-    .c(offsetadderReg_out), //changes for trans reg
+    .c(offsetadderReg2_out), //changes for trans reg
     .d(pcReg_out4),            //changed to trans reg
     .f(regfilemux_out)
 );
