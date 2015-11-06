@@ -31,8 +31,8 @@ begin
     ctrl.stb_filter_enable = 1'b0;
     ctrl.pcmux_sel = 2'b00;
     ctrl.brmux_sel = 1'b0;
-    ctrl.storemux_sel = 0;
-    ctrl.destmux_sel = 0;
+    ctrl.storemux_sel = 1'b0;
+    ctrl.destmux_sel = 1'b0;
     ctrl.alumux_sel = 2'b00;
     ctrl.regfilemux_sel = 2'b00;
     ctrl.marmux_sel = 2'b00;
@@ -42,6 +42,7 @@ begin
     ctrl.aluop = alu_add;
     ctrl.mem_read = 1'b0;
     ctrl.mem_write = 1'b0;
+    ctrl.indirect_enable = 1'b0;
     ctrl.mem_byte_enable = 2'b11;
 end
 

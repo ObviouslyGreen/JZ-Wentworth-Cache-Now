@@ -139,12 +139,16 @@ logic ctrl_register_mem_read;
 logic is_nop;
 logic indirect_ff_out;
 lc3b_word indirect_marmux_out;
+logic [1:0] resp_count;
 
 always_comb
 begin
     mem_byte_enable = ctrl_mem.mem_byte_enable;
     is_nop = (ir_out == 16'b0);
-    global_load = i_mem_resp & (d_mem_resp | ~(ctrl_mem.mem_read | ctrl_mem.mem_write));
+    if (ctrl_mem.indirect_enable)
+        global_load = (resp_count == 2'b10);
+    else
+        global_load = i_mem_resp & (d_mem_resp | ~(ctrl_mem.mem_read | ctrl_mem.mem_write));
 end
 /**************************************
  * User modules                       *
@@ -338,6 +342,17 @@ gencc gencc_module
 );
 
 
+/*
+ * 2-bit Counter
+ */
+up_counter #(.width(2)) mem_resp_counter
+(
+    .clk(clk),
+    .enable(ctrl_mem.indirect_enable & d_mem_resp),
+    .reset(global_load),
+    .count(resp_count)
+);
+
 /**************************************
  * Registers                          *
  **************************************/
@@ -359,7 +374,7 @@ register pc
 register mar
 (
     .clk(clk),
-    .load(global_load & ctrl_exec.load_mar),
+    .load((global_load & ctrl_exec.load_mar) | resp_count == 2'b01),
     .in(marmux_out),
     .out(mem_address)
 );
@@ -378,13 +393,14 @@ register mdr
 /*
  * Flip flop to count mem accesses for indirect instructions
  */
+/*
 register indirect_ff
 (
     .clk(clk),
     .load(d_mem_resp && ctrl_mem.indirect_enable),
     .in(~indirect_ff_out),
     .out(indirect_ff_out)
-);
+);*/
 
 /*
  * CC
@@ -640,7 +656,7 @@ mux4 mar_mux
  */
 mux2 indirect_mar_mux
 (
-    .sel(indirect_ff_out), //change this you fk
+    .sel((resp_count == 2'b01)),
     .a(alu_out),
     .b(mem_rdata),
     .f(indirect_marmux_out)
