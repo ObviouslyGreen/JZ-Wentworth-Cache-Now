@@ -120,7 +120,7 @@ begin
             ctrl.load_pc = 1'b1;
         end
         op_jmp: begin
-            ctrl.pcmux_sel = 2'b11;
+            ctrl.pcmux_sel = 2'b10;
             ctrl.load_pc = 1;
         end
         op_ldb: begin
@@ -222,7 +222,25 @@ begin
             ctrl.load_cc = 1;
             ctrl.load_regfile = 1;
         end
-        /* ... other opcodes ... */
+        op_trap: begin
+            /* R7 <= PC+ */
+            ctrl.destmux_sel = 1;
+            ctrl.regfilemux_sel = 2'b11;
+            ctrl.load_regfile = 1'b1;
+
+            /* MAR <= ZEXT(trapvect8 << 1) */
+            ctrl.marmux_sel = 2'b11;
+            ctrl.load_mar = 1;
+
+            /* MDR <= M[MAR] */
+            ctrl.mdrmux_sel = 1;
+            ctrl.load_mdr = 1;
+            ctrl.mem_read = 1;
+
+            /* PC <= MDR */
+            ctrl.pcmux_sel = 2'b11;
+            ctrl.load_pc = 1'b1;
+        end
         default: begin
             ctrl = 0; /* Unknown opcode, set control word to zero */
         end

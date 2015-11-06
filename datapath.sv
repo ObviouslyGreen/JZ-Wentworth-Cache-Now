@@ -615,7 +615,7 @@ mux4 pc_mux
     .a(pc_plus2_out),
     .b(offsetadderReg2_out),      //changes for trans reg
     .c(sr1reg2_out),            //changed to trans reg
-    .d(regfile_filter_out),
+    .d(mdr_out),
     .f(pcmux_out)
 );
 
