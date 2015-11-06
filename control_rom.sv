@@ -102,6 +102,23 @@ begin
                 ctrl.load_pc = 1'b1;
             end
         end
+        op_jsr: begin
+            /* R7 <= PC+ */
+            ctrl.destmux_sel = 1;
+            ctrl.regfilemux_sel = 2'b11;
+            ctrl.load_regfile = 1'b1;
+
+            /* PC <= PC + (SEXT(IR[10:0]) << 1) */
+            if(jsr_enable) begin
+                ctrl.offsetaddermux_sel = 1'b1;
+                ctrl.pcmux_sel = 2'b01;
+            end 
+            else begin
+                ctrl.storemux_sel = 0;
+                ctrl.pcmux_sel = 2'b10;
+            end
+            ctrl.load_pc = 1'b1;
+        end
         op_jmp: begin
             ctrl.pcmux_sel = 2'b11;
             ctrl.load_pc = 1;
@@ -148,7 +165,7 @@ begin
             ctrl.alumux_sel = 2'b01;
             ctrl.load_mar = 1'b1;
 
-            /* MDR <= M[MAR] */
+            /* MAR <= MDR <= M[MAR] */
             ctrl.mdrmux_sel = 1'b1;
             ctrl.load_mdr = 1'b1;
             ctrl.mem_read = 1'b1;
@@ -157,7 +174,23 @@ begin
             ctrl.regfilemux_sel = 2'b01;
             ctrl.load_cc = 1;
             ctrl.load_regfile = 1;
+        end
+        op_sti: begin
+            ctrl.indirect_enable = 1'b1;
 
+            /* calc_addr */
+            ctrl.aluop = alu_add;
+            ctrl.alumux_sel = 2'b01;
+            ctrl.load_mar = 1'b1;
+
+            /* MAR <= MDR <= M[MAR] */
+            ctrl.mdrmux_sel = 1'b1;
+            ctrl.load_mdr = 1'b1;
+
+            /* MDR <= SR */
+            ctrl.storemux_sel = 1'b1;
+
+            /* M[MAR] <= MDR */
         end
         op_lea: begin
             /* DR <= PC + (SEXT(IR[8:0]) << 1) */
