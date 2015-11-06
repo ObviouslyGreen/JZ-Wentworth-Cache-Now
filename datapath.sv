@@ -140,12 +140,22 @@ logic ctrl_register_mem_read;
 logic is_nop;
 logic indirect_ff_out;
 lc3b_word indirect_marmux_out;
+logic [1:0] resp_count;
 
 always_comb
 begin
-    mem_byte_enable = ctrl_mem.mem_byte_enable;
+    mem_read = ctrl_mem.mem_read | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b00));
+    mem_write = ctrl_mem.mem_write | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b10));
+    if(ctrl_mem.opcode == op_stb) begin
+        mem_byte_enable = (mem_address[0]) ? 2'b10 : 2'b01;
+    end
+    else
+        mem_byte_enable = ctrl_mem.mem_byte_enable;
     is_nop = (ir_out == 16'b0);
-    global_load = i_mem_resp & (d_mem_resp | ~(ctrl_mem.mem_read | ctrl_mem.mem_write));
+    if (ctrl_mem.indirect_enable)
+        global_load = (resp_count == 2'b10);
+    else
+        global_load = i_mem_resp & (d_mem_resp | ~(ctrl_mem.mem_read | ctrl_mem.mem_write));
 end
 /**************************************
  * User modules                       *
@@ -292,6 +302,18 @@ stb_filter stb_filter_module
 );
 
 /*
+ * STB filter
+ */
+stb_filter stb_filter2_module
+(
+    .filter_enable(ctrl_mem.stb_filter_enable),
+    .high_byte_enable(mem_address[0]),
+    .in(sr2reg2_out),               //changed to trans reg
+    .out(mem_wdata)
+);
+
+
+/*
  * Shift zext
  */
 zext #(.width(4)) shift_zext
@@ -340,6 +362,17 @@ gencc gencc_module
 );
 
 
+/*
+ * 2-bit Counter
+ */
+up_counter #(.width(2)) mem_resp_counter
+(
+    .clk(clk),
+    .enable(ctrl_mem.indirect_enable & d_mem_resp),
+    .reset(global_load),
+    .count(resp_count)
+);
+
 /**************************************
  * Registers                          *
  **************************************/
@@ -361,7 +394,7 @@ register pc
 register mar
 (
     .clk(clk),
-    .load(global_load & ctrl_exec.load_mar),
+    .load((global_load & ctrl_exec.load_mar) | resp_count == 2'b01),
     .in(marmux_out),
     .out(mem_address)
 );
@@ -375,17 +408,6 @@ register mdr
     .load(global_load & ctrl_mem.load_mdr),
     .in(mem_rdata),
     .out(mem_data_reg_out)
-);
-
-/*
- * Flip flop to count mem accesses for indirect instructions
- */
-register #(1) indirect_ff
-(
-    .clk(clk),
-    .load(d_mem_resp && ctrl_mem.indirect_enable),
-    .in(~indirect_ff_out),
-    .out(indirect_ff_out)
 );
 
 /*
@@ -458,14 +480,14 @@ ctrl_register ctrlword1
     .out(ctrl_exec)
 );
 
-ctrl_register_mem ctrlword2
+ctrl_register ctrlword2
 (
     .clk(clk),
     .load(global_load),
     .in(ctrl_exec),
-    .out(ctrl_mem),
-    .read(mem_read),
-    .write(mem_write)
+    .out(ctrl_mem)
+    //.read(),
+    //.write()
 );
 
 ctrl_register ctrlword3
@@ -537,7 +559,7 @@ register SR2Reg2
     .clk(clk),
     .load(global_load),
     .in(sr2reg1_out),
-    .out(mem_wdata)
+    .out(sr2reg2_out)
 );
 
 register offsetadderReg1
@@ -650,7 +672,7 @@ mux4 mar_mux
  */
 mux2 indirect_mar_mux
 (
-    .sel(indirect_ff_out), //change this you fk
+    .sel((resp_count == 2'b01)),
     .a(alu_out),
     .b(mem_rdata),
     .f(indirect_marmux_out)
