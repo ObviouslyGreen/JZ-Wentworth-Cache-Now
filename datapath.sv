@@ -143,7 +143,13 @@ logic [1:0] resp_count;
 
 always_comb
 begin
-    mem_byte_enable = ctrl_mem.mem_byte_enable;
+    mem_read = ctrl_mem.mem_read | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b00));
+    mem_write = ctrl_mem.mem_write | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b10));
+    if(ctrl_mem.opcode == op_stb) begin
+        mem_byte_enable = (mem_address[0]) ? 2'b10 : 2'b01;
+    end
+    else
+        mem_byte_enable = ctrl_mem.mem_byte_enable;
     is_nop = (ir_out == 16'b0);
     if (ctrl_mem.indirect_enable)
         global_load = (resp_count == 2'b10);
@@ -292,6 +298,18 @@ stb_filter stb_filter_module
     .in(sr1reg1_out),               //changed to trans reg
     .out(stb_filter_out)
 );
+
+/*
+ * STB filter
+ */
+stb_filter stb_filter2_module
+(
+    .filter_enable(ctrl_mem.stb_filter_enable),
+    .high_byte_enable(mem_address[0]),
+    .in(sr2reg2_out),               //changed to trans reg
+    .out(mem_wdata)
+);
+
 
 /*
  * Shift zext
@@ -472,14 +490,14 @@ ctrl_register ctrlword1
     .out(ctrl_exec)
 );
 
-ctrl_register_mem ctrlword2
+ctrl_register ctrlword2
 (
     .clk(clk),
     .load(global_load),
     .in(ctrl_exec),
-    .out(ctrl_mem),
-    .read(mem_read),
-    .write(mem_write)
+    .out(ctrl_mem)
+    //.read(),
+    //.write()
 );
 
 ctrl_register ctrlword3
@@ -551,7 +569,7 @@ register SR2Reg2
     .clk(clk),
     .load(global_load),
     .in(sr2reg1_out),
-    .out(mem_wdata)
+    .out(sr2reg2_out)
 );
 
 register offsetadderReg

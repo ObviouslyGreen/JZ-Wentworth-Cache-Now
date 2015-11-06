@@ -146,7 +146,7 @@ begin
             ctrl.alumux_sel = 2'b01;
             ctrl.load_mar = 1'b1;
 
-            /* MDR <= M[MAR] */
+            /* MAR <= MDR <= M[MAR] */
             ctrl.mdrmux_sel = 1'b1;
             ctrl.load_mdr = 1'b1;
             ctrl.mem_read = 1'b1;
@@ -155,7 +155,23 @@ begin
             ctrl.regfilemux_sel = 2'b01;
             ctrl.load_cc = 1;
             ctrl.load_regfile = 1;
+        end
+        op_sti: begin
+            ctrl.indirect_enable = 1'b1;
 
+            /* calc_addr */
+            ctrl.aluop = alu_add;
+            ctrl.alumux_sel = 2'b01;
+            ctrl.load_mar = 1'b1;
+
+            /* MAR <= MDR <= M[MAR] */
+            ctrl.mdrmux_sel = 1'b1;
+            ctrl.load_mdr = 1'b1;
+
+            /* MDR <= SR */
+            ctrl.storemux_sel = 1'b1;
+
+            /* M[MAR] <= MDR */
         end
         /* ... other opcodes ... */
         default: begin
