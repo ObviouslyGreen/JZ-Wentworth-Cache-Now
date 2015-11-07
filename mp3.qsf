@@ -73,7 +73,6 @@ set_global_assignment -name SYSTEMVERILOG_FILE arbiter_datapath.sv
 set_global_assignment -name SYSTEMVERILOG_FILE arbiter_control.sv
 set_global_assignment -name SYSTEMVERILOG_FILE arbiter.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ctrl_register_mem.sv
-set_global_assignment -name SYSTEMVERILOG_FILE reg_latch.sv
 set_global_assignment -name SYSTEMVERILOG_FILE magic_memory_dp.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ctrl_register.sv
 set_global_assignment -name SYSTEMVERILOG_FILE control_rom.sv

@@ -82,24 +82,23 @@ lc3b_mem_data arbiter_rdata_out;
 datapath datapath_module
 (
     .clk(clk),
+    .i_mem_resp(i_mem_resp),
+    .d_mem_resp(d_mem_resp),
+    .instr_rdata(i_mem_rdata),
+    .mem_rdata(d_mem_rdata),
     .branch_enable(branch_enable),
     .d_enable(d_enable),
     .imm_enable(imm_enable),
     .jsr_enable(jsr_enable),
-    //Change mem signals for l1 split cache
-    .i_mem_resp(i_mem_resp),
-    .d_mem_resp(d_mem_resp),
-    .mem_rdata(d_mem_rdata),
     .mem_read(d_mem_read),
     .mem_write(d_mem_write),
-    .mem_byte_enable(d_mem_byte_enable),
-    .mem_wdata(d_mem_wdata),
-    .mem_address(d_mem_address),
     .instr_read(i_mem_read),
     .instr_write(i_mem_write),
     .instr_wdata(i_mem_wdata),
-    .instr_rdata(i_mem_rdata),
-    .instr_address(i_mem_address)
+    .instr_address(i_mem_address),
+    .mem_wdata(d_mem_wdata),
+    .mem_address(d_mem_address),
+    .mem_byte_enable(d_mem_byte_enable)
 );
 
 l1_cache i_cache

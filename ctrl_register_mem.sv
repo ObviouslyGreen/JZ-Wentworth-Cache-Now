@@ -57,8 +57,8 @@ end
 always_comb
 begin
     out = ctrl;
-	read = ctrl.mem_read;
-	write = ctrl.mem_write;
+    read = ctrl.mem_read;
+    write = ctrl.mem_write;
 end
 
 endmodule : ctrl_register_mem

@@ -1,12 +1,12 @@
 /*
- * N-bit up counter
+ * Up counter
  */
-module up_counter #(parameter width = 2)
+module up_counter
 (
     input clk,
     input enable,
     input reset,
-    output logic [width-1:0] count
+    output logic [1:0] count
 );
 
 initial

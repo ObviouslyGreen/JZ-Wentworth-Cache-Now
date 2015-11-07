@@ -6,46 +6,23 @@ import lc3b_types::*;
 module datapath
 (
     input clk,
-
-    /* control signals */
-   /* input load_pc,
-    input load_ir,
-    input load_regfile,
-    input load_mar,
-    input load_mdr,
-    input load_cc,
-    input regfile_filter_enable,
-    input stb_filter_enable,
-    input [1:0] pcmux_sel,
-    input storemux_sel,
-    input destmux_sel,
-    input [1:0] alumux_sel,
-    input [1:0] regfilemux_sel,
-    input [1:0] marmux_sel,
-    input mdrmux_sel,
-    input offsetaddermux_sel,
-    input offset6mux_sel,
-    input lc3b_aluop aluop,
-    output lc3b_opcode opcode,*/
+    input i_mem_resp,
+    input d_mem_resp,
+    input lc3b_word instr_rdata,
+    input lc3b_word mem_rdata,
     output logic branch_enable,
     output logic d_enable,
     output logic imm_enable,
     output logic jsr_enable,
-
-    /* declare more ports here */
-    input d_mem_resp,
-    input i_mem_resp,
-    input lc3b_word mem_rdata,
     output logic mem_read,
     output logic mem_write,
-    output lc3b_mem_wmask mem_byte_enable,
-    output lc3b_word mem_wdata,
-    output lc3b_word mem_address,
-    input lc3b_word instr_rdata,
     output logic instr_read,
     output logic instr_write,
     output lc3b_word instr_wdata,
-    output lc3b_word instr_address
+    output lc3b_word instr_address,
+    output lc3b_word mem_wdata,
+    output lc3b_word mem_address,
+    output lc3b_mem_wmask mem_byte_enable
 );
 
 /* declare internal signals */
@@ -80,25 +57,27 @@ lc3b_offset6 offset6;
 lc3b_byte trapvect8;
 lc3b_offset9 offset9;
 lc3b_offset11 offset11;
+
+lc3b_word zext4_out;
 lc3b_word sext5_out;
 lc3b_word sext6_out;
 lc3b_word adj6_out;
 lc3b_word adj9_out;
 lc3b_word adj11_out;
 lc3b_word zadj8_out;
-lc3b_word regfile_filter_out;
-lc3b_word stb_filter_out;
-lc3b_word zext4_out;
+
 lc3b_word pcmux_out;
 lc3b_word brmux_out;
+
 lc3b_word alumux_out;
 lc3b_word regfilemux_out;
 lc3b_word marmux_out;
 
-lc3b_word mdrmux_out;
-lc3b_word mdr_out;
 
+lc3b_word mdr_out;
 lc3b_word alu_out;
+lc3b_word regfile_filter_out;
+
 lc3b_word aluReg_out;
 lc3b_word dataReg_out;
 
@@ -109,7 +88,6 @@ lc3b_word pcReg_out4;
 
 lc3b_word ir_out;
 lc3b_word irReg_out;
-lc3b_word irReg1_out;
 
 lc3b_reg writeReg1_out;
 lc3b_reg writeReg2_out;
@@ -120,8 +98,6 @@ lc3b_word offsetadder_out;
 
 lc3b_word offsetadderReg1_out;
 lc3b_word offsetadderReg2_out;
-
-lc3b_word textreg_out;
 
 lc3b_word offset6mux_out;
 lc3b_word pc_plus2_out;
@@ -134,10 +110,7 @@ lc3b_control_word ctrl_exec;
 lc3b_control_word ctrl_mem;
 lc3b_control_word ctrl_wb;
 
-logic ctrl_register_mem_write;
-logic ctrl_register_mem_read;
 logic is_nop;
-logic indirect_ff_out;
 lc3b_word indirect_marmux_out;
 logic [1:0] resp_count;
 
@@ -145,17 +118,18 @@ always_comb
 begin
     mem_read = ctrl_mem.mem_read | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b00));
     mem_write = ctrl_mem.mem_write | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b10));
-    if(ctrl_mem.opcode == op_stb) begin
+    is_nop = (ir_out == 16'b0);
+    if(ctrl_mem.opcode == op_stb)
         mem_byte_enable = (mem_address[0]) ? 2'b10 : 2'b01;
-    end
     else
         mem_byte_enable = ctrl_mem.mem_byte_enable;
-    is_nop = (ir_out == 16'b0);
     if (ctrl_mem.indirect_enable)
         global_load = (resp_count == 2'b10);
     else
         global_load = i_mem_resp & (d_mem_resp | ~(ctrl_mem.mem_read | ctrl_mem.mem_write));
 end
+
+
 /**************************************
  * User modules                       *
  **************************************/
@@ -183,6 +157,7 @@ ir ir_module
     .jsr_enable(jsr_enable),
     .out(ir_out)
 );
+
 
 /*
  * Control ROM
@@ -354,13 +329,14 @@ gencc gencc_module
 /*
  * 2-bit Counter
  */
-up_counter #(.width(2)) mem_resp_counter
+up_counter mem_resp_counter
 (
     .clk(clk),
     .enable(ctrl_mem.indirect_enable & d_mem_resp),
     .reset(global_load),
     .count(resp_count)
 );
+
 
 /**************************************
  * Registers                          *
@@ -566,6 +542,7 @@ register offsetadderReg2
     .in(offsetadderReg1_out),
     .out(offsetadderReg2_out)
 );
+
 
 /**************************************
  * Multiplexers                       *

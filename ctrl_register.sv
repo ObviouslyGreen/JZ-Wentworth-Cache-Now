@@ -1,5 +1,5 @@
 /*
- * Register module (provided)
+ * Control register module
  */
 import lc3b_types::*;
 
@@ -13,9 +13,6 @@ module ctrl_register
 
 lc3b_control_word ctrl;
 
-/* Altera device registers are 0 at power on. Specify this
- * so that Modelsim works as expected.
- */
 initial
 begin
     ctrl.opcode = op_add;
