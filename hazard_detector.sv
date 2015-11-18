@@ -11,4 +11,6 @@ module hazard_detector
     output logic bubble_enable
 );
 
+// TODO
+
 endmodule : hazard_detector
