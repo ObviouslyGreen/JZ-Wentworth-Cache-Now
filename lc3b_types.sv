@@ -3,6 +3,7 @@
  */
 package lc3b_types;
 
+typedef logic [255:0] lc3b_pmem_data;
 typedef logic [127:0] lc3b_mem_data;
 typedef logic [15:0] lc3b_word;
 typedef logic [7:0] lc3b_byte;
@@ -18,6 +19,9 @@ typedef logic [2:0] lc3b_reg;
 typedef logic [2:0] lc3b_nzp;
 typedef logic [1:0] lc3b_mem_wmask;
 
+typedef logic [3:0] lc3b_c_l2_index;
+typedef logic [4:0] lc3b_c_l2_offset;
+typedef logic [6:0] lc3b_c_l2_tag;
 typedef logic [2:0] lc3b_c_index;
 typedef logic [3:0] lc3b_c_offset;
 typedef logic [8:0] lc3b_c_tag;
