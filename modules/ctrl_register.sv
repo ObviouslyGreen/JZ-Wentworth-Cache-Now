@@ -38,6 +38,7 @@ begin
     ctrl.mem_read = 1'b0;
     ctrl.mem_write = 1'b0;
     ctrl.indirect_enable = 1'b0;
+    ctrl.is_nop = 1'b0;
     ctrl.mem_byte_enable = 2'b11;
 end
 

@@ -26,6 +26,11 @@ module ir
 
 lc3b_word data;
 
+initial
+begin
+    data = 16'b0;
+end
+
 always_ff @(posedge clk)
 begin
     if (load == 1)

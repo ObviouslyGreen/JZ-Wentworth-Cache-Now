@@ -151,7 +151,7 @@ end
 ir ir_module
 (
     .clk(clk),
-    .load(global_load && bubble_enable),
+    .load(global_load && ~bubble_enable),
     .in(instr_rdata),
     .opcode(opcode),
     .dest(dest),
@@ -355,7 +355,12 @@ hazard_detector hazard_detection_unit
 (
     .clk(clk),
     .mem_read(mem_read),
-    .opcode(opcode),
+    .is_nop(ctrl_mem.is_nop),
+    .sr1(sr1),
+    .sr2(sr2),
+    .write_reg2(writeReg2_out),
+    .write_reg3(writeReg3_out),
+    .opcode(ctrl_mem.opcode),
     .bubble_enable(bubble_enable)
 );
 
@@ -385,7 +390,7 @@ hazard_detector hazard_detection_unit
 register pc
 (
     .clk(clk),
-    .load(global_load && bubble_enable),
+    .load(global_load && ~bubble_enable),
     .in(brmux_out),
     .out(instr_address)
 );

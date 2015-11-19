@@ -75,6 +75,7 @@ typedef struct packed {
     logic mem_read;
     logic mem_write;
     logic indirect_enable;
+    logic is_nop;
     lc3b_mem_wmask mem_byte_enable;
 } lc3b_control_word;
 
