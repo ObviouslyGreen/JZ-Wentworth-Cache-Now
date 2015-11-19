@@ -249,7 +249,7 @@ begin
             end
 
             ctrl.load_cc = 1'b1;
-            ctrl.load_regfile = 11'b1;
+            ctrl.load_regfile = 1'b1;
         end
 
         op_trap:
