@@ -37,6 +37,7 @@ end
 
 lc3b_opcode opcode;
 lc3b_control_word ctrlword1_in;
+lc3b_control_word ctrlword2_in;
 
 lc3b_reg sr1;
 lc3b_reg sr2;
@@ -87,6 +88,7 @@ lc3b_word pcReg_out2;
 lc3b_word pcReg_out3;
 lc3b_word pcReg_out4;
 
+lc3b_word ir_in;
 lc3b_word ir_out;
 lc3b_word irReg_out;
 
@@ -122,14 +124,30 @@ logic [1:0] forwarding_sel_b;
 
 logic is_nop;
 logic bubble_enable;
+logic flush_enable;
 logic [1:0] resp_count;
+
+lc3b_control_word ctrl_bubble;
+
+initial
+begin
+    ctrl_bubble = 0;
+    ctrl_bubble.is_nop = 1'b1;
+end
 
 always_comb
 begin
-    mem_read = ctrl_mem.mem_read | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b00));
-    mem_write = ctrl_mem.mem_write | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b10));
+    mem_read = ctrl_mem.mem_read 
+                || ((ctrl_mem.opcode == op_sti) && (resp_count == 2'b00));
+    mem_write = ctrl_mem.mem_write 
+                || ((ctrl_mem.opcode == op_sti) && (resp_count == 2'b10));
     is_nop = (ir_out == 16'b0);
-    ctrlword1_in = bubble_enable ? 16'b0 : ctrl;
+    flush_enable = branch_enable 
+                    || ctrl_mem.opcode == op_jmp 
+                    || ctrl_mem.opcode == op_jsr;
+    ir_in = flush_enable ? 16'b0 : instr_rdata;
+    ctrlword1_in = (bubble_enable || flush_enable) ? ctrl_bubble : ctrl;
+    ctrlword2_in = flush_enable ? ctrl_bubble : ctrl_exec;
     if(ctrl_mem.opcode == op_stb)
         mem_byte_enable = (mem_address[0]) ? 2'b10 : 2'b01;
     else
@@ -152,7 +170,7 @@ ir ir_module
 (
     .clk(clk),
     .load(global_load && ~bubble_enable),
-    .in(instr_rdata),
+    .in(ir_in),
     .opcode(opcode),
     .dest(dest),
     .src1(sr1),
@@ -353,13 +371,11 @@ up_counter mem_resp_counter
  */
 hazard_detector hazard_detection_unit
 (
-    .clk(clk),
     .mem_read(mem_read),
     .is_nop(ctrl_mem.is_nop),
     .sr1(sr1),
     .sr2(sr2),
-    .write_reg2(writeReg2_out),
-    .write_reg3(writeReg3_out),
+    .write_reg1(writeReg1_out),
     .opcode(ctrl_mem.opcode),
     .bubble_enable(bubble_enable)
 );
@@ -371,8 +387,8 @@ hazard_detector hazard_detection_unit
  (
     .mem_reg_write(ctrl_mem.load_regfile),
     .wb_reg_write(ctrl_wb.load_regfile),
-    .sr1(sr1),
-    .sr2(sr2),
+    .sr1(sr1_index_reg_out),
+    .sr2(sr2_index_reg_out),
     .write_reg2(writeReg2_out),
     .write_reg3(writeReg3_out),
     .sel_a(forwarding_sel_a),
@@ -491,7 +507,7 @@ ctrl_register ctrlword2
 (
     .clk(clk),
     .load(global_load),
-    .in(ctrl_exec),
+    .in(ctrlword2_in),
     .out(ctrl_mem)
     //.read(),
     //.write()
