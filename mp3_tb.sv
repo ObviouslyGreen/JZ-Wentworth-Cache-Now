@@ -8,8 +8,8 @@ logic pmem_resp;
 logic pmem_read;
 logic pmem_write;
 logic [15:0] pmem_address;
-logic [127:0] pmem_rdata;
-logic [127:0] pmem_wdata;
+logic [255:0] pmem_rdata;
+logic [255:0] pmem_wdata;
 
 /*logic mem_resp;
 logic mem_read;

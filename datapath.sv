@@ -36,9 +36,6 @@ begin
 end
 
 lc3b_opcode opcode;
-lc3b_word pc_in;
-lc3b_word ir_in;
-lc3b_control_word ctrlword1_in;
 
 lc3b_reg sr1;
 lc3b_reg sr2;
@@ -104,7 +101,6 @@ lc3b_word offsetadderReg2_out;
 
 lc3b_word offset6mux_out;
 lc3b_word pc_plus2_out;
-lc3b_word indirect_marmux_out;
 lc3b_nzp gencc_out;
 lc3b_nzp cc_out;
 
@@ -115,7 +111,7 @@ lc3b_control_word ctrl_mem;
 lc3b_control_word ctrl_wb;
 
 logic is_nop;
-logic bubble_enable;
+lc3b_word indirect_marmux_out;
 logic [1:0] resp_count;
 
 always_comb
@@ -123,9 +119,6 @@ begin
     mem_read = ctrl_mem.mem_read | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b00));
     mem_write = ctrl_mem.mem_write | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b10));
     is_nop = (ir_out == 16'b0);
-    pc_in = bubble_enable ? 16'b0 : brmux_out;
-    ir_in = bubble_enable ? 16'b0 : instr_rdata;
-    ctrlword1_in = bubble_enable ? 16'b0 : ctrl;
     if(ctrl_mem.opcode == op_stb)
         mem_byte_enable = (mem_address[0]) ? 2'b10 : 2'b01;
     else
@@ -148,7 +141,7 @@ ir ir_module
 (
     .clk(clk),
     .load(global_load),
-    .in(ir_in),
+    .in(instr_rdata),
     .opcode(opcode),
     .dest(dest),
     .src1(sr1),
@@ -344,17 +337,6 @@ up_counter mem_resp_counter
     .count(resp_count)
 );
 
-/*
- * Hazard detection unit
- */
-hazard_detector hazard_detection_unit
-(
-    .clk(clk),
-    .mem_read(mem_read),
-    .opcode(opcode),
-    .bubble_enable(bubble_enable)
-);
-
 
 /**************************************
  * Registers                          *
@@ -367,7 +349,7 @@ register pc
 (
     .clk(clk),
     .load(global_load),
-    .in(pc_in),
+    .in(brmux_out),
     .out(instr_address)
 );
 
@@ -459,7 +441,7 @@ ctrl_register ctrlword1
 (
     .clk(clk),
     .load(global_load),
-    .in(ctrlword1_in),
+    .in(ctrl),
     .out(ctrl_exec)
 );
 

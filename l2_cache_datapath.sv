@@ -207,7 +207,7 @@ l2_array data1
 l2_array data2
 (
     .clk(clk),
-    .load(lddata1mux_out),
+    .load(lddata2mux_out),
     .index(index),
     .in(writecachemux_out),
     .out(data2_out)
@@ -219,7 +219,7 @@ l2_array data2
 l2_array data3
 (
     .clk(clk),
-    .load(lddata1mux_out),
+    .load(lddata3mux_out),
     .index(index),
     .in(writecachemux_out),
     .out(data3_out)
@@ -372,11 +372,11 @@ l2_array #(.width(1)) dirty3
 /*
  * LRU
  */
-l2_lru lru
+pseudo_lru lru
 (
     .clk(clk),
     .write(ld_lru),
-    .index(index)
+    .index(index),
     .in(curr_way),
     .out(lru_out)
 );
@@ -469,11 +469,11 @@ mux4 #(.width(256)) read_way_data_mux
 /*
  * Mem rdata mux
  */
-mux2 #(.width(127)) read_data_mux
+mux2 #(.width(128)) read_data_mux
 (
     .sel(offset[4]),
     .a(data_out[127:0]),
-    .b(data1_out[255:128]),
+    .b(data_out[255:128]),
     .f(mem_rdata)
 );
 
@@ -481,7 +481,7 @@ mux2 #(.width(127)) read_data_mux
 /*
  * Pmem tag mux
  */
-mux2 #(.width(7)) pmemtag_mux
+mux4 #(.width(7)) pmemtag_mux
 (
     .sel(lru_out),
     .a(tag0_out),

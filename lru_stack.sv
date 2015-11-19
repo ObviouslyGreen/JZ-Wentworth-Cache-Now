@@ -4,7 +4,7 @@ module lru_stack
 (
     input clk,
     input write,
-	input [1:0] in,
+	 input [1:0] in,
     output logic [1:0] out
 );
 
@@ -22,7 +22,7 @@ end
 
 always_comb
 begin
-    if (index == data[0])
+    if (in == data[0])
     begin
         temp[0] = data[1];
 		temp[1] = data[2];
@@ -30,7 +30,7 @@ begin
 		temp[3] = data[0];
     end
 	 
-	 else if (index == data[1])
+	 else if (in == data[1])
     begin
         temp[0] = data[0];
 		temp[1] = data[2];
@@ -38,7 +38,7 @@ begin
 		temp[3] = data[1];
     end
 	 
-	 else if (index == data[2])
+	 else if (in == data[2])
     begin
         temp[0] = data[0];
 		temp[1] = data[1];

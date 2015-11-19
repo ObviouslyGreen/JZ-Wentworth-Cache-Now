@@ -15,19 +15,19 @@ module encoder
 always_comb
 begin
     if (a)
-        out = 2'b00
+        out = 2'b00;
 
     else if (b)
-        out = 2'b01
+        out = 2'b01;
 
     else if (c)
-        out = 2'b10
+        out = 2'b10;
 
     else if (d)
-        out = 2'b11
+        out = 2'b11;
 
     else
-        out = 2'b00
+        out = 2'b00;
 end
 
 endmodule : encoder

@@ -112,7 +112,7 @@ begin: state_actions
             dirty_clean = 1'b0;
             if (lru_out == 2'b00)
             begin
-                ld_dirtyo = 1'b1;
+                ld_dirty0 = 1'b1;
             end
             else if (lru_out == 2'b01)
             begin
@@ -160,21 +160,21 @@ begin: next_state_logic
                     else
                         next_state = phys_mem_read;
                 end
-                else if (lru_out = 2'b01)
+                else if (lru_out == 2'b01)
                 begin
                     if (dirty1_out)
                         next_state = phys_mem_write;
                     else
                         next_state = phys_mem_read;
                 end
-                else if (lru_out = 2'b10)
+                else if (lru_out == 2'b10)
                 begin
                     if (dirty2_out)
                         next_state = phys_mem_write;
                     else
                         next_state = phys_mem_read;
                 end
-                else if (lru_out = 2'b11)
+                else if (lru_out == 2'b11)
                 begin
                     if (dirty3_out)
                         next_state = phys_mem_write;
