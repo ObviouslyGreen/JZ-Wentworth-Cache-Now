@@ -33,5 +33,6 @@ begin
         if (sr2 != write_reg2 && write_reg3 == sr2)
             sel_b = 2'b10;
     end
+end
 
 endmodule : forwarding_unit
