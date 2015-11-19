@@ -36,8 +36,6 @@ begin
 end
 
 lc3b_opcode opcode;
-lc3b_word pc_in;
-lc3b_word ir_in;
 lc3b_control_word ctrlword1_in;
 
 lc3b_reg sr1;
@@ -114,6 +112,12 @@ lc3b_control_word ctrl_exec;
 lc3b_control_word ctrl_mem;
 lc3b_control_word ctrl_wb;
 
+lc3b_reg SR1_index_reg_out;
+lc3b_reg SR2_index_reg_out;
+lc3b_word forwarding_mux_a_out;
+lc3b_word forwarding_mux_b_out;
+logic [1:0] forwarding_unit_sel;
+
 logic is_nop;
 logic bubble_enable;
 logic [1:0] resp_count;
@@ -123,8 +127,6 @@ begin
     mem_read = ctrl_mem.mem_read | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b00));
     mem_write = ctrl_mem.mem_write | ((ctrl_mem.opcode == op_sti) & (resp_count == 2'b10));
     is_nop = (ir_out == 16'b0);
-    pc_in = bubble_enable ? 16'b0 : brmux_out;
-    ir_in = bubble_enable ? 16'b0 : instr_rdata;
     ctrlword1_in = bubble_enable ? 16'b0 : ctrl;
     if(ctrl_mem.opcode == op_stb)
         mem_byte_enable = (mem_address[0]) ? 2'b10 : 2'b01;
@@ -147,8 +149,8 @@ end
 ir ir_module
 (
     .clk(clk),
-    .load(global_load),
-    .in(ir_in),
+    .load(global_load && bubble_enable),
+    .in(instr_rdata),
     .opcode(opcode),
     .dest(dest),
     .src1(sr1),
@@ -187,8 +189,8 @@ control_rom control_rom_module
 alu alu_module
 (
     .aluop(ctrl_exec.aluop),
-    .a(sr1reg1_out),
-    .b(alumux_out),
+    .a(forwarding_mux_a_out),
+    .b(forwarding_mux_b_out),
     .f(alu_out)
 );
 
@@ -366,8 +368,8 @@ hazard_detector hazard_detection_unit
 register pc
 (
     .clk(clk),
-    .load(global_load),
-    .in(pc_in),
+    .load(global_load && bubble_enable),
+    .in(brmux_out),
     .out(instr_address)
 );
 
@@ -561,6 +563,23 @@ register offsetadderReg2
     .out(offsetadderReg2_out)
 );
 
+register #(.width(3)) SR1_index_reg
+(
+    .clk(clk),
+    .load(global_load),
+    .in(sr1),
+    .out(SR1_index_reg_out)
+);
+
+register #(.width(3)) SR2_index_reg
+(
+    .clk(clk),
+    .load(global_load),
+    .in(sr2),
+    .out(SR2_index_reg_out)
+);
+
+
 
 /**************************************
  * Multiplexers                       *
@@ -684,5 +703,25 @@ mux2 offset6_mux
     .f(offset6mux_out)
 );
 
+mux4 forwarding_mux_a
+(
+    .sel(forwarding_unit_sel),
+    .a(sr1reg1_out),
+    .b(aluReg_out),
+    .c(regfile_filter_out),
+    .d(16'b0),
+    .f(forwarding_mux_a_out)
+);
+
+
+mux4 forwarding_mux_b
+(
+    .sel(forwarding_unit_sel),
+    .a(alumux_out),
+    .b(aluReg_out),
+    .c(regfile_filter_out),
+    .d(16'b0),
+    .f(forwarding_mux_b_out)
+);
 
 endmodule : datapath
