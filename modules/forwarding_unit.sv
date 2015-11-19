@@ -5,8 +5,8 @@ import lc3b_types::*;
 
 module forwarding_unit
 (
-    input lc3b_opcode exec_opcode,
-    input lc3b_opcode mem_opcode, 
+    input mem_reg_write,
+    input wb_reg_write,
     input lc3b_reg sr1,
     input lc3b_reg sr2,
     input lc3b_reg write_reg2,
@@ -17,6 +17,21 @@ module forwarding_unit
 
 always_comb
 begin
-end
+    sel_a = 2'b00;
+    sel_b = 2'b00;
+    if (mem_reg_write)
+    begin
+        if (write_reg2 == sr1)
+            sel_a = 2'b01;
+        if (write_reg2 == sr2)
+            sel_b = 2'b01;
+    end
+    if (wb_reg_write)
+    begin
+        if (sr1 != write_reg2 && write_reg3 == sr1)
+            sel_a = 2'b10;
+        if (sr2 != write_reg2 && write_reg3 == sr2)
+            sel_b = 2'b10;
+    end
 
 endmodule : forwarding_unit

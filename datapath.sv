@@ -364,8 +364,8 @@ hazard_detector hazard_detection_unit
  */
  forwarding_unit data_forwarding_unit
  (
-    .exec_opcode(ctrl_exec.opcode),
-    .mem_opcode(ctrl_mem.opcode),
+    .mem_reg_write(ctrl_mem.load_regfile),
+    .wb_reg_write(ctrl_wb.load_regfile),
     .sr1(sr1),
     .sr2(sr2),
     .write_reg2(writeReg2_out),
