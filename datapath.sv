@@ -112,11 +112,13 @@ lc3b_control_word ctrl_exec;
 lc3b_control_word ctrl_mem;
 lc3b_control_word ctrl_wb;
 
-lc3b_reg SR1_index_reg_out;
-lc3b_reg SR2_index_reg_out;
+lc3b_reg sr1_index_reg_out;
+lc3b_reg sr2_index_reg_out;
 lc3b_word forwarding_mux_a_out;
 lc3b_word forwarding_mux_b_out;
-logic [1:0] forwarding_unit_sel;
+logic [1:0] forwarding_sel_a;
+logic [1:0] forwarding_sel_b;
+
 
 logic is_nop;
 logic bubble_enable;
@@ -357,6 +359,21 @@ hazard_detector hazard_detection_unit
     .bubble_enable(bubble_enable)
 );
 
+/*
+ * Data forwarding unit
+ */
+ forwarding_unit data_forwarding_unit
+ (
+    .exec_opcode(ctrl_exec.opcode),
+    .mem_opcode(ctrl_mem.opcode),
+    .sr1(sr1),
+    .sr2(sr2),
+    .write_reg2(writeReg2_out),
+    .write_reg3(writeReg3_out),
+    .sel_a(forwarding_sel_a),
+    .sel_b(forwarding_sel_b)
+);
+
 
 /**************************************
  * Registers                          *
@@ -563,20 +580,20 @@ register offsetadderReg2
     .out(offsetadderReg2_out)
 );
 
-register #(.width(3)) SR1_index_reg
+register #(.width(3)) sr1_index_reg
 (
     .clk(clk),
     .load(global_load),
     .in(sr1),
-    .out(SR1_index_reg_out)
+    .out(sr1_index_reg_out)
 );
 
-register #(.width(3)) SR2_index_reg
+register #(.width(3)) sr2_index_reg
 (
     .clk(clk),
     .load(global_load),
     .in(sr2),
-    .out(SR2_index_reg_out)
+    .out(sr2_index_reg_out)
 );
 
 
@@ -705,7 +722,7 @@ mux2 offset6_mux
 
 mux4 forwarding_mux_a
 (
-    .sel(forwarding_unit_sel),
+    .sel(forwarding_sel_a),
     .a(sr1reg1_out),
     .b(aluReg_out),
     .c(regfile_filter_out),
@@ -716,7 +733,7 @@ mux4 forwarding_mux_a
 
 mux4 forwarding_mux_b
 (
-    .sel(forwarding_unit_sel),
+    .sel(forwarding_sel_b),
     .a(alumux_out),
     .b(aluReg_out),
     .c(regfile_filter_out),
