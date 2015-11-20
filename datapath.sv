@@ -80,27 +80,26 @@ lc3b_word mdr_out;
 lc3b_word alu_out;
 lc3b_word regfile_filter_out;
 
-lc3b_word aluReg_out;
-lc3b_word dataReg_out;
+lc3b_word alu_reg_out;
+lc3b_word data_reg_out;
 
-lc3b_word pcReg_out1;
-lc3b_word pcReg_out2;
-lc3b_word pcReg_out3;
-lc3b_word pcReg_out4;
+lc3b_word pc_reg_out1;
+lc3b_word pc_reg_out2;
+lc3b_word pc_reg_out3;
+lc3b_word pc_reg_out4;
 
-lc3b_word ir_in;
 lc3b_word ir_out;
-lc3b_word irReg_out;
+lc3b_word ir_reg_out;
 
-lc3b_reg writeReg1_out;
-lc3b_reg writeReg2_out;
-lc3b_reg writeReg3_out;
+lc3b_reg write_reg1_out;
+lc3b_reg write_reg2_out;
+lc3b_reg write_reg3_out;
 
 lc3b_word offsetadder_mux_out;
 lc3b_word offsetadder_out;
 
-lc3b_word offsetadderReg1_out;
-lc3b_word offsetadderReg2_out;
+lc3b_word offsetadder_reg1_out;
+lc3b_word offsetadder_reg2_out;
 
 lc3b_word offset6mux_out;
 lc3b_word pc_plus2_out;
@@ -120,6 +119,8 @@ lc3b_word forwarding_mux_a_out;
 lc3b_word forwarding_mux_b_out;
 logic [1:0] forwarding_sel_a;
 logic [1:0] forwarding_sel_b;
+logic forwarding_sel_c;
+logic forwarding_sel_d;
 
 
 logic is_nop;
@@ -127,8 +128,17 @@ logic bubble_enable;
 logic flush_enable;
 logic [1:0] resp_count;
 
+lc3b_word ir_in;
+lc3b_word ir_reg_in;
+lc3b_reg write_reg1_in;
+lc3b_word sr1reg1_in;
+lc3b_word sr2reg1_in;
+lc3b_word sr2reg2_in;
+lc3b_reg sr1_index_reg_in;
+lc3b_reg sr2_index_reg_in;
+lc3b_word gencc_in;
+
 lc3b_control_word ctrl_bubble;
-lc3b_word poop;
 
 initial
 begin
@@ -136,28 +146,62 @@ begin
     ctrl_bubble.is_nop = 1'b1;
 end
 
+
 always_comb
 begin
-    if (ctrl_mem.load_regfile)
-    begin
-        if(ctrl_mem.mem_read)
-            poop = mem_rdata;
-        else
-            poop = aluReg_out;
-    end
-    else
-        poop = 16'b0;
     mem_read = ctrl_mem.mem_read 
                 || ((ctrl_mem.opcode == op_sti) && (resp_count == 2'b00));
     mem_write = ctrl_mem.mem_write 
                 || ((ctrl_mem.opcode == op_sti) && (resp_count == 2'b10));
     is_nop = (ir_out == 16'b0);
+
+    if (ctrl_mem.load_regfile)
+    begin
+        if(ctrl_mem.mem_read)
+            gencc_in = mem_rdata;
+        else
+            gencc_in = alu_reg_out;
+    end
+    else
+    begin
+        gencc_in = 16'b0;
+    end
+
+    if (forwarding_sel_c)
+    begin
+        sr1reg1_in = regfile_filter_out;
+    end
+    else
+    begin
+        if (bubble_enable)
+            sr1reg1_in = 16'b0;
+        else
+            sr1reg1_in = sr1_out;
+    end
+
+    if (forwarding_sel_d)
+    begin
+        sr2reg1_in = regfile_filter_out;
+    end
+    else
+    begin
+        if (bubble_enable)
+            sr2reg1_in = 16'b0;
+        else
+            sr2reg1_in = sr2_out;
+    end
+    sr2reg2_in = (forwarding_sel_b == 2'b01) ? aluReg_out : sr2reg1_out;
     flush_enable = (branch_enable && ~ctrl_mem.is_nop && ctrl_mem.opcode == op_br)
                     || ctrl_mem.opcode == op_jmp 
                     || ctrl_mem.opcode == op_jsr;
     ir_in = flush_enable ? 16'b0 : instr_rdata;
+
     ctrlword1_in = (bubble_enable || flush_enable) ? ctrl_bubble : ctrl;
     ctrlword2_in = flush_enable ? ctrl_bubble : ctrl_exec;
+    ir_reg_in = bubble_enable ? 16'b0 : ir_out;
+    write_reg1_in = (bubble_enable || ctrl.mem_write)  ? 3'b000 : destmux_out;
+    sr1_index_reg_in = bubble_enable ? 3'b000 : sr1;
+    sr2_index_reg_in = bubble_enable ? 3'b000 : storemux_out;
     if(ctrl_mem.opcode == op_stb)
         mem_byte_enable = (mem_address[0]) ? 2'b10 : 2'b01;
     else
@@ -234,7 +278,7 @@ regfile regfile_module
     .in(regfile_filter_out),
     .src_a(sr1),
     .src_b(storemux_out),
-    .dest(writeReg3_out),           //changed to trans reg
+    .dest(write_reg3_out),           //changed to trans reg
     .reg_a(sr1_out),
     .reg_b(sr2_out)
 );
@@ -244,7 +288,7 @@ regfile regfile_module
  */
 sext #(.width(5)) sext5
 (
-    .in(irReg_out[4:0]),        //offset5
+    .in(ir_reg_out[4:0]),        //offset5
     .out(sext5_out)
 );
 
@@ -253,7 +297,7 @@ sext #(.width(5)) sext5
  */
 sext #(.width(6)) sext6
 (
-    .in(irReg_out[5:0]),        //offset6
+    .in(ir_reg_out[5:0]),        //offset6
     .out(sext6_out)
 );
 
@@ -262,7 +306,7 @@ sext #(.width(6)) sext6
  */
 adj #(.width(6)) adj6
 (
-    .in(irReg_out[5:0]),        //offset6
+    .in(ir_reg_out[5:0]),        //offset6
     .out(adj6_out)
 );
 
@@ -271,7 +315,7 @@ adj #(.width(6)) adj6
  */
 adj #(.width(9)) adj9
 (
-    .in(irReg_out[8:0]),        //offset9
+    .in(ir_reg_out[8:0]),        //offset9
     .out(adj9_out)
 );
 
@@ -280,7 +324,7 @@ adj #(.width(9)) adj9
  */
 adj #(.width(11)) adj11
 (
-    .in(irReg_out[10:0]),       //offset11
+    .in(ir_reg_out[10:0]),       //offset11
     .out(adj11_out)
 );
 
@@ -289,7 +333,7 @@ adj #(.width(11)) adj11
  */
 zadj #(.width(8)) zadj8
 (
-    .in(irReg_out[7:0]),        //trapvect8
+    .in(ir_reg_out[7:0]),        //trapvect8
     .out(zadj8_out)
 );
 
@@ -321,7 +365,7 @@ stb_filter stb_filter_module
  */
 zext #(.width(4)) shift_zext
 (
-    .in(irReg_out[3:0]),        //offset4
+    .in(ir_reg_out[3:0]),        //offset4
     .out(zext4_out)
 );
 
@@ -331,7 +375,7 @@ zext #(.width(4)) shift_zext
 adder offset_adder
 (
     .a(offsetadder_mux_out),
-    .b(pcReg_out2),
+    .b(pc_reg_out2),
     .out(offsetadder_out)
 );
 
@@ -344,14 +388,13 @@ plus2 plus2_module
     .out(pc_plus2_out)
 );
 
-
 /*
  * CCComp
  */
 nzp_comparator cccomp
 (
     .nzp(cc_out),
-    .ir_nzp(writeReg2_out),
+    .ir_nzp(write_reg2_out),
     .branch_enable(branch_enable)
 );
 
@@ -360,10 +403,9 @@ nzp_comparator cccomp
  */
 gencc gencc_module
 (
-    .in(poop),
+    .in(gencc_in),
     .out(gencc_out)
 );
-
 
 /*
  * 2-bit Counter
@@ -385,13 +427,11 @@ hazard_detector hazard_detection_unit
     .is_nop(ctrl_mem.is_nop),
     .sr1(sr1),
     .sr2(storemux_out),
-    .write_reg1(writeReg1_out),
+    .write_reg1(write_reg1_out),
     .opcode(ctrl_mem.opcode),
     .bubble_enable(bubble_enable)
 );
 
-logic forwarding_sel_c;
-logic forwarding_sel_d;
 /*
  * Data forwarding unit
  */
@@ -404,8 +444,8 @@ logic forwarding_sel_d;
     .sr2(storemux_out),
     .sr1_exec(sr1_index_reg_out),
     .sr2_exec(sr2_index_reg_out),
-    .write_reg2(writeReg2_out),
-    .write_reg3(writeReg3_out),
+    .write_reg2(write_reg2_out),
+    .write_reg3(write_reg3_out),
     .sel_a(forwarding_sel_a),
     .sel_b(forwarding_sel_b),
     .sel_c(forwarding_sel_c),
@@ -466,50 +506,52 @@ register #(.width(3)) cc
  * TRANSITION Registers               *
  **************************************/
 
-register pcReg1
+register pc_reg1
 (
     .clk(clk),
     .load(global_load),
     .in(pc_plus2_out),
-    .out(pcReg_out1)
+    .out(pc_reg_out1)
 );
 
-register pcReg2
+register pc_reg2
 (
     .clk(clk),
     .load(global_load),
-    .in(pcReg_out1),
-    .out(pcReg_out2)
-);
-register pcReg3
-(
-    .clk(clk),
-    .load(global_load),
-    .in(pcReg_out2),
-    .out(pcReg_out3)
-);
-register pcReg4
-(
-    .clk(clk),
-    .load(global_load),
-    .in(pcReg_out3),
-    .out(pcReg_out4)
+    .in(pc_reg_out1),
+    .out(pc_reg_out2)
 );
 
-register aluReg
+register pc_reg3
+(
+    .clk(clk),
+    .load(global_load),
+    .in(pc_reg_out2),
+    .out(pc_reg_out3)
+);
+
+register pc_reg4
+(
+    .clk(clk),
+    .load(global_load),
+    .in(pc_reg_out3),
+    .out(pc_reg_out4)
+);
+
+register alu_reg
 (
     .clk(clk),
     .load(global_load),
     .in(alu_out),
-    .out(aluReg_out)
+    .out(alu_reg_out)
 );
 
-register dataReg
+register data_reg
 (
     .clk(clk),
     .load(global_load),
-    .in(aluReg_out),
-    .out(dataReg_out)
+    .in(alu_reg_out),
+    .out(data_reg_out)
 );
 
 ctrl_register ctrlword1
@@ -526,8 +568,6 @@ ctrl_register ctrlword2
     .load(global_load),
     .in(ctrlword2_in),
     .out(ctrl_mem)
-    //.read(),
-    //.write()
 );
 
 ctrl_register ctrlword3
@@ -537,49 +577,40 @@ ctrl_register ctrlword3
     .in(ctrl_mem),
     .out(ctrl_wb)
 );
-lc3b_word irreg_in;
-assign irreg_in = bubble_enable ? 0 : ir_out;
-register irReg
+
+register ir_reg
 (
     .clk(clk),
     .load(global_load),
-    .in(irreg_in),
-    .out(irReg_out)
-);
-lc3b_reg writeReg1_in;
-assign writeReg1_in = (bubble_enable || ctrl.mem_write)  ? 3'b000 : destmux_out;
-register #(.width(3)) writeReg1
-(
-    .clk(clk),
-    .load(global_load),
-    .in(writeReg1_in),
-    .out(writeReg1_out)
+    .in(ir_reg_in),
+    .out(ir_reg_out)
 );
 
-register #(.width(3)) writeReg2
+register #(.width(3)) write_reg1
 (
     .clk(clk),
     .load(global_load),
-    .in(writeReg1_out),
-    .out(writeReg2_out)
+    .in(write_reg1_in),
+    .out(write_reg1_out)
 );
 
-register #(.width(3)) writeReg3
+register #(.width(3)) write_reg2
 (
     .clk(clk),
     .load(global_load),
-    .in(writeReg2_out),
-    .out(writeReg3_out)
+    .in(write_reg1_out),
+    .out(write_reg2_out)
 );
-lc3b_word sr1reg1_t;
-lc3b_word sr2reg1_t;
-assign sr1reg1_t = bubble_enable ? 0 : sr1_out;
-assign sr2reg1_t = bubble_enable ? 0 : sr2_out;
-lc3b_word sr1reg1_in;
-lc3b_word sr2reg1_in;
-assign sr1reg1_in = forwarding_sel_c ? regfile_filter_out : sr1reg1_t;
-assign sr2reg1_in = forwarding_sel_d ? regfile_filter_out : sr2reg1_t;
-register SR1Reg1
+
+register #(.width(3)) write_reg3
+(
+    .clk(clk),
+    .load(global_load),
+    .in(write_reg2_out),
+    .out(write_reg3_out)
+);
+
+register sr1_reg1
 (
     .clk(clk),
     .load(global_load),
@@ -587,7 +618,7 @@ register SR1Reg1
     .out(sr1reg1_out)
 );
 
-register SR1Reg2
+register sr1_reg2
 (
     .clk(clk),
     .load(global_load),
@@ -595,7 +626,7 @@ register SR1Reg2
     .out(sr1reg2_out)
 );
 
-register SR2Reg1
+register sr2_reg1
 (
     .clk(clk),
     .load(global_load),
@@ -603,9 +634,7 @@ register SR2Reg1
     .out(sr2reg1_out)
 );
 
-lc3b_word sr2reg2_in;
-assign sr2reg2_in = (forwarding_sel_b == 2'b01) ? aluReg_out : sr2reg1_out;
-register SR2Reg2
+register sr2_reg2
 (
     .clk(clk),
     .load(global_load),
@@ -613,25 +642,22 @@ register SR2Reg2
     .out(sr2reg2_out)
 );
 
-register offsetadderReg1
+register offsetadder_reg1
 (
     .clk(clk),
     .load(global_load),
     .in(offsetadder_out),
-    .out(offsetadderReg1_out)
+    .out(offsetadder_reg1_out)
 );
 
-register offsetadderReg2
+register offsetadder_reg2
 (
     .clk(clk),
     .load(global_load),
-    .in(offsetadderReg1_out),
-    .out(offsetadderReg2_out)
+    .in(offsetadder_reg1_out),
+    .out(offsetadder_reg2_out)
 );
-lc3b_reg sr1_index_reg_in;
-lc3b_reg sr2_index_reg_in;
-assign sr1_index_reg_in = bubble_enable ? 3'b000 : sr1;
-assign sr2_index_reg_in = bubble_enable ? 3'b000 : storemux_out;
+
 register #(.width(3)) sr1_index_reg
 (
     .clk(clk),
@@ -653,6 +679,28 @@ register #(.width(3)) sr2_index_reg
 /**************************************
  * Multiplexers                       *
  **************************************/
+
+/*
+ * Offset adder mux
+ */
+mux2 offset_adder_mux
+(
+    .sel(ctrl_exec.offsetaddermux_sel),
+    .a(adj9_out),
+    .b(adj11_out),
+    .f(offsetadder_mux_out)
+);
+
+/*
+ * Offset6 mux
+ */
+mux2 offset6_mux
+(
+    .sel(ctrl_exec.offset6mux_sel),
+    .a(adj6_out),
+    .b(sext6_out),
+    .f(offset6mux_out)
+);
 
 /*
  * Store mux
@@ -677,27 +725,25 @@ mux2 #(.width(3)) dest_mux
 );
 
 /*
- * PC mux
- */
-mux4 pc_mux
-(
-    .sel(ctrl_mem.pcmux_sel),
-    .a(pc_plus2_out),
-    .b(offsetadderReg1_out),      //changes for trans reg
-    .c(sr1reg2_out),            //changed to trans reg
-    .d(mem_rdata),
-    .f(pcmux_out)
-);
-
-/*
  * Branch mux
  */
 mux2 br_mux
 (
     .sel((ctrl_mem.brmux_sel) & branch_enable),
     .a(pcmux_out),
-    .b(offsetadderReg1_out),
+    .b(offsetadder_reg1_out),
     .f(brmux_out)
+);
+
+/*
+ * Indirect MAR mux
+ */
+mux2 indirect_mar_mux
+(
+    .sel((resp_count == 2'b01)),
+    .a(alu_out),
+    .b(mem_rdata),
+    .f(indirect_marmux_out)
 );
 
 /*
@@ -714,15 +760,28 @@ mux4 alu_mux
 );
 
 /*
+ * PC mux
+ */
+mux4 pc_mux
+(
+    .sel(ctrl_mem.pcmux_sel),
+    .a(pc_plus2_out),
+    .b(offsetadder_reg1_out),      //changes for trans reg
+    .c(sr1reg2_out),            //changed to trans reg
+    .d(mem_rdata),
+    .f(pcmux_out)
+);
+
+/*
  * Regfile mux
  */
 mux4 regfile_mux
 (
     .sel(ctrl_wb.regfilemux_sel),
-    .a(dataReg_out),       //changes for trans reg
+    .a(data_reg_out),       //changes for trans reg
     .b(mdr_out),
-    .c(offsetadderReg2_out), //changes for trans reg
-    .d(pcReg_out4),            //changed to trans reg
+    .c(offsetadder_reg2_out), //changes for trans reg
+    .d(pc_reg_out4),            //changed to trans reg
     .f(regfilemux_out)
 );
 
@@ -733,50 +792,18 @@ mux4 mar_mux
 (
     .sel(ctrl_exec.marmux_sel),
     .a(indirect_marmux_out),           //changed for trans reg
-    .b(pcReg_out2),                //changed for trans reg
+    .b(pc_reg_out2),                //changed for trans reg
     .c(regfile_filter_out),
     .d(zadj8_out),            //changed for trans reg
     .f(marmux_out)
 );
 
-/*
- * Indirect MAR mux
- */
-mux2 indirect_mar_mux
-(
-    .sel((resp_count == 2'b01)),
-    .a(alu_out),
-    .b(mem_rdata),
-    .f(indirect_marmux_out)
-);
-
-/*
- * Offset adder mux
- */
-mux2 offset_adder_mux
-(
-    .sel(ctrl_exec.offsetaddermux_sel),
-    .a(adj9_out),
-    .b(adj11_out),
-    .f(offsetadder_mux_out)
-);
-
-/*
- * Offset6 mux
- */
-mux2 offset6_mux
-(
-    .sel(ctrl_exec.offset6mux_sel),
-    .a(adj6_out),
-    .b(sext6_out),
-    .f(offset6mux_out)
-);
 
 mux4 forwarding_mux_a
 (
     .sel(forwarding_sel_a),
     .a(sr1reg1_out),
-    .b(aluReg_out),
+    .b(alu_reg_out),
     .c(regfile_filter_out),
     .d(16'b0),
     .f(forwarding_mux_a_out)
@@ -787,7 +814,7 @@ mux4 forwarding_mux_b
 (
     .sel(ctrl_exec.mem_write ? 2'b00 : forwarding_sel_b),
     .a(alumux_out),
-    .b(aluReg_out),
+    .b(alu_reg_out),
     .c(regfile_filter_out),
     .d(16'b0),
     .f(forwarding_mux_b_out)
