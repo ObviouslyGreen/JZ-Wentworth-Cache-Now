@@ -50,6 +50,7 @@ begin : state_actions
         dcache_miss_fetched:
         begin
             d_pmem_resp = 1;
+            arbiter_sel = 1;
         end
 
     endcase
