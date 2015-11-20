@@ -522,7 +522,7 @@ register #(.width(3)) cc
 register pc_reg1
 (
     .clk(clk),
-    .load(global_load),
+    .load(global_load && ~bubble_enable),
     .in(pc_plus2_out),
     .out(pc_reg_out1)
 );
@@ -530,7 +530,7 @@ register pc_reg1
 register pc_reg2
 (
     .clk(clk),
-    .load(global_load),
+    .load(global_load && ~bubble_enable),
     .in(pc_reg_out1),
     .out(pc_reg_out2)
 );
@@ -538,7 +538,7 @@ register pc_reg2
 register pc_reg3
 (
     .clk(clk),
-    .load(global_load),
+    .load(global_load && ~bubble_enable),
     .in(pc_reg_out2),
     .out(pc_reg_out3)
 );
@@ -546,7 +546,7 @@ register pc_reg3
 register pc_reg4
 (
     .clk(clk),
-    .load(global_load),
+    .load(global_load && ~bubble_enable),
     .in(pc_reg_out3),
     .out(pc_reg_out4)
 );

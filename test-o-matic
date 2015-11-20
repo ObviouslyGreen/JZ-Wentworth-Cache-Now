@@ -26,7 +26,7 @@ TESTCODE_DIR=$HOME/ece411/testcode/
 #(not sure if 183 meant 181 and i also uncommented 185)
 # the original path was also incorrect so that was changed
 REG_FILE={/mp3_tb/dut/datapath_module/regfile_module/data}
-RUN_TIME=75000ns
+RUN_TIME=5000ns
 
 #Other debug signals
 #signals can be prefixed with -radix
@@ -79,7 +79,7 @@ fi
 
 
 if [[ $(dirname "$TESTCODE") == "." ]]; then
-	TEST_FILE=${TESTCODE_DIR}/$TESTCODE
+	TEST_FILE=${TESTCODE_DIR}$TESTCODE
 else
 	if [[ ! -d $(dirname "$TESTCODE") ]]; then
 		echo "Directory doesn't exist!"

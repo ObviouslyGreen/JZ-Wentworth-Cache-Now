@@ -45,10 +45,10 @@ begin
     end
     if (wb_reg_write)
     begin
-        if (((sr1_exec != write_reg2) || mem_write) 
+        if (((sr1_exec != write_reg2) || mem_write || ~mem_reg_write) 
             && write_reg3 == sr1_exec)
             sel_a = 2'b10;
-        if (((sr2_exec != write_reg2) || mem_write && ~exec_imm) 
+        if (((sr2_exec != write_reg2) || mem_write  || ~mem_reg_write) && ~exec_imm 
             && write_reg3 == sr2_exec
             && exec_mem_read == 1'b0)
             sel_b = 2'b10;
