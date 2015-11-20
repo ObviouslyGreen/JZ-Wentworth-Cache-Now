@@ -384,7 +384,7 @@ hazard_detector hazard_detection_unit
     .mem_read(ctrl_exec.mem_read),
     .is_nop(ctrl_mem.is_nop),
     .sr1(sr1),
-    .sr2(sr2),
+    .sr2(storemux_out),
     .write_reg1(writeReg1_out),
     .opcode(ctrl_mem.opcode),
     .bubble_enable(bubble_enable)
@@ -397,10 +397,11 @@ logic forwarding_sel_d;
  */
  forwarding_unit data_forwarding_unit
  (
+    .mem_write(ctrl_mem.mem_write),
     .mem_reg_write(ctrl_mem.load_regfile),
     .wb_reg_write(ctrl_wb.load_regfile),
     .sr1(sr1),
-    .sr2(sr2),
+    .sr2(storemux_out),
     .sr1_exec(sr1_index_reg_out),
     .sr2_exec(sr2_index_reg_out),
     .write_reg2(writeReg2_out),
@@ -546,7 +547,7 @@ register irReg
     .out(irReg_out)
 );
 lc3b_reg writeReg1_in;
-assign writeReg1_in = bubble_enable ? 3'b000 : destmux_out;
+assign writeReg1_in = (bubble_enable || ctrl.mem_write)  ? 3'b000 : destmux_out;
 register #(.width(3)) writeReg1
 (
     .clk(clk),
@@ -602,11 +603,13 @@ register SR2Reg1
     .out(sr2reg1_out)
 );
 
+lc3b_word sr2reg2_in;
+assign sr2reg2_in = (forwarding_sel_b == 2'b01) ? aluReg_out : sr2reg1_out;
 register SR2Reg2
 (
     .clk(clk),
     .load(global_load),
-    .in(sr2reg1_out),
+    .in(sr2reg2_in),
     .out(sr2reg2_out)
 );
 
@@ -628,7 +631,7 @@ register offsetadderReg2
 lc3b_reg sr1_index_reg_in;
 lc3b_reg sr2_index_reg_in;
 assign sr1_index_reg_in = bubble_enable ? 3'b000 : sr1;
-assign sr2_index_reg_in = bubble_enable ? 3'b000 : sr2;
+assign sr2_index_reg_in = bubble_enable ? 3'b000 : storemux_out;
 register #(.width(3)) sr1_index_reg
 (
     .clk(clk),
@@ -782,7 +785,7 @@ mux4 forwarding_mux_a
 
 mux4 forwarding_mux_b
 (
-    .sel(forwarding_sel_b),
+    .sel(ctrl_exec.mem_write ? 2'b00 : forwarding_sel_b),
     .a(alumux_out),
     .b(aluReg_out),
     .c(regfile_filter_out),

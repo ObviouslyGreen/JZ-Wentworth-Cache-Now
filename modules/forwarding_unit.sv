@@ -5,6 +5,7 @@ import lc3b_types::*;
 
 module forwarding_unit
 (
+    input mem_write,
     input mem_reg_write,
     input wb_reg_write,
     input lc3b_reg sr1,
@@ -34,9 +35,9 @@ begin
     end
     if (wb_reg_write)
     begin
-        if (sr1_exec != write_reg2 && write_reg3 == sr1_exec)
+        if (((sr1_exec != write_reg2) || mem_write) && write_reg3 == sr1_exec)
             sel_a = 2'b10;
-        if (sr2_exec != write_reg2 && write_reg3 == sr2_exec)
+        if (((sr2_exec != write_reg2) || mem_write) && write_reg3 == sr2_exec)
             sel_b = 2'b10;
         if (sr1 != write_reg2 && write_reg3 == sr1)
             sel_c = 1'b1;
