@@ -132,6 +132,7 @@ lc3b_word ir_in;
 lc3b_word ir_reg_in;
 lc3b_reg write_reg1_in;
 lc3b_word sr1reg1_in;
+lc3b_word sr1reg2_in;
 lc3b_word sr2reg1_in;
 lc3b_word sr2reg2_in;
 lc3b_reg sr1_index_reg_in;
@@ -179,6 +180,8 @@ begin
             sr1reg1_in = sr1_out;
     end
 
+    sr1reg2_in = forwarding_sel_a ? alu_reg_out : sr1reg1_out;
+    
     if (forwarding_sel_d)
     begin
         sr2reg1_in = regfile_filter_out;
@@ -448,6 +451,8 @@ hazard_detector hazard_detection_unit
     .mem_opcode(ctrl_mem.opcode),
     .wb_reg_write(ctrl_wb.load_regfile),
     .exec_mem_read(ctrl_exec.mem_read),
+    .id_imm(ctrl.imm_enable),
+    .exec_imm(ctrl_exec.imm_enable),
     .sr1(sr1),
     .sr2(storemux_out),
     .sr1_exec(sr1_index_reg_out),
@@ -630,7 +635,7 @@ register sr1_reg2
 (
     .clk(clk),
     .load(global_load),
-    .in(sr1reg1_out),
+    .in(forwarding_mux_a_out),
     .out(sr1reg2_out)
 );
 

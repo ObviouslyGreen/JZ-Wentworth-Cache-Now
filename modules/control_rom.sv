@@ -38,6 +38,7 @@ begin
     ctrl.indirect_enable = 1'b0;
     ctrl.mem_byte_enable = 2'b11;
     ctrl.is_nop = is_nop;
+    ctrl.imm_enable = 1'b0;
 
     /* Assign control signals based on opcode */
     case(opcode)
@@ -50,6 +51,7 @@ begin
             begin
                 /* DR <= A & SEXT(IR[4:0]) */
                 ctrl.alumux_sel = 2'b10;
+                ctrl.imm_enable = 1'b1;
             end
         end
 
@@ -62,6 +64,7 @@ begin
             begin
                 /* DR <= A & SEXT(IR[4:0]) */
                 ctrl.alumux_sel = 2'b10;
+                ctrl.imm_enable = 1'b1;
             end
         end
 
@@ -241,11 +244,13 @@ begin
                 begin
                     /* DR <= SR >> IR[3:0], 0 */
                     ctrl.aluop = alu_srl;
+                    ctrl.imm_enable = 1'b1;
                 end
                 else
                 begin
                     /* DR <= SR >> IR[3:0], SR[15] */
                     ctrl.aluop = alu_sra;
+                    ctrl.imm_enable = 1'b1;
                 end
             end
 

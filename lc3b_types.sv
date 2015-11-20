@@ -81,6 +81,7 @@ typedef struct packed {
     logic indirect_enable;
     logic is_nop;
     lc3b_mem_wmask mem_byte_enable;
+    logic imm_enable;
 } lc3b_control_word;
 
 endpackage : lc3b_types
