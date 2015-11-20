@@ -37,10 +37,10 @@ begin
         else if (write_reg2 == sr1_exec)
             sel_a = 2'b01;
         if (mem_opcode == op_lea && write_reg2 == sr2_exec
-            && exec_mem_read == 1'b0)
+            && ~exec_mem_read)
             sel_b = 2'b11;
         else if (write_reg2 == sr2_exec
-            && exec_mem_read == 1'b0 && ~exec_imm)
+            && ~exec_mem_read && ~exec_imm)
             sel_b = 2'b01;
     end
     if (wb_reg_write)
@@ -50,7 +50,7 @@ begin
             sel_a = 2'b10;
         if (((sr2_exec != write_reg2) || mem_write  || ~mem_reg_write) && ~exec_imm 
             && write_reg3 == sr2_exec
-            && exec_mem_read == 1'b0)
+            && ~exec_mem_read)
             sel_b = 2'b10;
         if (sr1 != write_reg2 && write_reg3 == sr1)
             sel_c = 1'b1;
