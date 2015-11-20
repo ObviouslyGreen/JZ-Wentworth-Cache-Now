@@ -190,7 +190,13 @@ begin
         else
             sr2reg1_in = sr2_out;
     end
-    sr2reg2_in = (forwarding_sel_b == 2'b01) ? alu_reg_out : sr2reg1_out;
+    if (forwarding_sel_b == 2'b01)
+        sr2reg2_in = alu_reg_out;
+    else if (forwarding_sel_b == 2'b10)
+        sr2reg2_in = regfile_filter_out;
+    else
+        sr2reg2_in = sr2reg1_out;
+
     flush_enable = (branch_enable && ~ctrl_mem.is_nop && ctrl_mem.opcode == op_br)
                     || ctrl_mem.opcode == op_jmp 
                     || ctrl_mem.opcode == op_jsr;
@@ -439,7 +445,9 @@ hazard_detector hazard_detection_unit
  (
     .mem_write(ctrl_mem.mem_write),
     .mem_reg_write(ctrl_mem.load_regfile),
+    .mem_opcode(ctrl_mem.opcode),
     .wb_reg_write(ctrl_wb.load_regfile),
+    .exec_mem_read(ctrl_exec.mem_read),
     .sr1(sr1),
     .sr2(storemux_out),
     .sr1_exec(sr1_index_reg_out),
@@ -805,7 +813,7 @@ mux4 forwarding_mux_a
     .a(sr1reg1_out),
     .b(alu_reg_out),
     .c(regfile_filter_out),
-    .d(16'b0),
+    .d(offsetadder_reg1_out),
     .f(forwarding_mux_a_out)
 );
 
@@ -816,7 +824,7 @@ mux4 forwarding_mux_b
     .a(alumux_out),
     .b(alu_reg_out),
     .c(regfile_filter_out),
-    .d(16'b0),
+    .d(offsetadder_reg1_out),
     .f(forwarding_mux_b_out)
 );
 
