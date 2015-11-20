@@ -128,6 +128,7 @@ logic flush_enable;
 logic [1:0] resp_count;
 
 lc3b_control_word ctrl_bubble;
+lc3b_word poop;
 
 initial
 begin
@@ -137,12 +138,21 @@ end
 
 always_comb
 begin
+    if (ctrl_mem.load_regfile)
+    begin
+        if(ctrl_mem.mem_read)
+            poop = mem_rdata;
+        else
+            poop = aluReg_out;
+    end
+    else
+        poop = 16'b0;
     mem_read = ctrl_mem.mem_read 
                 || ((ctrl_mem.opcode == op_sti) && (resp_count == 2'b00));
     mem_write = ctrl_mem.mem_write 
                 || ((ctrl_mem.opcode == op_sti) && (resp_count == 2'b10));
     is_nop = (ir_out == 16'b0);
-    flush_enable = branch_enable 
+    flush_enable = (branch_enable && ~ctrl_mem.is_nop && ctrl_mem.opcode == op_br)
                     || ctrl_mem.opcode == op_jmp 
                     || ctrl_mem.opcode == op_jsr;
     ir_in = flush_enable ? 16'b0 : instr_rdata;
@@ -350,7 +360,7 @@ nzp_comparator cccomp
  */
 gencc gencc_module
 (
-    .in(regfile_filter_out),
+    .in(poop),
     .out(gencc_out)
 );
 
@@ -371,7 +381,7 @@ up_counter mem_resp_counter
  */
 hazard_detector hazard_detection_unit
 (
-    .mem_read(mem_read),
+    .mem_read(ctrl_exec.mem_read),
     .is_nop(ctrl_mem.is_nop),
     .sr1(sr1),
     .sr2(sr2),
@@ -380,6 +390,8 @@ hazard_detector hazard_detection_unit
     .bubble_enable(bubble_enable)
 );
 
+logic forwarding_sel_c;
+logic forwarding_sel_d;
 /*
  * Data forwarding unit
  */
@@ -387,12 +399,16 @@ hazard_detector hazard_detection_unit
  (
     .mem_reg_write(ctrl_mem.load_regfile),
     .wb_reg_write(ctrl_wb.load_regfile),
-    .sr1(sr1_index_reg_out),
-    .sr2(sr2_index_reg_out),
+    .sr1(sr1),
+    .sr2(sr2),
+    .sr1_exec(sr1_index_reg_out),
+    .sr2_exec(sr2_index_reg_out),
     .write_reg2(writeReg2_out),
     .write_reg3(writeReg3_out),
     .sel_a(forwarding_sel_a),
-    .sel_b(forwarding_sel_b)
+    .sel_b(forwarding_sel_b),
+    .sel_c(forwarding_sel_c),
+    .sel_d(forwarding_sel_d)
 );
 
 
@@ -439,7 +455,7 @@ register mdr
 register #(.width(3)) cc
 (
     .clk(clk),
-    .load(ctrl_wb.load_cc),
+    .load(ctrl_mem.load_cc),
     .in(gencc_out),
     .out(cc_out)
 );
@@ -520,20 +536,22 @@ ctrl_register ctrlword3
     .in(ctrl_mem),
     .out(ctrl_wb)
 );
-
+lc3b_word irreg_in;
+assign irreg_in = bubble_enable ? 0 : ir_out;
 register irReg
 (
     .clk(clk),
     .load(global_load),
-    .in(ir_out),
+    .in(irreg_in),
     .out(irReg_out)
 );
-
+lc3b_reg writeReg1_in;
+assign writeReg1_in = bubble_enable ? 3'b000 : destmux_out;
 register #(.width(3)) writeReg1
 (
     .clk(clk),
     .load(global_load),
-    .in(destmux_out),
+    .in(writeReg1_in),
     .out(writeReg1_out)
 );
 
@@ -552,12 +570,19 @@ register #(.width(3)) writeReg3
     .in(writeReg2_out),
     .out(writeReg3_out)
 );
-
+lc3b_word sr1reg1_t;
+lc3b_word sr2reg1_t;
+assign sr1reg1_t = bubble_enable ? 0 : sr1_out;
+assign sr2reg1_t = bubble_enable ? 0 : sr2_out;
+lc3b_word sr1reg1_in;
+lc3b_word sr2reg1_in;
+assign sr1reg1_in = forwarding_sel_c ? regfile_filter_out : sr1reg1_t;
+assign sr2reg1_in = forwarding_sel_d ? regfile_filter_out : sr2reg1_t;
 register SR1Reg1
 (
     .clk(clk),
     .load(global_load),
-    .in(sr1_out),
+    .in(sr1reg1_in),
     .out(sr1reg1_out)
 );
 
@@ -573,7 +598,7 @@ register SR2Reg1
 (
     .clk(clk),
     .load(global_load),
-    .in(sr2_out),
+    .in(sr2reg1_in),
     .out(sr2reg1_out)
 );
 
@@ -600,12 +625,15 @@ register offsetadderReg2
     .in(offsetadderReg1_out),
     .out(offsetadderReg2_out)
 );
-
+lc3b_reg sr1_index_reg_in;
+lc3b_reg sr2_index_reg_in;
+assign sr1_index_reg_in = bubble_enable ? 3'b000 : sr1;
+assign sr2_index_reg_in = bubble_enable ? 3'b000 : sr2;
 register #(.width(3)) sr1_index_reg
 (
     .clk(clk),
     .load(global_load),
-    .in(sr1),
+    .in(sr1_index_reg_in),
     .out(sr1_index_reg_out)
 );
 
@@ -613,7 +641,7 @@ register #(.width(3)) sr2_index_reg
 (
     .clk(clk),
     .load(global_load),
-    .in(sr2),
+    .in(sr2_index_reg_in),
     .out(sr2_index_reg_out)
 );
 
