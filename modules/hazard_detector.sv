@@ -18,7 +18,10 @@ logic is_data_hazard;
 
 assign is_data_hazard = mem_read 
                     && (write_reg1 == sr1 
-                        || write_reg1 == sr2);
+                        || write_reg1 == sr2)
+                    && opcode != op_jmp
+                    && opcode != op_jsr
+                    && opcode != op_trap;
 
 always_comb
 begin

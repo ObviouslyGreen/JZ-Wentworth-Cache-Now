@@ -119,8 +119,8 @@ lc3b_word forwarding_mux_a_out;
 lc3b_word forwarding_mux_b_out;
 logic [1:0] forwarding_sel_a;
 logic [1:0] forwarding_sel_b;
-logic forwarding_sel_c;
-logic forwarding_sel_d;
+logic [1:0] forwarding_sel_c;
+logic [1:0] forwarding_sel_d;
 
 
 logic is_nop;
@@ -138,6 +138,7 @@ lc3b_word sr2reg2_in;
 lc3b_reg sr1_index_reg_in;
 lc3b_reg sr2_index_reg_in;
 lc3b_word gencc_in;
+lc3b_word mar_reg_out;
 
 lc3b_control_word ctrl_bubble;
 
@@ -168,9 +169,13 @@ begin
         gencc_in = 16'b0;
     end
 
-    if (forwarding_sel_c)
+    if (forwarding_sel_c == 2'b10)
     begin
         sr1reg1_in = regfile_filter_out;
+    end
+    else if (forwarding_sel_c == 2'b01)
+    begin
+        sr1reg1_in = offsetadder_reg1_out;
     end
     else
     begin
@@ -181,10 +186,14 @@ begin
     end
 
     sr1reg2_in = forwarding_sel_a ? alu_reg_out : sr1reg1_out;
-    
-    if (forwarding_sel_d)
+
+    if (forwarding_sel_d == 2'b10)
     begin
         sr2reg1_in = regfile_filter_out;
+    end
+    else if (forwarding_sel_d == 2'b01)
+    begin
+        sr2reg1_in = offsetadder_reg1_out;
     end
     else
     begin
@@ -202,12 +211,13 @@ begin
 
     flush_enable = (branch_enable && ~ctrl_mem.is_nop && ctrl_mem.opcode == op_br)
                     || ctrl_mem.opcode == op_jmp 
-                    || ctrl_mem.opcode == op_jsr;
+                    || ctrl_mem.opcode == op_jsr
+                    || ctrl_mem.opcode == op_trap;
     ir_in = flush_enable ? 16'b0 : instr_rdata;
 
     ctrlword1_in = (bubble_enable || flush_enable) ? ctrl_bubble : ctrl;
     ctrlword2_in = flush_enable ? ctrl_bubble : ctrl_exec;
-    ir_reg_in = bubble_enable ? 16'b0 : ir_out;
+    ir_reg_in = (bubble_enable || flush_enable) ? 16'b0 : ir_out;
     write_reg1_in = (bubble_enable || ctrl.mem_write)  ? 3'b000 : destmux_out;
     sr1_index_reg_in = bubble_enable ? 3'b000 : sr1;
     sr2_index_reg_in = bubble_enable ? 3'b000 : storemux_out;
@@ -263,6 +273,7 @@ control_rom control_rom_module
     .d_enable(d_enable),
     .stb_high_enable(mem_address[0]),
     .is_nop(is_nop),
+    .flush_enable(flush_enable || ir_out == 16'b0),
     .ctrl(ctrl)
 );
 
@@ -352,7 +363,7 @@ zadj #(.width(8)) zadj8
 regfile_filter regfile_filter_module
 (
     .filter_enable(ctrl_wb.regfile_filter_enable),
-    .high_byte_enable(mem_address[0]),
+    .high_byte_enable(mar_reg_out[0]),
     .in(regfilemux_out),
     .out(regfile_filter_out)
 );
@@ -446,6 +457,7 @@ hazard_detector hazard_detection_unit
  */
  forwarding_unit data_forwarding_unit
  (
+    .exec_mem_write(ctrl_exec.mem_write),
     .mem_write(ctrl_mem.mem_write),
     .mem_reg_write(ctrl_mem.load_regfile),
     .mem_opcode(ctrl_mem.opcode),
@@ -518,6 +530,13 @@ register #(.width(3)) cc
 /**************************************
  * TRANSITION Registers               *
  **************************************/
+register mar_reg
+(
+    .clk(clk),
+    .load(global_load),
+    .in(mem_address), 
+    .out(mar_reg_out)
+);
 
 register pc_reg1
 (
