@@ -66,6 +66,7 @@ set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name EDA_TEST_BENCH_FILE mp3_tb.sv -section_id mp3_tb
 set_global_assignment -name EDA_TEST_BENCH_FILE physical_memory.sv -section_id mp3_tb
+set_global_assignment -name SYSTEMVERILOG_FILE control_rom.sv
 set_global_assignment -name SDC_FILE mp3.out.sdc
 set_global_assignment -name SYSTEMVERILOG_FILE modules/zext.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/zadj.sv
@@ -83,17 +84,14 @@ set_global_assignment -name SYSTEMVERILOG_FILE modules/mux2.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/l2_data_line_filter.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/l2_array.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/ir.sv
-set_global_assignment -name SOURCE_FILE modules/hazard_detector.sv.bak
 set_global_assignment -name SYSTEMVERILOG_FILE modules/hazard_detector.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/gencc.sv
-set_global_assignment -name SOURCE_FILE modules/forwarding_unit.sv.bak
 set_global_assignment -name SYSTEMVERILOG_FILE modules/forwarding_unit.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/encoder.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/decoder.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/data_membyte_filter.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/ctrl_register.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/counter.sv
-set_global_assignment -name SYSTEMVERILOG_FILE modules/control_rom.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/control.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/comparator.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/byte_select_mux2.sv
