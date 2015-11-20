@@ -190,7 +190,7 @@ begin
         else
             sr2reg1_in = sr2_out;
     end
-    sr2reg2_in = (forwarding_sel_b == 2'b01) ? aluReg_out : sr2reg1_out;
+    sr2reg2_in = (forwarding_sel_b == 2'b01) ? alu_reg_out : sr2reg1_out;
     flush_enable = (branch_enable && ~ctrl_mem.is_nop && ctrl_mem.opcode == op_br)
                     || ctrl_mem.opcode == op_jmp 
                     || ctrl_mem.opcode == op_jsr;
