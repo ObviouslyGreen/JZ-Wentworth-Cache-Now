@@ -219,7 +219,7 @@ begin
     if (ctrl_mem.indirect_enable)
         global_load = (resp_count == 2'b10);
     else
-        global_load = i_mem_resp & (d_mem_resp | ~(ctrl_mem.mem_read | ctrl_mem.mem_write));
+        global_load = i_mem_resp && (d_mem_resp || ~(ctrl_mem.mem_read || ctrl_mem.mem_write));
 end
 
 
@@ -424,7 +424,7 @@ gencc gencc_module
 up_counter mem_resp_counter
 (
     .clk(clk),
-    .enable(ctrl_mem.indirect_enable & d_mem_resp),
+    .enable(ctrl_mem.indirect_enable && d_mem_resp),
     .reset(global_load),
     .count(resp_count)
 );
