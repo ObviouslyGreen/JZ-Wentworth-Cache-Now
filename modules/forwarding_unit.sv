@@ -43,10 +43,6 @@ begin
         else if (write_reg2 == sr2_exec
             && ~exec_mem_read && ~exec_imm)
             sel_b = 2'b01;
-        if (sr1_exec == write_reg2 && exec_mem_write)
-            sel_c = 2'b01;
-        if (sr2_exec == write_reg2 && exec_mem_write && ~id_imm)
-            sel_d = 2'b01;
     end
     if (wb_reg_write)
     begin
@@ -57,10 +53,6 @@ begin
             && write_reg3 == sr2_exec
             && ~exec_mem_read)
             sel_b = 2'b10;
-        if (sr1 != write_reg2 && write_reg3 == sr1)
-            sel_c = 2'b10;
-        if (sr2 != write_reg2 && write_reg3 == sr2 && ~id_imm)
-            sel_d = 2'b10;
     end
 end
 

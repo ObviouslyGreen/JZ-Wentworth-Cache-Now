@@ -230,6 +230,7 @@ begin
                 /* DR <= PC + (SEXT(IR[8:0]) << 1) */
                 ctrl.regfilemux_sel = 2'b10;
                 ctrl.load_regfile = 1'b1;
+                ctrl.load_cc = 1'b1;
             end
 
             op_shf:
