@@ -159,8 +159,10 @@ begin
 
     if (ctrl_mem.load_regfile)
     begin
-        if(ctrl_mem.mem_read)
+        if (ctrl_mem.mem_read)
             gencc_in = mem_rdata;
+        else if (ctrl_mem.opcode == op_lea)
+            gencc_in = offsetadder_reg1_out;
         else
             gencc_in = alu_reg_out;
     end
@@ -169,43 +171,32 @@ begin
         gencc_in = 16'b0;
     end
 
-    if (forwarding_sel_c == 2'b10)
-    begin
-        sr1reg1_in = regfile_filter_out;
-    end
-    else if (forwarding_sel_c == 2'b01)
-    begin
-        sr1reg1_in = offsetadder_reg1_out;
-    end
+    if (bubble_enable)
+        sr1reg1_in = 16'b0;
     else
-    begin
-        if (bubble_enable)
-            sr1reg1_in = 16'b0;
-        else
-            sr1reg1_in = sr1_out;
-    end
+        sr1reg1_in = sr1_out;
 
-    sr1reg2_in = forwarding_sel_a ? alu_reg_out : sr1reg1_out;
-
-    if (forwarding_sel_d == 2'b10)
-    begin
-        sr2reg1_in = regfile_filter_out;
-    end
-    else if (forwarding_sel_d == 2'b01)
-    begin
-        sr2reg1_in = offsetadder_reg1_out;
-    end
+    // MAKE MUXES
+    if (forwarding_sel_a == 2'b01)
+        sr1reg2_in = alu_reg_out;
+    else if (forwarding_sel_a == 2'b10)
+        sr1reg2_in = regfile_filter_out;
+    else if (forwarding_sel_a == 2'b11)
+        sr1reg2_in = offsetadder_reg1_out;
     else
-    begin
-        if (bubble_enable)
-            sr2reg1_in = 16'b0;
-        else
-            sr2reg1_in = sr2_out;
-    end
+        sr1reg2_in = sr1reg1_out;
+
+    if (bubble_enable)
+        sr2reg1_in = 16'b0;
+    else
+        sr2reg1_in = sr2_out;
+
     if (forwarding_sel_b == 2'b01)
         sr2reg2_in = alu_reg_out;
     else if (forwarding_sel_b == 2'b10)
         sr2reg2_in = regfile_filter_out;
+    else if (forwarding_sel_b == 2'b11)
+        sr2reg2_in = offsetadder_reg1_out;
     else
         sr2reg2_in = sr2reg1_out;
 
