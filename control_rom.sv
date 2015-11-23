@@ -218,6 +218,7 @@ begin
                 /* MAR <= MDR <= M[MAR] */
                 ctrl.mdrmux_sel = 1'b1;
                 ctrl.load_mdr = 1'b1;
+                ctrl.mem_read = 1'b1;
 
                 /* MDR <= SR */
                 ctrl.storemux_sel = 1'b1;
