@@ -100,9 +100,7 @@ set_global_assignment -name SYSTEMVERILOG_FILE modules/alu.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/adj.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/adder.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/pseudo_lru.sv
-set_global_assignment -name SYSTEMVERILOG_FILE lru_stack.sv
 set_global_assignment -name SYSTEMVERILOG_FILE lc3b_types.sv
-set_global_assignment -name SYSTEMVERILOG_FILE l2_lru.sv
 set_global_assignment -name SYSTEMVERILOG_FILE l2_cache_datapath.sv
 set_global_assignment -name SYSTEMVERILOG_FILE l2_cache_control.sv
 set_global_assignment -name SYSTEMVERILOG_FILE l2_cache.sv

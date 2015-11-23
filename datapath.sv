@@ -132,7 +132,6 @@ lc3b_word ir_in;
 lc3b_word ir_reg_in;
 lc3b_reg write_reg1_in;
 lc3b_word sr1reg1_in;
-lc3b_word sr1reg2_in;
 lc3b_word sr2reg1_in;
 lc3b_word sr2reg2_in;
 lc3b_reg sr1_index_reg_in;
@@ -151,10 +150,10 @@ end
 
 always_comb
 begin
-    mem_read = ctrl_mem.mem_read 
-                || ((ctrl_mem.opcode == op_sti) && (resp_count == 2'b00));
-    mem_write = ctrl_mem.mem_write 
-                || ((ctrl_mem.opcode == op_sti) && (resp_count == 2'b10));
+    mem_read = ctrl_mem.mem_read
+                || ((ctrl_mem.opcode == op_sti) && (ctrl_mem.indirect_enable && resp_count == 2'b00));
+    mem_write = ctrl_mem.mem_write
+                || ((ctrl_mem.opcode == op_sti) && (ctrl_mem.indirect_enable && resp_count == 2'b10));
     is_nop = (ir_out == 16'b0);
 
     if (ctrl_mem.load_regfile)
@@ -176,16 +175,6 @@ begin
     else
         sr1reg1_in = sr1_out;
 
-    // MAKE MUXES
-    if (forwarding_sel_a == 2'b01)
-        sr1reg2_in = alu_reg_out;
-    else if (forwarding_sel_a == 2'b10)
-        sr1reg2_in = regfile_filter_out;
-    else if (forwarding_sel_a == 2'b11)
-        sr1reg2_in = offsetadder_reg1_out;
-    else
-        sr1reg2_in = sr1reg1_out;
-
     if (bubble_enable)
         sr2reg1_in = 16'b0;
     else
@@ -201,7 +190,7 @@ begin
         sr2reg2_in = sr2reg1_out;
 
     flush_enable = (branch_enable && ~ctrl_mem.is_nop && ctrl_mem.opcode == op_br)
-                    || ctrl_mem.opcode == op_jmp 
+                    || ctrl_mem.opcode == op_jmp
                     || ctrl_mem.opcode == op_jsr
                     || ctrl_mem.opcode == op_trap;
     ir_in = flush_enable ? 16'b0 : instr_rdata;
@@ -425,7 +414,6 @@ up_counter mem_resp_counter
 (
     .clk(clk),
     .enable(ctrl_mem.indirect_enable && d_mem_resp),
-    .reset(global_load),
     .count(resp_count)
 );
 
@@ -490,7 +478,7 @@ register pc
 register mar
 (
     .clk(clk),
-    .load((global_load & ctrl_exec.load_mar) | resp_count == 2'b01),
+    .load((global_load & ctrl_exec.load_mar) | (ctrl_mem.indirect_enable && resp_count == 2'b01 && d_mem_resp)),
     .in(marmux_out),
     .out(mem_address)
 );
@@ -525,7 +513,7 @@ register mar_reg
 (
     .clk(clk),
     .load(global_load),
-    .in(mem_address), 
+    .in(mem_address),
     .out(mar_reg_out)
 );
 
@@ -763,7 +751,7 @@ mux2 br_mux
  */
 mux2 indirect_mar_mux
 (
-    .sel((resp_count == 2'b01)),
+    .sel((ctrl_mem.indirect_enable && resp_count == 2'b01 && d_mem_resp)),
     .a(alu_out),
     .b(mem_rdata),
     .f(indirect_marmux_out)
