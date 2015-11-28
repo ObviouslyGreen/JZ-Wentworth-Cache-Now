@@ -75,10 +75,10 @@ lc3b_word alumux_out;
 lc3b_word regfilemux_out;
 lc3b_word marmux_out;
 
-
 lc3b_word mdr_out;
 lc3b_word alu_out;
 lc3b_word regfile_filter_out;
+lc3b_word stb_filter_out;
 
 lc3b_word alu_reg_out;
 lc3b_word data_reg_out;
@@ -117,10 +117,9 @@ lc3b_reg sr1_index_reg_out;
 lc3b_reg sr2_index_reg_out;
 lc3b_word forwarding_mux_a_out;
 lc3b_word forwarding_mux_b_out;
+logic sti_forward;
 logic [1:0] forwarding_sel_a;
 logic [1:0] forwarding_sel_b;
-logic [1:0] forwarding_sel_c;
-logic [1:0] forwarding_sel_d;
 
 
 logic is_nop;
@@ -188,6 +187,8 @@ begin
         sr2reg2_in = offsetadder_reg1_out;
     else
         sr2reg2_in = sr2reg1_out;
+
+    mem_wdata = sti_forward ? regfile_filter_out : stb_filter_out;
 
     flush_enable = (branch_enable && ~ctrl_mem.is_nop && ctrl_mem.opcode == op_br)
                     || ctrl_mem.opcode == op_jmp
@@ -356,7 +357,7 @@ stb_filter stb_filter_module
     .filter_enable(ctrl_mem.stb_filter_enable),
     .high_byte_enable(mem_address[0]),
     .in(sr2reg2_out),               //changed to trans reg
-    .out(mem_wdata)
+    .out(stb_filter_out)
 );
 
 
@@ -448,12 +449,12 @@ hazard_detector hazard_detection_unit
     .sr2(storemux_out),
     .sr1_exec(sr1_index_reg_out),
     .sr2_exec(sr2_index_reg_out),
+    .write_reg1(write_reg1_out),
     .write_reg2(write_reg2_out),
     .write_reg3(write_reg3_out),
+    .sti_forward(sti_forward),
     .sel_a(forwarding_sel_a),
-    .sel_b(forwarding_sel_b),
-    .sel_c(forwarding_sel_c),
-    .sel_d(forwarding_sel_d)
+    .sel_b(forwarding_sel_b)
 );
 
 
