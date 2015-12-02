@@ -66,8 +66,22 @@ lc3b_mem_wmask d_mem_byte_enable;
 lc3b_word d_mem_address;
 lc3b_word d_mem_rdata;
 lc3b_word d_mem_wdata;
-lc3b_word d_pmem_address;
-lc3b_mem_data d_pmem_wdata;
+
+
+logic v_dirty_in;
+logic v_dirty_out;
+logic ld_from_vic;
+logic v_pmem_read;
+logic v_pmem_write;
+logic v_mem_read;
+logic v_mem_write;
+logic v_mem_resp;
+logic v_pmem_resp;
+lc3b_word v_mem_address;
+lc3b_mem_data v_mem_rdata;
+lc3b_mem_data v_mem_wdata;
+lc3b_word v_pmem_address;
+lc3b_mem_data v_pmem_wdata;
 
 logic l2_mem_resp;
 logic l2_mem_read;
@@ -102,7 +116,7 @@ datapath datapath_module
     .mem_byte_enable(d_mem_byte_enable)
 );
 
-l1_cache i_cache
+i_cache i_cache
 (
     .clk(clk),
     .mem_read(i_mem_read),
@@ -120,22 +134,46 @@ l1_cache i_cache
     .pmem_wdata(i_pmem_wdata)
 );
 
-l1_cache d_cache
+d_cache d_cache
 (
     .clk(clk),
+    .ld_from_vic(ld_from_vic),
+    .dirty_in(v_dirty_out),
+    .dirty_out(v_dirty_in),
     .mem_read(d_mem_read),
     .mem_write(d_mem_write),
     .pmem_resp(d_pmem_resp),
     .mem_byte_enable(d_mem_byte_enable),
     .mem_wdata(d_mem_wdata),
     .mem_address(d_mem_address),
-    .pmem_rdata(arbiter_rdata_out),
+    .pmem_rdata(v_mem_rdata),
     .mem_resp(d_mem_resp),
-    .pmem_read(d_pmem_read),
-    .pmem_write(d_pmem_write),
+    .pmem_read(v_mem_read),
+    .pmem_write(v_mem_write),
     .mem_rdata(d_mem_rdata),
-    .pmem_address(d_pmem_address),
-    .pmem_wdata(d_pmem_wdata)
+    .pmem_address(v_mem_address),
+    .pmem_wdata(v_mem_wdata)
+);
+
+victim_cache victim_cache
+(
+    .clk(clk),
+    .l1_dirty(v_dirty_in),
+    .mem_read(v_mem_read),
+    .mem_write(v_mem_write),
+    .pmem_resp(v_pmem_resp),
+    .d_mem_address(d_mem_address),
+    .mem_address(v_mem_address),
+    .mem_wdata(v_mem_wdata),
+    .pmem_rdata(arbiter_rdata_out),
+    .dirty_reg_out(v_dirty_out),
+    .ld_from_vic(ld_from_vic)
+    .mem_resp(v_mem_resp),
+    .pmem_read(v_pmem_read),
+    .pmem_write(v_pmem_write),
+    .pmem_address(v_pmem_address),
+    .mem_rdata(v_mem_rdata),
+    .pmem_wdata(v_pmem_wdata),
 );
 
 l2_cache l2_cache
@@ -163,15 +201,15 @@ arbiter arbiter
     .l2_mem_resp(l2_mem_resp),
     .i_pmem_read(i_pmem_read),
     .i_pmem_write(i_pmem_write),
-    .d_pmem_read(d_pmem_read),
-    .d_pmem_write(d_pmem_write),
+    .d_pmem_read(v_pmem_read),
+    .d_pmem_write(v_pmem_write),
     .i_pmem_wdata(i_pmem_wdata),
     .i_pmem_address(i_pmem_address),
-    .d_pmem_wdata(d_pmem_wdata),
-    .d_pmem_address(d_pmem_address),
+    .d_pmem_wdata(v_pmem_wdata),
+    .d_pmem_address(v_pmem_address),
     .l2_mem_rdata_in(l2_mem_rdata_in),
     .i_pmem_resp(i_pmem_resp),
-    .d_pmem_resp(d_pmem_resp),
+    .d_pmem_resp(v_pmem_resp),
     .l2_mem_read(l2_mem_read),
     .l2_mem_write(l2_mem_write),
     .l2_mem_address(l2_mem_address),

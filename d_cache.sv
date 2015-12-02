@@ -1,8 +1,11 @@
 import lc3b_types::*; 
 
-module l1_cache
+module d_cache
 (
     input clk,
+    input ld_from_vic,
+    input dirty_in,
+    output logic dirty_out,
     input mem_read,
     input mem_write,
     input pmem_resp,
@@ -22,31 +25,40 @@ logic ld_cache;
 logic ld_dirty0;
 logic ld_dirty1;
 logic ld_lru;
-logic dirtymux_sel;
 logic writecachemux_sel;
 logic data0mux_sel;
 logic data1mux_sel;
 logic hit;
 logic curr_way;
 logic lru_out;
+logic valid0_out;
+logic valid1_out
+logic dirty0_in;
+logic dirty1_in;
 logic dirty0_out;
 logic dirty1_out;
 lc3b_c_tag pmem_tag;
 
-cache_datapath cache_datapath_module
+d_cache_datapath cache_datapath_module
 (
     .clk(clk),
     .ld_cache(ld_cache),
     .ld_dirty0(ld_dirty0),
     .ld_dirty1(ld_dirty1),
     .ld_lru(ld_lru),
-    .dirtymux_sel(dirtymux_sel),
     .writecachemux_sel(writecachemux_sel),
     .data0mux_sel(data0mux_sel),
     .data1mux_sel(data1mux_sel),
+    .ld_from_vic(ld_from_vic),
+    .dirty0_in(dirty0_in),
+    .dirty1_in(dirty1_in),
+    .dirty_in(dirty_in),
     .hit(hit),
     .curr_way(curr_way),
     .lru_out(lru_out),
+    .valid0_out(valid0_out),
+    .valid1_out(valid0_out),
+    .dirty_out(dirty_out),
     .dirty0_out(dirty0_out),
     .dirty1_out(dirty1_out),
     .pmem_tag(pmem_tag),
@@ -58,12 +70,14 @@ cache_datapath cache_datapath_module
     .pmem_wdata(pmem_wdata)
 );
 
-cache_control cache_control_module
+d_cache_control cache_control_module
 (
     .clk(clk),
     .hit(hit),
     .curr_way(curr_way),
     .lru_out(lru_out),
+    .valid0_out(valid0_out),
+    .valid1_out(valid0_out),
     .dirty0_out(dirty0_out),
     .dirty1_out(dirty1_out),
     .pmem_tag(pmem_tag),
@@ -71,7 +85,6 @@ cache_control cache_control_module
     .ld_dirty0(ld_dirty0),
     .ld_dirty1(ld_dirty1),
     .ld_lru(ld_lru),
-    .dirtymux_sel(dirtymux_sel),
     .writecachemux_sel(writecachemux_sel),
     .data0mux_sel(data0mux_sel),
     .data1mux_sel(data1mux_sel),
@@ -85,4 +98,4 @@ cache_control cache_control_module
     .pmem_write(pmem_write)
 );
 
-endmodule : l1_cache
+endmodule : d_cache

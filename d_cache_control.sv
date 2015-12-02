@@ -3,7 +3,7 @@ import lc3b_types::*;
 /*
  * Control signals and state machine for the cache
  */
-module cache_control
+module d_cache_control
 (
     input clk,
 
@@ -11,14 +11,17 @@ module cache_control
     input hit,
     input curr_way,
     input lru_out,
+    input valid0_out,
+    input valid1_out,
     input dirty0_out,
     input dirty1_out,
     input lc3b_c_tag pmem_tag,
     output logic ld_cache,
     output logic ld_dirty0,
     output logic ld_dirty1,
+    output logic dirty0_in,
+    output logic dirty1_in,
     output logic ld_lru,
-    output logic dirtymux_sel,
     output logic writecachemux_sel,
     output logic data0mux_sel,
     output logic data1mux_sel,
@@ -49,8 +52,9 @@ begin: state_actions
     ld_cache = 1'b0;
     ld_dirty0 = 1'b0;
     ld_dirty1 = 1'b0;
+    dirty0_in = 1'b0;
+    dirty1_in = 1'b0;
     ld_lru = 1'b0;
-    dirtymux_sel = 1'b0;
     writecachemux_sel = 1'b0;
     data0mux_sel = 1'b0;
     data1mux_sel = 1'b0;
@@ -77,11 +81,13 @@ begin: state_actions
                     begin
                         data1mux_sel = 1'b1;
                         ld_dirty1 = 1'b1;
+                        dirty1_in = 1'b1;
                     end
                     else
                     begin
                         data0mux_sel = 1'b1;
                         ld_dirty0 = 1'b1;
+                        dirty0_in = 1'b1;
                     end
                 end
             end
@@ -89,7 +95,6 @@ begin: state_actions
 
         phys_mem_write:
         begin
-            dirtymux_sel = 1'b0;
             if (lru_out)
             begin
                 ld_dirty1 = 1'b1;
@@ -123,21 +128,21 @@ begin: next_state_logic
      case (state)
         idle_rw_cache:
         begin
-            if ((mem_read | mem_write) & (~hit))
+            if ((mem_read || mem_write) && (~hit))
             begin
-                if (lru_out)
+                if (curr_way)
                 begin
-                    if (dirty1_out)
-                        next_state = phys_mem_write;
-                    else
+                    if (valid1_out)
                         next_state = phys_mem_read;
+                    else
+                        next_state = phys_mem_write;
                 end
                 else
                 begin
-                    if (dirty0_out)
-                        next_state = phys_mem_write;
-                    else
+                    if (valid0_out)
                         next_state = phys_mem_read;
+                    else
+                        next_state = phys_mem_write;
                 end
             end
             else
@@ -171,4 +176,4 @@ begin: next_state_assignment
     state <= next_state;
 end
 
-endmodule : cache_control
+endmodule : d_cache_control
