@@ -59,6 +59,7 @@ lc3b_offset6 offset6;
 lc3b_byte trapvect8;
 lc3b_offset9 offset9;
 lc3b_offset11 offset11;
+lc3b_lc3x lc3x_check;
 
 lc3b_word zext4_out;
 lc3b_word sext5_out;
@@ -235,6 +236,7 @@ ir ir_module
     .trapvect8(trapvect8),
     .offset9(offset9),
     .offset11(offset11),
+    .lc3x_check(lc3x_check),
     .d_enable(d_enable),
     .imm_enable(imm_enable),
     .jsr_enable(jsr_enable),
@@ -249,6 +251,7 @@ ir ir_module
 control_rom control_rom_module
 (
     .opcode(opcode),
+    .lc3x_check(lc3x_check),
     .imm_enable(imm_enable),
     .jsr_enable(jsr_enable),
     .d_enable(d_enable),

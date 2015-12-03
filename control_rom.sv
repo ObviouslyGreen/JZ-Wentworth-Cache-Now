@@ -2,6 +2,7 @@ import lc3b_types::*;
 module control_rom
 (
     input lc3b_opcode opcode,
+    input lc3b_lc3x lc3x_check,
     input imm_enable,
     input jsr_enable,
     input d_enable,
@@ -47,28 +48,58 @@ begin
         case(opcode)
             op_add:
             begin
-                ctrl.aluop = alu_add;
-                ctrl.load_regfile = 1'b1;
-                ctrl.load_cc = 1'b1;
-                if (imm_enable == 1'b1)
+                if (lc3x_check == 2'b00)            //addition
                 begin
-                    /* DR <= A & SEXT(IR[4:0]) */
-                    ctrl.alumux_sel = 2'b10;
-                    ctrl.imm_enable = 1'b1;
+                    ctrl.aluop = alu_add;
+                    if (imm_enable == 1'b1)
+                    begin
+                        /* DR <= A & SEXT(IR[4:0]) */
+                        ctrl.alumux_sel = 2'b10;
+                        ctrl.imm_enable = 1'b1;
+                    end
                 end
+                /*LC-3X instructions do not need immediate*/
+                else if (lc3x_check == 2'b01)       //division
+                begin
+                    ctrl.aluop = alu_div;
+                end
+                
+                else if (lc3x_check == 2'b10)       //multiplication
+                begin
+                    ctrl.aluop = alu_mult;
+                end
+                
+                else if (lc3x_check == 2'b11)       //subtraction
+                begin
+                    ctrl.aluop = alu_sub;
+                end
+                ctrl.load_regfile = 1'b1;
+                ctrl.load_cc = 1'b1;        
             end
 
             op_and:
             begin
-                ctrl.aluop = alu_and;
+                if (lc3x_check == 2'b00)            //AND
+                    ctrl.aluop = alu_and;
+                    if (imm_enable == 1'b1)
+                    begin
+                        /* DR <= A & SEXT(IR[4:0]) */
+                        ctrl.alumux_sel = 2'b10;
+                        ctrl.imm_enable = 1'b1;
+                    end
+                end
+                else if (lc3x_check == 2'b01)       //OR
+                begin
+                    ctrl.aluop = alu_or;
+                end
+
+                else if (lc3x_check == 2'b10)       //XOR
+                begin
+                    ctrl.aluop = alu_xor;
+                end
                 ctrl.load_regfile = 1'b1;
                 ctrl.load_cc = 1'b1;
-                if (imm_enable == 1'b1)
-                begin
-                    /* DR <= A & SEXT(IR[4:0]) */
-                    ctrl.alumux_sel = 2'b10;
-                    ctrl.imm_enable = 1'b1;
-                end
+               
             end
 
             op_not:

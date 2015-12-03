@@ -14,6 +14,7 @@ typedef logic [5:0] lc3b_offset6;
 typedef logic [4:0] lc3b_offset5;
 typedef logic [3:0] lc3b_offset4;
 typedef logic [2:0] lc3b_offset3;
+typedef logic [2:0] lc3b_lc3x;
 
 typedef logic [2:0] lc3b_reg;
 typedef logic [2:0] lc3b_nzp;
@@ -28,7 +29,12 @@ typedef logic [8:0] lc3b_c_tag;
 
 typedef enum bit [3:0] {
     op_add  = 4'b0001,
+    //  op_div = 4'b0001            bits [4:3] = 01
+    //  op_mult = 4'b0001                      = 10
+    //  op_sub = 4'b0001                       = 11
     op_and  = 4'b0101,
+    //  op_or = 4'b0101                        = 01
+    //  op_xor = 4'b0101                       = 10
     op_br   = 4'b0000,
     op_jmp  = 4'b1100,   /* also RET */
     op_jsr  = 4'b0100,   /* also JSRR */
@@ -47,7 +53,12 @@ typedef enum bit [3:0] {
 
 typedef enum bit [3:0] {
     alu_add,
+    alu_sub,
+    alu_mult,
+    alu_div,
     alu_and,
+    alu_or,
+    alu_xor,
     alu_not,
     alu_pass,
     alu_sll,
