@@ -6,6 +6,7 @@ module d_cache
     input ld_from_vic,
     input dirty_in,
     output logic dirty_out,
+    output logic no_evict,
     input mem_read,
     input mem_write,
     input pmem_resp,
@@ -32,7 +33,7 @@ logic hit;
 logic curr_way;
 logic lru_out;
 logic valid0_out;
-logic valid1_out
+logic valid1_out;
 logic dirty0_in;
 logic dirty1_in;
 logic dirty0_out;
@@ -57,7 +58,7 @@ d_cache_datapath cache_datapath_module
     .curr_way(curr_way),
     .lru_out(lru_out),
     .valid0_out(valid0_out),
-    .valid1_out(valid0_out),
+    .valid1_out(valid1_out),
     .dirty_out(dirty_out),
     .dirty0_out(dirty0_out),
     .dirty1_out(dirty1_out),
@@ -77,17 +78,20 @@ d_cache_control cache_control_module
     .curr_way(curr_way),
     .lru_out(lru_out),
     .valid0_out(valid0_out),
-    .valid1_out(valid0_out),
+    .valid1_out(valid1_out),
     .dirty0_out(dirty0_out),
     .dirty1_out(dirty1_out),
     .pmem_tag(pmem_tag),
     .ld_cache(ld_cache),
     .ld_dirty0(ld_dirty0),
     .ld_dirty1(ld_dirty1),
+    .dirty0_in(dirty0_in),
+    .dirty1_in(dirty1_in),
     .ld_lru(ld_lru),
     .writecachemux_sel(writecachemux_sel),
     .data0mux_sel(data0mux_sel),
     .data1mux_sel(data1mux_sel),
+    .no_evict(no_evict),
     .mem_address(mem_address),
     .pmem_resp(pmem_resp),
     .mem_read(mem_read),

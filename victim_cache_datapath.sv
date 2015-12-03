@@ -64,8 +64,8 @@ begin
         index = 2'b00;
 end
 
-assign tag_match = comparator0_out | comparator1_out | 
-                    comparator2_out | comparator3_out; 
+assign tag_match = comparator0_out || comparator1_out || 
+                    comparator2_out || comparator3_out; 
 assign tag = mem_address[15:4];
 assign load_mem_tag = d_mem_address[15:4];
 assign pmem_wdata = data_out;
@@ -78,10 +78,10 @@ assign pmem_wdata = data_out;
 /*
  * Tag Comparator 0
  */
-comparator comparator0
+comparator #(.width(12)) comparator0
 (
     .clk(clk),
-    .a(tag),
+    .a(load_mem_tag),
     .b(tag0_out),
     .out(comparator0_out)
 );
@@ -89,10 +89,10 @@ comparator comparator0
 /*
  * Tag Comparator 1
  */
-comparator comparator1
+comparator #(.width(12)) comparator1
 (
     .clk(clk),
-    .a(tag),
+    .a(load_mem_tag),
     .b(tag1_out),
     .out(comparator1_out)
 );
@@ -100,10 +100,10 @@ comparator comparator1
 /*
  * Tag Comparator 1
  */
-comparator comparator2
+comparator #(.width(12)) comparator2
 (
     .clk(clk),
-    .a(tag),
+    .a(load_mem_tag),
     .b(tag2_out),
     .out(comparator2_out)
 );
@@ -111,10 +111,10 @@ comparator comparator2
 /*
  * Tag Comparator 1
  */
-comparator comparator3
+comparator #(.width(12)) comparator3
 (
     .clk(clk),
-    .a(tag),
+    .a(load_mem_tag),
     .b(tag3_out),
     .out(comparator3_out)
 );
@@ -138,7 +138,7 @@ lru_stack lru
 /*
  * Data 
  */
-victim_array data
+victim_array #(.width(128)) data
 (
     .clk(clk),
     .load(ld_cache),
@@ -158,17 +158,17 @@ register #(.width(128)) data_reg
 /*
  * Tag 
  */
-victim_tag_array #(.width(9)) tag
+victim_tag_array tag_array
 (
     .clk(clk),
     .load(ld_cache),
-    .index(index),
+    .index(indexmux_out),
     .in(tag),
     .out(tag_out),
     .data0(tag0_out),
     .data1(tag1_out),
     .data2(tag2_out),
-    .data3(tag3_out),
+    .data3(tag3_out)
 );
 
 register #(.width(1)) tag_reg_buffer
@@ -182,7 +182,7 @@ register #(.width(1)) tag_reg_buffer
 /*
  * Valid 
  */
-victim_array #(.width(1)) valid
+victim_array #(.width(1)) valid_array
 (
     .clk(clk),
     .load(ld_cache),
@@ -215,7 +215,7 @@ register #(.width(1)) dirty_reg
 (
     .clk(clk),
     .load(ld_cache),
-    .in(dirty),
+    .in(dirty_out),
     .out(dirty_reg_out)
 );
 
@@ -240,7 +240,7 @@ mux2 #(.width(2)) indexmux
 mux2 #(.width(128)) mem_rdata_mux
 (
     .sel(miss_get),
-    .a(data_buffer_out),
+    .a(data_reg_out),
     .b(pmem_rdata),
     .f(mem_rdata)
 );

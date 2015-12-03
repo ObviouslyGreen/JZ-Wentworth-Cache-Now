@@ -1,10 +1,8 @@
-import lc3b_types::*;
-
 module lru_stack
 (
     input clk,
     input write,
-	input [1:0] in,
+	input [1:0] index,
     output logic [1:0] out
 );
 
@@ -66,6 +64,6 @@ begin
     end
 end
 
-assign lru = data[0];
+assign out = data[0];
 
 endmodule : lru_stack

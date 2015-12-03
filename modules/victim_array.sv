@@ -13,7 +13,7 @@ module victim_array #(parameter width = 256)
 );
 
 
-logic [width-1:0] data [7:0] /* synthesis ramstyle = "logic" */;
+logic [width-1:0] data [3:0] /* synthesis ramstyle = "logic" */;
 
 /* Initialize array */
 initial

@@ -2,12 +2,12 @@ import lc3b_types::*;
 
 module victim_tag_array 
 (
-    input clk,
-    input load,
-    input lc3b_c_vic_index index,
-    input lc3b_c_vic_tag in,
-    output lc3b_c_vic_tag out,
-	output lc3b_c_vic_tag data0,
+	input clk,
+  input load,
+  input lc3b_c_vic_index index,
+  input lc3b_c_vic_tag in,
+  output lc3b_c_vic_tag out,
+  output lc3b_c_vic_tag data0,
 	output lc3b_c_vic_tag data1,
 	output lc3b_c_vic_tag data2,
 	output lc3b_c_vic_tag data3
@@ -26,13 +26,13 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (write == 1)
+    if (load == 1)
     begin
-        data[index] = datain;
+        data[index] = in;
     end
 end
 
-assign dataout = data[index];
+assign out = data[index];
 assign data0 = data[0];
 assign data1 = data[1];
 assign data2 = data[2];

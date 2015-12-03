@@ -25,6 +25,7 @@ module d_cache_control
     output logic writecachemux_sel,
     output logic data0mux_sel,
     output logic data1mux_sel,
+    output logic no_evict,
 
     /* Memory signals */
     input lc3b_word mem_address,
@@ -42,7 +43,8 @@ enum int unsigned {
     /* List of states */
     idle_rw_cache,
     phys_mem_write,
-    phys_mem_read
+    phys_mem_read,
+    no_evict_phys_mem_read
 } state, next_state;
 
 always_comb
@@ -58,6 +60,7 @@ begin: state_actions
     writecachemux_sel = 1'b0;
     data0mux_sel = 1'b0;
     data1mux_sel = 1'b0;
+    no_evict = 1'b0;
     mem_resp = 1'b0;
     pmem_read = 1'b0;
     pmem_write = 1'b0;
@@ -75,7 +78,6 @@ begin: state_actions
                 if (mem_write)
                 begin
                     writecachemux_sel = 1'b1;
-                    dirtymux_sel = 1'b1;
 
                     if (curr_way)
                     begin
@@ -114,6 +116,13 @@ begin: state_actions
             pmem_read = 1'b1;
         end
 
+        no_evict_phys_mem_read:
+        begin
+            ld_cache = 1'b1;
+            pmem_read = 1'b1;
+            no_evict = 1'b1;
+        end
+
         default:
             /* nothing */;
     endcase
@@ -130,19 +139,19 @@ begin: next_state_logic
         begin
             if ((mem_read || mem_write) && (~hit))
             begin
-                if (curr_way)
+                if (lru_out)
                 begin
                     if (valid1_out)
-                        next_state = phys_mem_read;
-                    else
                         next_state = phys_mem_write;
+                    else
+                        next_state = no_evict_phys_mem_read;
                 end
                 else
                 begin
                     if (valid0_out)
-                        next_state = phys_mem_read;
-                    else
                         next_state = phys_mem_write;
+                    else
+                        next_state = no_evict_phys_mem_read;
                 end
             end
             else
@@ -165,6 +174,13 @@ begin: next_state_logic
                 next_state = phys_mem_read;
         end
 
+        no_evict_phys_mem_read:
+        begin
+            if (pmem_resp)
+                next_state = idle_rw_cache;
+            else
+                next_state = no_evict_phys_mem_read;
+		  end
         default:
             /* nothing */;
      endcase

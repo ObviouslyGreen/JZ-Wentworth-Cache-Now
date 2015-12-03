@@ -1,5 +1,3 @@
-import lc3b_types::*; /* Import types defined in lc3b_types.sv */
-
 module victim_cache_control
 (
     /* Input and output port declarations */
@@ -11,6 +9,7 @@ module victim_cache_control
 	input tag_match_reg_out,
 	input valid,
 	input valid_reg_out,
+	input no_evict,
 	output logic ld_cache,
 	output logic mem_resp,
 	output logic ld_from_vic,
@@ -47,7 +46,12 @@ begin : state_actions
 				ld_cache= 1;
 				mem_resp = 1;
 			end
-			else if (mem_read && valid_buffer_out && tag_match_buffer_out) 
+			else if (mem_read && no_evict && tag_match && valid)
+			begin
+				ld_from_vic = 1;
+				mem_resp = 1;
+			end
+			else if (mem_read && valid_reg_out && tag_match_reg_out && ~no_evict) 
 			begin
 			   	ld_from_vic = 1;
 				mem_resp = 1;
@@ -90,7 +94,9 @@ begin : next_state_logic
         begin
 			if (mem_write && ~tag_match)
 				next_state = phys_mem_write;
-			else if (mem_read && (~valid_buffer_out || ~tag_match_buffer_out))
+			else if (mem_read && (~tag_match || ~valid) && no_evict)
+				next_state = phys_mem_read;
+			else if (mem_read && (~valid_reg_out || ~tag_match_reg_out))
 				next_state = phys_mem_read;
 		end
 		  
@@ -108,7 +114,7 @@ begin : next_state_logic
 				next_state = idle_check;
 			else
 				next_state = phys_mem_read;
-
+		end
         default: next_state = idle_check;
     endcase
 end
