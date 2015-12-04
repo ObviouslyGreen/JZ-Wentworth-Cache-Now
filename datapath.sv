@@ -78,6 +78,9 @@ lc3b_word marmux_out;
 
 lc3b_word mdr_out;
 lc3b_word alu_out;
+lc3b_word aluopmux_out;
+lc3b_word divider_out;
+lc3b_word multiplier_out;
 lc3b_word regfile_filter_out;
 lc3b_word stb_filter_out;
 
@@ -271,6 +274,36 @@ alu alu_module
     .b(forwarding_mux_b_out),
     .f(alu_out)
 );
+
+/*
+ * Additional ALU functions (DIV and MULT) that cannot be implemented through logic
+ */
+divider divider_module
+(
+    .clock(clk),
+    .denom(forwarding_mux_b_out),
+    .numer(forwarding_mux_a_out),
+    .quotient(divider_out)
+);
+
+multiplier multiplier_module
+(
+    .clock(clk),
+    .dataa(forwarding_mux_a_out),
+    .datab(forwarding_mux_b_out),
+    .result(multiplier_out)
+);
+
+mux4 aluop_mux
+(
+    .sel(ctrl_exec.aluopmux_sel),
+    .a(alu_out),         //changed for trans reg
+    .b(divider_out),
+    .c(multiplier_out),
+    .d(),
+    .f(aluopmux_out)
+);
+
 
 /*
  * Regfile
@@ -557,7 +590,7 @@ register alu_reg
 (
     .clk(clk),
     .load(global_load),
-    .in(alu_out),
+    .in(aluopmux_out),
     .out(alu_reg_out)
 );
 
@@ -756,7 +789,7 @@ mux2 br_mux
 mux2 indirect_mar_mux
 (
     .sel((ctrl_mem.indirect_enable && resp_count == 2'b01 && d_mem_resp)),
-    .a(alu_out),
+    .a(aluopmux_out),
     .b(mem_rdata),
     .f(indirect_marmux_out)
 );

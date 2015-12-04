@@ -54,8 +54,6 @@ typedef enum bit [3:0] {
 typedef enum bit [3:0] {
     alu_add,
     alu_sub,
-    alu_mult,
-    alu_div,
     alu_and,
     alu_or,
     alu_xor,
@@ -82,6 +80,7 @@ typedef struct packed {
     logic storemux_sel;
     logic destmux_sel;
     logic [1:0] alumux_sel;
+    logic [1:0] aluopmux_sel;
     logic [1:0] regfilemux_sel;
     logic [1:0] marmux_sel;
     logic mdrmux_sel;

@@ -29,6 +29,7 @@ begin
     ctrl.storemux_sel = 1'b0;
     ctrl.destmux_sel = 1'b0;
     ctrl.alumux_sel = 2'b00;
+    ctrl.aluopmux_sel = 2'b00;
     ctrl.regfilemux_sel = 2'b00;
     ctrl.marmux_sel = 2'b00;
     ctrl.mdrmux_sel = 1'b0;
@@ -61,12 +62,12 @@ begin
                 /*LC-3X instructions do not need immediate*/
                 else if (lc3x_check == 2'b01)       //division
                 begin
-                    ctrl.aluop = alu_div;
+                    ctrl.aluopmux_sel = 2'b01;
                 end
                 
                 else if (lc3x_check == 2'b10)       //multiplication
                 begin
-                    ctrl.aluop = alu_mult;
+                    ctrl.aluopmux_sel = 2'b10;
                 end
                 
                 else if (lc3x_check == 2'b11)       //subtraction

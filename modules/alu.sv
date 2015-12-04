@@ -13,8 +13,6 @@ begin
     case (aluop)
         alu_add: f = a + b;
         alu_sub: f = a - b;
-        alu_mult: f = a * b;
-        alu_div: f = a / b;         //division is really bad in circuits because of high complexity and high cycles
         alu_and: f = a & b;
         alu_or: f = a | b;
         alu_xor: f = a ^ b;
