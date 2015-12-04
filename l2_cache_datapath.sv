@@ -40,7 +40,7 @@ module l2_cache_datapath
 
 
 /* declare internal signals */
-lc3b_c_l2_index index;
+lc3b_c_l2_index index /* synthesis syn_maxfan = 50 */;
 lc3b_c_l2_offset offset;
 lc3b_c_l2_tag tag;
 lc3b_pmem_data l2_data_line_filter_out;

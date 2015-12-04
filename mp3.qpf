@@ -18,12 +18,12 @@
 #
 # Quartus II 32-bit
 # Version 13.1.4 Build 182 03/12/2014 SJ Full Version
-# Date created = 00:00:00  August 25, 2014
+# Date created = 20:17:10  December 03, 2015
 #
 # -------------------------------------------------------------------------- #
 
 QUARTUS_VERSION = "13.1"
-DATE = "00:00:00  August 25, 2014"
+DATE = "20:17:10  December 03, 2015"
 
 # Revisions
 
