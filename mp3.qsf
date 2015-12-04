@@ -66,6 +66,9 @@ set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name EDA_TEST_BENCH_FILE mp3_tb.sv -section_id mp3_tb
 set_global_assignment -name EDA_TEST_BENCH_FILE physical_memory.sv -section_id mp3_tb
+set_global_assignment -name SYSTEMVERILOG_FILE modules/gen_prediction.sv
+set_global_assignment -name SYSTEMVERILOG_FILE modules/branch_predictors.sv
+set_global_assignment -name SYSTEMVERILOG_FILE modules/branch_history.sv
 set_global_assignment -name SYSTEMVERILOG_FILE control_rom.sv
 set_global_assignment -name SDC_FILE mp3.out.sdc
 set_global_assignment -name SYSTEMVERILOG_FILE modules/zext.sv
