@@ -80,6 +80,7 @@ begin
             op_and:
             begin
                 if (lc3x_check == 2'b00)            //AND
+					 begin
                     ctrl.aluop = alu_and;
                     if (imm_enable == 1'b1)
                     begin

@@ -58,7 +58,7 @@ begin
     d_enable   = data[4];
     imm_enable = data[5];
     jsr_enable = data[11];
-    lc3x_check = data[4:3]
+    lc3x_check = data[4:3];
     out = data;
 end
 
