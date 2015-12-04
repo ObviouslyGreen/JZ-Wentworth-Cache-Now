@@ -66,6 +66,7 @@ lc3b_word d_mem_address;
 lc3b_word d_mem_rdata;
 lc3b_word d_mem_wdata;
 
+logic d_v_mem_swap;
 logic no_evict;
 logic v_dirty_in;
 logic v_dirty_out;
@@ -150,6 +151,7 @@ d_cache d_cache
     .mem_resp(d_mem_resp),
     .pmem_read(v_mem_read),
     .pmem_write(v_mem_write),
+    .pmem_swap(d_v_mem_swap),
     .mem_rdata(d_mem_rdata),
     .pmem_address(v_mem_address),
     .pmem_wdata(v_mem_wdata)
@@ -158,6 +160,7 @@ d_cache d_cache
 victim_cache victim_cache
 (
     .clk(clk),
+    .d_v_mem_swap(d_v_mem_swap),
     .no_evict(no_evict),
     .l1_dirty(v_dirty_in),
     .mem_read(v_mem_read),
@@ -167,7 +170,7 @@ victim_cache victim_cache
     .mem_address(v_mem_address),
     .mem_wdata(v_mem_wdata),
     .pmem_rdata(arbiter_rdata_out),
-    .dirty_reg_out(v_dirty_out),
+    .dirty_out(v_dirty_out),
     .ld_from_vic(ld_from_vic),
     .mem_resp(v_mem_resp),
     .pmem_read(v_pmem_read),

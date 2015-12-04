@@ -17,6 +17,7 @@ module d_cache
     output logic mem_resp,
     output logic pmem_read,
     output logic pmem_write,
+    output logic pmem_swap,
     output lc3b_word mem_rdata,
     output lc3b_word pmem_address,
     output lc3b_mem_data pmem_wdata
@@ -99,7 +100,8 @@ d_cache_control cache_control_module
     .pmem_address(pmem_address),
     .mem_resp(mem_resp),
     .pmem_read(pmem_read),
-    .pmem_write(pmem_write)
+    .pmem_write(pmem_write),
+    .pmem_swap(pmem_swap)
 );
 
 endmodule : d_cache

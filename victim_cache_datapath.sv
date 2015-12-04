@@ -16,6 +16,7 @@ module victim_cache_datapath
     output logic tag_match_reg_out,
     output logic valid_reg_out,
     output logic dirty_reg_out,
+    output logic dirty_out,
 
     /* Memory signals */
     input pmem_write,
@@ -39,7 +40,6 @@ logic comparator0_out;
 logic comparator1_out;
 logic comparator2_out;
 logic comparator3_out;
-logic dirty_out;
 
 lc3b_c_vic_tag tag;
 lc3b_c_vic_tag tag_out;
@@ -240,7 +240,7 @@ mux2 #(.width(2)) indexmux
 mux2 #(.width(128)) mem_rdata_mux
 (
     .sel(miss_get),
-    .a(data_reg_out),
+    .a(data_out),
     .b(pmem_rdata),
     .f(mem_rdata)
 );

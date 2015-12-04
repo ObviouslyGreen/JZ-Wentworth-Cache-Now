@@ -3,12 +3,14 @@ module victim_cache_control
     /* Input and output port declarations */
 	input clk,
 
+	input d_v_mem_swap,
 	input mem_read,
 	input mem_write,
 	input tag_match,
 	input tag_match_reg_out,
 	input valid,
 	input valid_reg_out,
+	input dirty,
 	input no_evict,
 	output logic ld_cache,
 	output logic mem_resp,
@@ -41,21 +43,41 @@ begin : state_actions
 	case(state)
         idle_check: 
         begin
-			if (mem_write && tag_match) 
+			/*if (mem_write && tag_match) 
 			begin
 				ld_cache= 1;
 				mem_resp = 1;
+			end*/
+			if (d_v_mem_swap)
+			begin
+				if (valid)
+				begin
+					if (tag_match)
+					begin
+						ld_from_vic = 1;
+						ld_cache = 1;
+						mem_resp = 1;
+					end
+					
+					else
+					begin
+						if (~dirty)
+							ld_cache = 1;
+					end
+				end
+				else
+					ld_cache = 1;
 			end
 			else if (mem_read && no_evict && tag_match && valid)
 			begin
 				ld_from_vic = 1;
 				mem_resp = 1;
 			end
-			else if (mem_read && valid_reg_out && tag_match_reg_out && ~no_evict) 
+			/*else if (mem_read && valid_reg_out && tag_match_reg_out && ~no_evict) 
 			begin
 			   	ld_from_vic = 1;
 				mem_resp = 1;
-			end
+			end*/
 		  end
 		  
 		phys_mem_write: 
@@ -64,7 +86,6 @@ begin : state_actions
 			if (pmem_resp) 
 			begin
 				ld_cache= 1;
-			   	mem_resp = 1;
 			end
 		end
 		  
@@ -92,18 +113,29 @@ begin : next_state_logic
     case(state)
         idle_check: 
         begin
-			if (mem_write && ~tag_match)
+			/*if (mem_write && ~tag_match)
 				next_state = phys_mem_write;
 			else if (mem_read && (~tag_match || ~valid) && no_evict)
 				next_state = phys_mem_read;
 			else if (mem_read && (~valid_reg_out || ~tag_match_reg_out))
+				next_state = phys_mem_read;*/
+			if (d_v_mem_swap && (~tag_match) && valid)
+			begin
+				if (dirty)
+					next_state = phys_mem_write;
+				else
+					next_state = phys_mem_read;
+			end
+			else if (d_v_mem_swap && (~valid))
+				next_state = phys_mem_read;
+			else if (mem_read && (~tag_match || ~valid) && no_evict)
 				next_state = phys_mem_read;
 		end
 		  
 		phys_mem_write: 
 		begin
 			if (pmem_resp) 
-				next_state = idle_check;
+				next_state = phys_mem_read;
 			else
 				next_state = phys_mem_write;
 		end

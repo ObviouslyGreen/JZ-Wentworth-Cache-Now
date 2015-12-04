@@ -35,16 +35,16 @@ module d_cache_control
     output lc3b_word pmem_address,
     output logic mem_resp,
     output logic pmem_read,
-    output logic pmem_write
+    output logic pmem_write,
+    output logic pmem_swap
 );
 
 
 enum int unsigned {
     /* List of states */
     idle_rw_cache,
-    phys_mem_write,
-    phys_mem_read,
-    no_evict_phys_mem_read
+    no_evict_phys_mem_read,
+    phys_mem_swap
 } state, next_state;
 
 always_comb
@@ -64,6 +64,7 @@ begin: state_actions
     mem_resp = 1'b0;
     pmem_read = 1'b0;
     pmem_write = 1'b0;
+    pmem_swap = 1'b0;
     pmem_address = mem_address;
 
     /* Actions for each state */
@@ -95,33 +96,19 @@ begin: state_actions
             end
         end
 
-        phys_mem_write:
-        begin
-            if (lru_out)
-            begin
-                ld_dirty1 = 1'b1;
-            end
-            else
-            begin
-                ld_dirty0 = 1'b1;
-            end
-
-            pmem_address = {pmem_tag, mem_address[6:4], 4'b0000};
-            pmem_write = 1'b1;
-        end
-
-        phys_mem_read:
-        begin
-            ld_cache = 1'b1;
-            pmem_read = 1'b1;
-        end
-
         no_evict_phys_mem_read:
         begin
             ld_cache = 1'b1;
             pmem_read = 1'b1;
             no_evict = 1'b1;
         end
+
+        phys_mem_swap:
+        begin
+            pmem_address = {pmem_tag, mem_address[6:4], 4'b0000};
+            ld_cache = 1'b1;
+            pmem_swap = 1'b1;
+        end 
 
         default:
             /* nothing */;
@@ -142,14 +129,14 @@ begin: next_state_logic
                 if (lru_out)
                 begin
                     if (valid1_out)
-                        next_state = phys_mem_write;
+                        next_state = phys_mem_swap;
                     else
                         next_state = no_evict_phys_mem_read;
                 end
                 else
                 begin
                     if (valid0_out)
-                        next_state = phys_mem_write;
+                        next_state = phys_mem_swap;
                     else
                         next_state = no_evict_phys_mem_read;
                 end
@@ -158,29 +145,21 @@ begin: next_state_logic
                 next_state = idle_rw_cache;
         end
 
-        phys_mem_write:
-        begin
-            if (pmem_resp)
-                next_state = phys_mem_read;
-            else
-                next_state = phys_mem_write;
-        end
-
-        phys_mem_read:
-        begin
-            if (pmem_resp)
-                next_state = idle_rw_cache;
-            else
-                next_state = phys_mem_read;
-        end
-
         no_evict_phys_mem_read:
         begin
             if (pmem_resp)
                 next_state = idle_rw_cache;
             else
                 next_state = no_evict_phys_mem_read;
-		  end
+		end
+
+        phys_mem_swap:
+        begin
+            if (pmem_resp)
+                next_state = idle_rw_cache;
+            else
+                next_state = phys_mem_swap;
+        end
         default:
             /* nothing */;
      endcase

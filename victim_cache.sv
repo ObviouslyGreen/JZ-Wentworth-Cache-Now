@@ -3,6 +3,7 @@ import lc3b_types::*;
 module victim_cache
 (
     input clk,
+    input d_v_mem_swap,
 	input no_evict,
 	input l1_dirty,
 	input mem_read,
@@ -12,7 +13,7 @@ module victim_cache
 	input lc3b_word mem_address,
 	input lc3b_mem_data mem_wdata,
 	input lc3b_mem_data pmem_rdata,
-	output logic dirty_reg_out,
+	output logic dirty_out,
 	output logic ld_from_vic,
 	output logic mem_resp,
 	output logic pmem_read,
@@ -28,6 +29,7 @@ logic tag_match_reg_out;
 logic valid;
 logic valid_reg_out;
 logic miss_get;
+logic dirty_reg_out; 
 
 victim_cache_datapath victim_cache_datapath
 (
@@ -40,6 +42,7 @@ victim_cache_datapath victim_cache_datapath
 	.tag_match_reg_out(tag_match_reg_out),
 	.valid_reg_out(valid_reg_out),
 	.dirty_reg_out(dirty_reg_out),
+	.dirty_out(dirty_out),
 	.pmem_write(pmem_write),
 	.d_mem_address(d_mem_address),
 	.mem_address(mem_address),
@@ -53,12 +56,14 @@ victim_cache_datapath victim_cache_datapath
 victim_cache_control victim_cache_control
 (
     .clk(clk),
+    .d_v_mem_swap(d_v_mem_swap),
 	.mem_read(mem_read),
 	.mem_write(mem_write),
 	.tag_match(tag_match),
 	.tag_match_reg_out(tag_match_reg_out),
 	.valid(valid),
 	.valid_reg_out(valid_reg_out),
+	.dirty(dirty_out),
 	.no_evict(no_evict),
 	.ld_cache(ld_cache),
 	.mem_resp(mem_resp),
