@@ -1,16 +1,19 @@
+/*
+ * Branch history table
+ */
 import lc3b_types::*;
 
 module branch_history
 (
     input clk,
     input load,
-    input lc3b_offset5 index,
-    input lc3b_word in,
+    input lc3b_offset9 index,
+    input branch_enable,
     output lc3b_word out
 );
 
-// Data is 2^5 entries of branch pc values
-logic [15:0] data [4:0] /* synthesis ramstyle = "logic" */;
+// Data is 2^9 entries of the last 16 branches for PC values
+logic [15:0] data [8:0] /* synthesis ramstyle = "logic" */;
 
 /* Initialize array */
 initial
@@ -25,7 +28,7 @@ always_ff @(posedge clk)
 begin
     if (load == 1)
     begin
-        data[index] = in;
+        data[index] = data[index] << 1 | branch_enable;
     end
 end
 assign out = data[index];

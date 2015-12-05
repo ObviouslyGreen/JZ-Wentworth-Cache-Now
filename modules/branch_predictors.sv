@@ -1,3 +1,6 @@
+/*
+ * Bi-modal counters for branch prediction
+ */
 import lc3b_types::*;
 
 module branch_predictors

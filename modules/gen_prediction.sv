@@ -1,3 +1,6 @@
+/*
+ * Prediction generator
+ */
 module gen_prediction
 (
     input [1:0] branch_count,

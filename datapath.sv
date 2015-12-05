@@ -140,6 +140,18 @@ lc3b_word mar_reg_out;
 
 lc3b_control_word ctrl_bubble;
 
+lc3b_word predictor_index;
+lc3b_word branch_history_out;
+lc3b_word adj9_predict_out;
+lc3b_word predicted_pc;
+lc3b_word brmux_predict_out;
+logic [1:0] branch_count;
+logic branch_predict;
+logic mispredict;
+logic pred_reg1_out;
+logic pred_reg2_out;
+logic pred_reg3_out;
+
 initial
 begin
     ctrl_bubble = 0;
@@ -193,7 +205,8 @@ begin
     flush_enable = (branch_enable && ~ctrl_mem.is_nop && ctrl_mem.opcode == op_br)
                     || ctrl_mem.opcode == op_jmp
                     || ctrl_mem.opcode == op_jsr
-                    || ctrl_mem.opcode == op_trap;
+                    || ctrl_mem.opcode == op_trap
+                    || mispredict;
     ir_in = flush_enable ? 16'b0 : instr_rdata;
 
     ctrlword1_in = (bubble_enable || flush_enable) ? ctrl_bubble : ctrl;
@@ -210,6 +223,9 @@ begin
         global_load = (resp_count == 2'b10);
     else
         global_load = i_mem_resp && (d_mem_resp || ~(ctrl_mem.mem_read || ctrl_mem.mem_write));
+
+    predictor_index = instr_rdata ^ branch_history_out;
+    mispredict = branch_enable ^ pred_reg3_out;
 end
 
 
@@ -457,6 +473,58 @@ hazard_detector hazard_detection_unit
     .sel_b(forwarding_sel_b)
 );
 
+/*
+ * Branch history table
+ */
+branch_history branch_history_table
+(
+    .clk(clk),
+    .load(ctrl_mem.opcode == op_br),
+    .index(pc_reg_out3[8:0]),
+    .branch_enable(branch_enable),
+    .out(branch_history_out)
+);
+
+/*
+ * Branch bimodal counter table
+ */
+branch_predictors branch_predictor_table
+(
+    .clk(clk),
+    .load(ctrl_mem.opcode == op_br),
+    .branch_enable(branch_enable),
+    .index(predictor_index),
+    .branch_count(branch_count)
+);
+
+/*
+ * Predictor generator
+ */
+gen_prediction gen_prediction_module
+(
+    .branch_count(branch_count),
+    .branch_predict(branch_predict)
+);
+
+/*
+ * ADJ9 for prediction
+ */
+adj #(.width(9)) adj9_predict
+(
+    .in(instr_rdata[8:0]),
+    .out(adj9_predict_out)
+);
+
+/*
+ * Offset adder for prediction
+ */
+adder offset_prediction_adder
+(
+    .a(adj9_predict_out),
+    .b(pc_plus2_out),
+    .out(predicted_pc)
+);
+
 
 /**************************************
  * Registers                          *
@@ -469,7 +537,7 @@ register pc
 (
     .clk(clk),
     .load(global_load && ~bubble_enable),
-    .in(brmux_out),
+    .in(brmux_predict_out),
     .out(instr_address)
 );
 
@@ -686,6 +754,29 @@ register #(.width(3)) sr2_index_reg
     .out(sr2_index_reg_out)
 );
 
+register #(.width(1)) br_prediction_reg1
+(
+    .clk(clk),
+    .load(global_load),
+    .in(branch_predict),
+    .out(pred_reg1_out)
+);
+
+register #(.width(1)) br_prediction_reg2
+(
+    .clk(clk),
+    .load(global_load),
+    .in(pred_reg1_out),
+    .out(pred_reg2_out)
+);
+
+register #(.width(1)) br_prediction_reg3
+(
+    .clk(clk),
+    .load(global_load),
+    .in(pred_reg2_out),
+    .out(pred_reg3_out)
+);
 
 
 /**************************************
@@ -745,6 +836,19 @@ mux2 br_mux
     .a(pcmux_out),
     .b(offsetadder_reg1_out),
     .f(brmux_out)
+);
+
+/*
+ * Branch predict mux
+ */
+mux2 br_mux_predict
+(
+    // Only select prediction when decoding a br instruction
+    // Choose brmux_out on mispredict
+    .sel((branch_predict && opcode == op_br) || ~mispredict),
+    .a(brmux_out),
+    .b(predicted_pc),
+    .f(brmux_predict_out)
 );
 
 /*
@@ -810,7 +914,6 @@ mux4 mar_mux
     .f(marmux_out)
 );
 
-
 mux4 forwarding_mux_a
 (
     .sel(forwarding_sel_a),
@@ -820,7 +923,6 @@ mux4 forwarding_mux_a
     .d(offsetadder_reg1_out),
     .f(forwarding_mux_a_out)
 );
-
 
 mux4 forwarding_mux_b
 (
