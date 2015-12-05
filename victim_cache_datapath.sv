@@ -13,9 +13,6 @@ module victim_cache_datapath
     input miss_get,
     output logic tag_match,
     output logic valid,
-    output logic tag_match_reg_out,
-    output logic valid_reg_out,
-    output logic dirty_reg_out,
     output logic dirty_out,
 
     /* Memory signals */
@@ -35,7 +32,6 @@ lc3b_c_vic_index index;
 lc3b_c_vic_index indexmux_out;
 lc3b_c_vic_index lru_out;
 lc3b_mem_data data_out;
-lc3b_mem_data data_reg_out;
 logic comparator0_out;
 logic comparator1_out;
 logic comparator2_out;
@@ -132,7 +128,7 @@ lru_stack lru
 
 
 /**************************************
- * Arrays and registers               *
+ * Arrays                             *
  **************************************/
 
 /*
@@ -145,14 +141,6 @@ victim_array #(.width(128)) data
     .index(indexmux_out),
     .in(mem_wdata),
     .out(data_out)
-);
-
-register #(.width(128)) data_reg
-(
-    .clk(clk),
-    .load(ld_cache),
-    .in(data_out),
-    .out(data_reg_out)
 );
 
 /*
@@ -171,14 +159,6 @@ victim_tag_array tag_array
     .data3(tag3_out)
 );
 
-register #(.width(1)) tag_reg_buffer
-(
-    .clk(clk),
-    .load(ld_cache),
-    .in(tag_match),
-    .out(tag_match_reg_out)
-);
-
 /*
  * Valid 
  */
@@ -191,14 +171,6 @@ victim_array #(.width(1)) valid_array
     .out(valid)
 );
 
-register #(.width(1)) valid_reg
-(
-    .clk(clk),
-    .load(ld_cache),
-    .in(valid),
-    .out(valid_reg_out)
-);
-
 /*
  * Dirty 
  */
@@ -209,14 +181,6 @@ victim_array #(.width(1)) dirty
     .index(indexmux_out),
     .in(l1_dirty),
     .out(dirty_out)
-);
-
-register #(.width(1)) dirty_reg
-(
-    .clk(clk),
-    .load(ld_cache),
-    .in(dirty_out),
-    .out(dirty_reg_out)
 );
 
 /**************************************

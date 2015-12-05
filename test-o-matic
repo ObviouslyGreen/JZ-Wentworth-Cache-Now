@@ -9,7 +9,7 @@
 #MP project name
 MP=mp3
 #MP directory
-MP_DIR=$HOME/ece411/stable/JZ-Wentworth-Cache-Now
+MP_DIR=$HOME/ece411/JZ-Wentworth-Cache-Now
 #Location of LC3bAssembler; Should usually be in bin
 ASSEMBLER=$HOME/ece411/bin/LC3bAssembler
 #Addressability of physical memory; from load_memory.sh
@@ -26,7 +26,7 @@ TESTCODE_DIR=$HOME/ece411/testcode/
 #(not sure if 183 meant 181 and i also uncommented 185)
 # the original path was also incorrect so that was changed
 REG_FILE={/mp3_tb/dut/datapath_module/regfile_module/data}
-RUN_TIME=750000ns
+RUN_TIME=270000ns
 
 #Other debug signals
 #signals can be prefixed with -radix

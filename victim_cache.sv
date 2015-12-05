@@ -25,11 +25,8 @@ module victim_cache
 
 logic ld_cache;
 logic tag_match;
-logic tag_match_reg_out;
 logic valid;
-logic valid_reg_out;
 logic miss_get;
-logic dirty_reg_out; 
 
 victim_cache_datapath victim_cache_datapath
 (
@@ -39,9 +36,6 @@ victim_cache_datapath victim_cache_datapath
 	.miss_get(miss_get),
 	.tag_match(tag_match),
 	.valid(valid),
-	.tag_match_reg_out(tag_match_reg_out),
-	.valid_reg_out(valid_reg_out),
-	.dirty_reg_out(dirty_reg_out),
 	.dirty_out(dirty_out),
 	.pmem_write(pmem_write),
 	.d_mem_address(d_mem_address),
@@ -60,9 +54,7 @@ victim_cache_control victim_cache_control
 	.mem_read(mem_read),
 	.mem_write(mem_write),
 	.tag_match(tag_match),
-	.tag_match_reg_out(tag_match_reg_out),
 	.valid(valid),
-	.valid_reg_out(valid_reg_out),
 	.dirty(dirty_out),
 	.no_evict(no_evict),
 	.ld_cache(ld_cache),
