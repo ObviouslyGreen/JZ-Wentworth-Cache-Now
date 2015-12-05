@@ -206,7 +206,6 @@ array #(.width(1)) valid1
 
 logic dirty0mux_out;
 logic dirty1mux_out;
-logic lru_reg_out;
 /*
  * Dirty 0
  */
@@ -243,13 +242,6 @@ array #(.width(1)) lru
     .out(lru_out)
 );
 
-register #(.width(1)) lru_reg
-(
-    .clk(clk),
-    .load(ld_cache),
-    .in(lru_out),
-    .out(lru_reg_out)
-);
 /**************************************
  * Multiplexers                       *
  **************************************/
@@ -303,7 +295,7 @@ mux2 #(.width(1)) writedirty1_mux
  */
 mux2 #(.width(1)) dirtyout_mux
 (
-    .sel(lru_reg_out),
+    .sel(lru_out),
     .a(dirty0_out),
     .b(dirty1_out),
     .f(dirty_out)

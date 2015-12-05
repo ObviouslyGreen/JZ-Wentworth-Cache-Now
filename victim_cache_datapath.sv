@@ -8,6 +8,7 @@ module victim_cache_datapath
     input clk,
 
     /* Control signals */
+    input ld_data_reg,
     input ld_cache,
     input l1_dirty,
     input miss_get,
@@ -36,6 +37,7 @@ logic comparator0_out;
 logic comparator1_out;
 logic comparator2_out;
 logic comparator3_out;
+lc3b_mem_data datareg_out;
 
 lc3b_c_vic_tag tag;
 lc3b_c_vic_tag tag_out;
@@ -64,7 +66,7 @@ assign tag_match = comparator0_out || comparator1_out ||
                     comparator2_out || comparator3_out; 
 assign tag = mem_address[15:4];
 assign load_mem_tag = d_mem_address[15:4];
-assign pmem_wdata = data_out;
+assign pmem_wdata = datareg_out;
 
 
 /**************************************
@@ -130,6 +132,16 @@ lru_stack lru
 /**************************************
  * Arrays                             *
  **************************************/
+/*
+ * data in reg
+ */
+register_neg #(.width(128)) data_reg
+(
+    .clk(clk),
+    .load(ld_cache),
+    .in(data_out),
+    .out(datareg_out)
+);
 
 /*
  * Data 

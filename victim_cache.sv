@@ -27,10 +27,12 @@ logic ld_cache;
 logic tag_match;
 logic valid;
 logic miss_get;
+logic ld_data_reg;
 
 victim_cache_datapath victim_cache_datapath
 (
     .clk(clk),
+    .ld_data_reg(ld_data_reg),
 	.ld_cache(ld_cache),
 	.l1_dirty(l1_dirty),
 	.miss_get(miss_get),
@@ -57,6 +59,7 @@ victim_cache_control victim_cache_control
 	.valid(valid),
 	.dirty(dirty_out),
 	.no_evict(no_evict),
+	.ld_data_reg(ld_data_reg),
 	.ld_cache(ld_cache),
 	.mem_resp(mem_resp),
 	.ld_from_vic(ld_from_vic),

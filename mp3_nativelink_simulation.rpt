@@ -115,6 +115,12 @@ ModelSim-Altera Info: # -- Compiling module arbiter_control
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	arbiter_control
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/register_neg.sv}
+ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+ModelSim-Altera Info: # -- Compiling module register_neg
+ModelSim-Altera Info: # 
+ModelSim-Altera Info: # Top level modules:
+ModelSim-Altera Info: # 	register_neg
 ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/zext.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package zext_sv_unit
@@ -493,6 +499,7 @@ ModelSim-Altera Info: # Loading work.victim_cache
 ModelSim-Altera Info: # Loading work.victim_cache_datapath_sv_unit
 ModelSim-Altera Info: # Loading work.victim_cache_datapath
 ModelSim-Altera Info: # Loading work.lru_stack
+ModelSim-Altera Info: # Loading work.register_neg
 ModelSim-Altera Info: # Loading work.victim_array_sv_unit
 ModelSim-Altera Info: # Loading work.victim_array
 ModelSim-Altera Info: # Loading work.victim_tag_array_sv_unit

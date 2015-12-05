@@ -10,6 +10,7 @@ module victim_cache_control
 	input valid,
 	input dirty,
 	input no_evict,
+	output logic ld_data_reg,
 	output logic ld_cache,
 	output logic mem_resp,
 	output logic ld_from_vic,
@@ -35,7 +36,9 @@ begin : state_actions
 	miss_get = 1'b0;
 	pmem_read = 1'b0;
 	pmem_write = 1'b0;
-	mem_resp = 1'b0;
+	mem_resp = 1'b0;				
+	ld_data_reg = 1'b0;
+
 	 
     /* Actions for each state */
 	case(state)
@@ -53,6 +56,10 @@ begin : state_actions
 				mem_resp = 1;
 			end 
 			else if (d_v_mem_swap && (~valid))
+			begin
+				ld_cache = 1;
+			end
+			else if (d_v_mem_swap && (~tag_match) && valid && dirty)
 			begin
 				ld_cache = 1;
 			end
@@ -75,10 +82,6 @@ begin : state_actions
 		phys_mem_write: 
 		begin
 			pmem_write = 1;
-			if (pmem_resp) 
-			begin
-				ld_cache= 1;
-			end
 		end
 		  
 		phys_mem_read: 
