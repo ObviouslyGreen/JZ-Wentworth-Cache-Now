@@ -48,25 +48,19 @@ begin : state_actions
 				ld_cache= 1;
 				mem_resp = 1;
 			end*/
-			if (d_v_mem_swap)
+			if (d_v_mem_swap && tag_match && valid)
 			begin
-				if (valid)
-				begin
-					if (tag_match)
-					begin
-						ld_from_vic = 1;
-						ld_cache = 1;
-						mem_resp = 1;
-					end
-					
-					else
-					begin
-						if (~dirty)
-							ld_cache = 1;
-					end
-				end
-				else
-					ld_cache = 1;
+				ld_from_vic = 1;
+				ld_cache = 1;
+				mem_resp = 1;
+			end 
+			else if (d_v_mem_swap && (~valid))
+			begin
+				ld_cache = 1;
+			end
+			else if (d_v_mem_swap && (~tag_match) && valid && (~dirty))
+			begin
+				ld_cache = 1;
 			end
 			else if (mem_read && no_evict && tag_match && valid)
 			begin
@@ -119,13 +113,10 @@ begin : next_state_logic
 				next_state = phys_mem_read;
 			else if (mem_read && (~valid_reg_out || ~tag_match_reg_out))
 				next_state = phys_mem_read;*/
-			if (d_v_mem_swap && (~tag_match) && valid)
-			begin
-				if (dirty)
-					next_state = phys_mem_write;
-				else
-					next_state = phys_mem_read;
-			end
+			if (d_v_mem_swap && (~tag_match) && valid && dirty)
+				next_state = phys_mem_write;
+			else if (d_v_mem_swap && (~tag_match) && valid)
+				next_state = phys_mem_read;
 			else if (d_v_mem_swap && (~valid))
 				next_state = phys_mem_read;
 			else if (mem_read && (~tag_match || ~valid) && no_evict)
