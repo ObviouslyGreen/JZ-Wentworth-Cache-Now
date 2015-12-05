@@ -291,7 +291,7 @@ alu alu_module
 /*
  * Additional ALU functions (DIV and MULT) that cannot be implemented through logic
  */
-divider divider_module
+/*divider divider_module
 (
     .clock(clk),
     .denom(forwarding_mux_b_out),
@@ -306,6 +306,23 @@ multiplier multiplier_module
     .datab(forwarding_mux_b_out),
     .result(multiplier_out)
 );
+*/
+alu alu_module_div
+(
+    .aluop(ctrl_exec.aluop),
+    .a(forwarding_mux_a_out),
+    .b(forwarding_mux_b_out),
+    .f(divider_out)
+);
+
+alu alu_module_mult
+(
+    .aluop(ctrl_exec.aluop),
+    .a(forwarding_mux_a_out),
+    .b(forwarding_mux_b_out),
+    .f(multiplier_out)
+);
+
 
 up_counter lx3x_counter
 (
