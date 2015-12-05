@@ -242,6 +242,7 @@ begin
                 begin
                     /* DR <= SR << IR[3:0] */
                     ctrl.aluop = alu_sll;
+                    ctrl.imm_enable = 1'b1;
                 end
                 else
                 begin
