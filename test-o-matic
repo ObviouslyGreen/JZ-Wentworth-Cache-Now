@@ -9,7 +9,7 @@
 #MP project name
 MP=mp3
 #MP directory
-MP_DIR=$HOME/ece411/JZ-Wentworth-Cache-Now
+MP_DIR=$HOME/ece411/stable/JZ-Wentworth-Cache-Now
 #Location of LC3bAssembler; Should usually be in bin
 ASSEMBLER=$HOME/ece411/bin/LC3bAssembler
 #Addressability of physical memory; from load_memory.sh

@@ -71,28 +71,28 @@ begin: state_actions
     case (state)
         idle_rw_cache:
         begin
-            if (hit)
+            if (hit && mem_write && curr_way)
             begin
                 ld_lru = 1'b1;
                 mem_resp = 1'b1;
-
-                if (mem_write)
-                begin
-                    writecachemux_sel = 1'b1;
-
-                    if (curr_way)
-                    begin
-                        data1mux_sel = 1'b1;
-                        ld_dirty1 = 1'b1;
-                        dirty1_in = 1'b1;
-                    end
-                    else
-                    begin
-                        data0mux_sel = 1'b1;
-                        ld_dirty0 = 1'b1;
-                        dirty0_in = 1'b1;
-                    end
-                end
+                writecachemux_sel = 1'b1;
+                data1mux_sel = 1'b1;
+                ld_dirty1 = 1'b1;
+                dirty1_in = 1'b1;
+            end
+            else if (hit && mem_write && ~curr_way)
+            begin
+                ld_lru = 1'b1;
+                mem_resp = 1'b1;
+                writecachemux_sel = 1'b1;
+                data0mux_sel = 1'b1;
+                ld_dirty0 = 1'b1;
+                dirty0_in = 1'b1;
+            end
+            else if (hit && ~mem_write)
+            begin
+                ld_lru = 1'b1;
+                mem_resp = 1'b1;
             end
         end
 
