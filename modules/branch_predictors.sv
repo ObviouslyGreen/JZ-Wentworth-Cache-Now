@@ -8,12 +8,13 @@ module branch_predictors
     input clk,
     input load,
     input branch_enable,
-    input lc3b_word index,
+    input lc3b_p_index index,
+    input lc3b_p_index br_index,
     output logic [1:0] branch_count
 );
 
 // Data is 2^16 entries of 2 bit counters
-logic [1:0] data [15:0] /* synthesis ramstyle = "logic" */;
+logic [1:0] data [31:0] /* synthesis ramstyle = "logic" */;
 assign branch_count = data[index];
 
 /* Initialize array */
@@ -34,26 +35,26 @@ begin
             2'b00:
             begin
                 if (branch_enable)
-                    data[index] = 2'b01;
+                    data[br_index] = 2'b01;
             end
             2'b01:
             begin
                 if (branch_enable)
-                    data[index] = 2'b10;
+                    data[br_index] = 2'b10;
                 else
-                    data[index] = 2'b00;
+                    data[br_index] = 2'b00;
             end
             2'b10:
             begin
                 if (branch_enable)
-                    data[index] = 2'b11;
+                    data[br_index] = 2'b11;
                 else
-                    data[index] = 2'b01;
+                    data[br_index] = 2'b01;
             end
             2'b11:
             begin
                 if (~branch_enable)
-                    data[index] = 2'b10;
+                    data[br_index] = 2'b10;
             end
         endcase
     end

@@ -140,8 +140,8 @@ lc3b_word mar_reg_out;
 
 lc3b_control_word ctrl_bubble;
 
-lc3b_word predictor_index;
-lc3b_word branch_history_out;
+lc3b_p_index predictor_index;
+lc3b_p_index branch_history_out;
 lc3b_word adj9_predict_out;
 lc3b_word predicted_pc;
 lc3b_word brmux_predict_out;
@@ -202,11 +202,11 @@ begin
 
     mem_wdata = sti_forward ? regfile_filter_out : stb_filter_out;
 
-    flush_enable = (branch_enable && ~ctrl_mem.is_nop && ctrl_mem.opcode == op_br)
+    flush_enable = ((branch_enable && ~ctrl_mem.is_nop && ctrl_mem.opcode == op_br)
                     || ctrl_mem.opcode == op_jmp
                     || ctrl_mem.opcode == op_jsr
-                    || ctrl_mem.opcode == op_trap
-                    || mispredict;
+                    || ctrl_mem.opcode == op_trap)
+                    && mispredict;
     ir_in = flush_enable ? 16'b0 : instr_rdata;
 
     ctrlword1_in = (bubble_enable || flush_enable) ? ctrl_bubble : ctrl;
@@ -224,8 +224,8 @@ begin
     else
         global_load = i_mem_resp && (d_mem_resp || ~(ctrl_mem.mem_read || ctrl_mem.mem_write));
 
-    predictor_index = instr_rdata ^ branch_history_out;
-    mispredict = branch_enable ^ pred_reg3_out;
+    predictor_index = instr_address[4:0] ^ branch_history_out;
+    mispredict = (branch_enable ^ pred_reg3_out) && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop;
 end
 
 
@@ -412,6 +412,7 @@ nzp_comparator cccomp
 (
     .nzp(cc_out),
     .ir_nzp(write_reg2_out),
+    .enable(ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .branch_enable(branch_enable)
 );
 
@@ -479,9 +480,10 @@ hazard_detector hazard_detection_unit
 branch_history branch_history_table
 (
     .clk(clk),
-    .load(ctrl_mem.opcode == op_br),
-    .index(pc_reg_out3[8:0]),
+    .load(ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .branch_enable(branch_enable),
+    .index(instr_address[4:0]),
+    .br_index(pc_reg_out3[4:0]),
     .out(branch_history_out)
 );
 
@@ -491,9 +493,10 @@ branch_history branch_history_table
 branch_predictors branch_predictor_table
 (
     .clk(clk),
-    .load(ctrl_mem.opcode == op_br),
+    .load(ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .branch_enable(branch_enable),
     .index(predictor_index),
+    .br_index(pc_reg_out3[4:0]),
     .branch_count(branch_count)
 );
 
@@ -503,6 +506,7 @@ branch_predictors branch_predictor_table
 gen_prediction gen_prediction_module
 (
     .branch_count(branch_count),
+    .enable(ctrl_exec.opcode == op_br && ~ctrl_exec.is_nop),
     .branch_predict(branch_predict)
 );
 
@@ -845,7 +849,7 @@ mux2 br_mux_predict
 (
     // Only select prediction when decoding a br instruction
     // Choose brmux_out on mispredict
-    .sel((branch_predict && opcode == op_br) || ~mispredict),
+    .sel((branch_predict && ctrl.opcode == op_br && ~ctrl.is_nop)),
     .a(brmux_out),
     .b(predicted_pc),
     .f(brmux_predict_out)

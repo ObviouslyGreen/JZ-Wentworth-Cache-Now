@@ -7,20 +7,21 @@ module branch_history
 (
     input clk,
     input load,
-    input lc3b_offset9 index,
     input branch_enable,
-    output lc3b_word out
+    input lc3b_p_index index,
+    input lc3b_p_index br_index,
+    output lc3b_p_index out
 );
 
-// Data is 2^9 entries of the last 16 branches for PC values
-logic [15:0] data [8:0] /* synthesis ramstyle = "logic" */;
+// Data is 32 entries of the last 5 branches for PC values
+logic [4:0] data [31:0] /* synthesis ramstyle = "logic" */;
 
 /* Initialize array */
 initial
 begin
     for (int i = 0; i < $size(data); i++)
     begin
-        data[i] = 16'b0;
+        data[i] = 1'b0;
     end
 end
 
@@ -28,7 +29,7 @@ always_ff @(posedge clk)
 begin
     if (load == 1)
     begin
-        data[index] = data[index] << 1 | branch_enable;
+        data[br_index] = (data[br_index] << 1) | branch_enable;
     end
 end
 assign out = data[index];

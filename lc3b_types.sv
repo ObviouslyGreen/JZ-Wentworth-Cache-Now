@@ -25,6 +25,7 @@ typedef logic [6:0] lc3b_c_l2_tag;
 typedef logic [2:0] lc3b_c_index;
 typedef logic [3:0] lc3b_c_offset;
 typedef logic [8:0] lc3b_c_tag;
+typedef logic [4:0] lc3b_p_index;
 
 typedef enum bit [3:0] {
     op_add  = 4'b0001,
