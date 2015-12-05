@@ -4,40 +4,56 @@
 
 import logging
 import argparse
+import re
 
-def clean(self, filename):
-	with open(filename) as f_old, open('converted_' + filename,'w') as f_new:
-		for line in f_old:
-			instr_whole = line.split()
-			instruction = instr_whole[0]
-			regs = instr_whole[1:]
-			# get only the number of the register
-			dest = ((regs[0])[:-1])[1]
-			R1 = ((regs[1])[:-1])[1]
-			R2 = (regs[2])[1]
-			# removing div
-			binary_dest = '{0:03b}'.format(int(dest))
-			binary_R1 = '{0:03b}'.format(int(R1))
-			binary_R2 = '{0:03b}'.format(int(R2))
-			if instruction == 'DIV':
-				concat = (binary_dest << 11) + (binary_R1 << 8) + bin(0) + '01' + str(binary_R2)
-				f_new.write('DATA 4x1'+'')
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-			elif instruction == 'MULT':
+def clean(filename):
+	with open(filename) as f_old:
+		with open('converted_' + filename,'w') as f_new:
+			for line in f_old:
+				instr_whole = line.split()
+				if(len(instr_whole) > 0):
+					instruction = instr_whole[0]
+					logger.info(line)
+					if(instruction == 'DIV' or instruction == 'MULT' or instruction == 'SUB' or instruction == 'XOR' or instruction == 'OR'):
+						regs = instr_whole[1:]
+						# get only the number of the register
+						dest = int((regs[0])[1])
+						R1 = int((regs[1])[1])
+						R2 = int((regs[2])[1])
+						# shifting bits to the right position
+						dest = dest << 9
+						R1 = R1 << 6
+						# R2 is in correct position
 
+						if instruction == 'DIV':
+							concat = dest | R1 | 8 | R2
+							f_new.write('	DATA2 4x1'+format(concat,'x'))
 
-			elif instruction == 'SUB':
+						if instruction == 'MULT':
+							concat = dest | R1 | 16 | R2
+							f_new.write('	DATA2 4x1'+format(concat,'x'))
 
+						if instruction == 'SUB':
+							concat = dest | R1 | 24 | R2
+							f_new.write('	DATA2 4x1'+format(concat,'x'))
 
-			elif instruction == 'XOR':
+						if instruction == 'XOR':
+							concat = dest | R1 | 8 | R2
+							f_new.write('	DATA2 4x5'+format(concat,'x'))
 
+						if instruction == 'OR':
+							concat = dest | R1 | 16| R2
+							f_new.write('	DATA2 4x5'+format(concat,'x'))
 
-			elif instruction == 'OR':
-
-
-			else:
-				f_new.write(line)
+					else:
+						f_new.write(line)
+				else:
+					f_new.write(line)
 		f_new.close()
+	f_old.close()
 
 
 def main():
