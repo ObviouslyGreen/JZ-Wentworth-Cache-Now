@@ -51,7 +51,7 @@ endmodule
 // Retrieval info: PRIVATE: B_isConstant NUMERIC "0"
 // Retrieval info: PRIVATE: ConstantB NUMERIC "0"
 // Retrieval info: PRIVATE: INTENDED_DEVICE_FAMILY STRING "Stratix III"
-// Retrieval info: PRIVATE: LPM_PIPELINE NUMERIC "1"
+// Retrieval info: PRIVATE: LPM_PIPELINE NUMERIC "2"
 // Retrieval info: PRIVATE: Latency NUMERIC "1"
 // Retrieval info: PRIVATE: SYNTH_WRAPPER_GEN_POSTFIX STRING "0"
 // Retrieval info: PRIVATE: SignedMult NUMERIC "1"
@@ -66,7 +66,7 @@ endmodule
 // Retrieval info: PRIVATE: optimize NUMERIC "0"
 // Retrieval info: LIBRARY: lpm lpm.lpm_components.all
 // Retrieval info: CONSTANT: LPM_HINT STRING "MAXIMIZE_SPEED=5"
-// Retrieval info: CONSTANT: LPM_PIPELINE NUMERIC "1"
+// Retrieval info: CONSTANT: LPM_PIPELINE NUMERIC "2"
 // Retrieval info: CONSTANT: LPM_REPRESENTATION STRING "SIGNED"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "LPM_MULT"
 // Retrieval info: CONSTANT: LPM_WIDTHA NUMERIC "16"
@@ -83,7 +83,7 @@ endmodule
 // Retrieval info: GEN_FILE: TYPE_NORMAL multiplier.v TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL multiplier.inc FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL multiplier.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL multiplier.bsf FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL multiplier.bsf TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL multiplier_inst.v FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL multiplier_bb.v TRUE
 // Retrieval info: LIB_FILE: lpm

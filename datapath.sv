@@ -124,7 +124,9 @@ lc3b_word forwarding_mux_b_out;
 logic sti_forward;
 logic [1:0] forwarding_sel_a;
 logic [1:0] forwarding_sel_b;
+logic [1:0] lc3xcounter_out;
 
+logic lc3x_op_check;        //lc3x mult/div check
 
 logic is_nop;
 logic bubble_enable;
@@ -206,6 +208,17 @@ begin
     write_reg1_in = (bubble_enable || ctrl.mem_write)  ? 3'b000 : destmux_out;
     sr1_index_reg_in = bubble_enable ? 3'b000 : sr1;
     sr2_index_reg_in = bubble_enable ? 3'b000 : storemux_out;
+
+    if(ctrl_exec.aluopmux_sel == 2'b01 || ctrl_exec.aluopmux_sel == 2'b10)
+    begin
+        if(lc3xcounter_out == 2'b10)
+            lc3x_op_check = 1;
+        else
+            lc3x_op_check = 0;
+    end
+    else
+        lc3x_op_check = 1;
+
     if(ctrl_mem.opcode == op_stb)
         mem_byte_enable = (mem_address[0]) ? 2'b10 : 2'b01;
     else
@@ -213,7 +226,7 @@ begin
     if (ctrl_mem.indirect_enable)
         global_load = (resp_count == 2'b10);
     else
-        global_load = i_mem_resp && (d_mem_resp || ~(ctrl_mem.mem_read || ctrl_mem.mem_write));
+        global_load = i_mem_resp && (d_mem_resp || ~(ctrl_mem.mem_read || ctrl_mem.mem_write)) && (lc3x_op_check);
 end
 
 
@@ -292,6 +305,13 @@ multiplier multiplier_module
     .dataa(forwarding_mux_a_out),
     .datab(forwarding_mux_b_out),
     .result(multiplier_out)
+);
+
+up_counter lx3x_counter
+(
+    .clk(clk),
+    .enable(ctrl_exec.aluopmux_sel == 2'b01 || ctrl_exec.aluopmux_sel == 2'b10),
+    .count(lc3xcounter_out)
 );
 
 mux4 aluop_mux
