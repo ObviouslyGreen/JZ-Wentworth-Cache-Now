@@ -6,7 +6,6 @@ import lc3b_types::*;
 module branch_predictors
 (
     input clk,
-    input load,
     input branch_enable,
     input lc3b_p_index index,
     input lc3b_p_index br_index,
@@ -29,7 +28,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (load == 1)
+    if (branch_enable)
     begin
         case (branch_count)
             2'b00:

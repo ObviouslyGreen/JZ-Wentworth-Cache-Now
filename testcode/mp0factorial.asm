@@ -6,7 +6,7 @@
 ;; R1 - Contains factorial result
 ;; R2 - Used as a negative one
 ;; R3 - Counter for factorial
-;; R4 - Counter for multiplacation 
+;; R4 - Counter for multiplication 
 ;; R5 - Contains current product/sum
 ORIGIN 4x0000
 
