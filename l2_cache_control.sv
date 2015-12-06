@@ -8,6 +8,7 @@ module l2_cache_control
     input clk,
 
     /* Datapath signals */
+    input ewb_ready, 
     input hit,
     input [1:0] curr_way,
     input [1:0] lru_out,
@@ -35,6 +36,7 @@ module l2_cache_control
     input mem_read,
     input mem_write,
     output lc3b_word pmem_address,
+    output lc3b_word pmem_waddress,
     output logic mem_resp,
     output logic pmem_read,
     output logic pmem_write
@@ -45,7 +47,7 @@ enum int unsigned {
     /* List of states */
     idle_rw_cache,
     check_line,
-    phys_mem_write,
+    ewb_rw0,
     phys_mem_read
 } state, next_state;
 
@@ -69,6 +71,7 @@ begin: state_actions
     pmem_read = 1'b0;
     pmem_write = 1'b0;
     pmem_address = mem_address;
+	 pmem_waddress = mem_address;
 
     /* Actions for each state */
     case (state)
@@ -120,7 +123,7 @@ begin: state_actions
             end
         end
 
-        phys_mem_write:
+        ewb_rw0:
         begin
             dirty_clean = 1'b0;
             if (lru_out == 2'b00)
@@ -140,14 +143,22 @@ begin: state_actions
                 ld_dirty3 = 1'b1;
             end
 
-            pmem_address = {pmem_tag, mem_address[8:5], 5'b00000};
-            pmem_write = 1'b1;
+            pmem_waddress = {pmem_tag, mem_address[8:5], 5'b00000};
+            ld_cache = 1'b1;
+            if (ewb_ready)
+                pmem_read = 1'b1;
+
+            if (pmem_resp)
+                pmem_write = 1'b1;
         end
 
         phys_mem_read:
         begin
-            ld_cache = 1'b1;
-            pmem_read = 1'b1;
+            if (ewb_ready)
+            begin
+                ld_cache = 1'b1;
+                pmem_read = 1'b1;
+            end
         end
 
         default:
@@ -177,42 +188,42 @@ begin: next_state_logic
                 if (lru_out == 2'b00)
                 begin
                     if (dirty0_out)
-                        next_state = phys_mem_write;
+                        next_state = ewb_rw0;
                     else
                         next_state = phys_mem_read;
                 end
                 else if (lru_out == 2'b01)
                 begin
                     if (dirty1_out)
-                        next_state = phys_mem_write;
+                        next_state = ewb_rw0;
                     else
                         next_state = phys_mem_read;
                 end
                 else if (lru_out == 2'b10)
                 begin
                     if (dirty2_out)
-                        next_state = phys_mem_write;
+                        next_state = ewb_rw0;
                     else
                         next_state = phys_mem_read;
                 end
                 else if (lru_out == 2'b11)
                 begin
                     if (dirty3_out)
-                        next_state = phys_mem_write;
+                        next_state = ewb_rw0;
                     else
                         next_state = phys_mem_read;
                 end
             end
-            else
+            else ((mem_read || mem_write) && (hit))
                 next_state = idle_rw_cache;
         end
 
-        phys_mem_write:
+        ewb_rw0:
         begin
             if (pmem_resp)
-                next_state = phys_mem_read;
+                next_state = idle_rw_cache;
             else
-                next_state = phys_mem_write;
+                next_state = ewb_rw0;
         end
 
         phys_mem_read:

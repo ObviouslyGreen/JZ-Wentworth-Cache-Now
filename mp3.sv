@@ -96,6 +96,12 @@ lc3b_mem_data arbiter_rdata_out;
 lc3b_mem_data l2_mem_wdata_buff_out;
 lc3b_word l2_mem_address_buff_out;
 
+logic ewb_ready;
+logic l2_pmem_write;
+lc3b_word pmem_waddress;
+lc3b_word pmem_raddress;
+lc3b_pmem_data l2_pmem_wdata;
+
 /* Instantiate MP 3 top level blocks here */
 datapath datapath_module
 (
@@ -186,6 +192,7 @@ victim_cache victim_cache
 l2_cache l2_cache
 (
     .clk(clk),
+    .ewb_ready(ewb_ready),
     .mem_read(l2_mem_read),
     .mem_write(l2_mem_write),
     .pmem_resp(pmem_resp),
@@ -195,11 +202,27 @@ l2_cache l2_cache
     .pmem_rdata(pmem_rdata),
     .mem_resp(l2_mem_resp),
     .pmem_read(pmem_read),
-    .pmem_write(pmem_write),
+    .pmem_write(l2_pmem_write),
     .mem_rdata(l2_mem_rdata_in),
-    .pmem_address(pmem_address),
-    .pmem_wdata(pmem_wdata)
+    .pmem_address(pmem_raddress),
+    .pmem_waddress(pmem_waddress),
+    .pmem_wdata(l2_pmem_wdata)
 
+);
+
+eviction_write_buffer eviction_write_buffer
+(
+    .clk(clk),
+    .pmem_resp(pmem_resp),
+    .l2_pmem_read(pmem_read),
+    .l2_pmem_write(l2_pmem_write),
+    .l2_pmem_waddress(pmem_waddress),
+    .l2_pmem_raddress(pmem_raddress),
+    .l2_pmem_wdata(l2_pmem_wdata),
+    .pmem_address(pmem_address),
+    .pmem_wdata(pmem_wdata),
+    .ready(ewb_ready),
+    .pmem_write(pmem_write)
 );
 
 arbiter arbiter
@@ -223,6 +246,7 @@ arbiter arbiter
     .l2_mem_rdata_out(arbiter_rdata_out),
     .l2_mem_wdata(l2_mem_wdata)
 );
+
 
 register #(.width(128)) l2_wdata_in_buffer
 (

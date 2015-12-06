@@ -3,6 +3,7 @@ import lc3b_types::*;
 module l2_cache
 (
     input clk,
+    input ewb_ready,
     input mem_read,
     input mem_write,
     input pmem_resp,
@@ -15,6 +16,7 @@ module l2_cache
     output logic pmem_write,
     output lc3b_mem_data mem_rdata,
     output lc3b_word pmem_address,
+    output lc3b_word pmem_waddress,
     output lc3b_pmem_data pmem_wdata
 );
 
@@ -73,6 +75,7 @@ l2_cache_datapath l2_cache_datapath
 l2_cache_control l2_cache_control
 (
     .clk(clk),
+    .ewb_ready(ewb_ready),
     .hit(hit),
     .curr_way(curr_way),
     .lru_out(lru_out),
@@ -98,6 +101,7 @@ l2_cache_control l2_cache_control
     .mem_read(mem_read),
     .mem_write(mem_write),
     .pmem_address(pmem_address),
+    .pmem_waddress(pmem_waddress),
     .mem_resp(mem_resp),
     .pmem_read(pmem_read),
     .pmem_write(pmem_write)
