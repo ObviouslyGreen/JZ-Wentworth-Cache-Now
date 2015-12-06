@@ -9,7 +9,8 @@ module branch_history
     input branch_enable,
     input lc3b_p_index index,
     input lc3b_p_index br_index,
-    output lc3b_p_index out
+    output lc3b_p_index out,
+    output lc3b_p_index br_out
 );
 
 // Data is 32 entries of the last 5 branches for PC values
@@ -32,5 +33,6 @@ begin
     end
 end
 assign out = data[index];
+assign br_out = data[br_index];
 
 endmodule : branch_history

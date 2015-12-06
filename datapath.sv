@@ -142,6 +142,7 @@ lc3b_control_word ctrl_bubble;
 
 lc3b_p_index predictor_index;
 lc3b_p_index branch_history_out;
+lc3b_p_index br_branch_history_out;
 lc3b_word pc_in;
 lc3b_word adj9_predict_out;
 lc3b_word predicted_pc;
@@ -231,7 +232,7 @@ begin
     predictor_index = instr_address[4:0] ^ branch_history_out;
     mispredict = (branch_enable ^ pred_reg3_out) && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop;
     if (mispredict)
-        pc_in = mispredict_pc_reg1_out;
+        pc_in = mispredict_pc_reg2_out;
     else
         pc_in = (branch_predict && ~mispredict) ? predicted_pc : brmux_out;
 end
@@ -247,7 +248,7 @@ end
 ir ir_module
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(ir_in),
     .opcode(opcode),
     .dest(dest),
@@ -491,7 +492,8 @@ branch_history branch_history_table
     .branch_enable(branch_enable && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .index(instr_address[4:0]),
     .br_index(pc_reg_out3[4:0]),
-    .out(branch_history_out)
+    .out(branch_history_out),
+    .br_out(br_branch_history_out)
 );
 
 /*
@@ -502,7 +504,7 @@ branch_predictors branch_predictor_table
     .clk(clk),
     .branch_enable(branch_enable && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .index(predictor_index),
-    .br_index(pc_reg_out3[4:0]),
+    .br_index(pc_reg_out3[4:0] ^ br_branch_history_out),
     .branch_count(branch_count)
 );
 
@@ -546,7 +548,7 @@ adder offset_prediction_adder
 register pc
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_in),
     .out(instr_address)
 );
@@ -607,7 +609,7 @@ register mar_reg
 register pc_reg1
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_plus2_out),
     .out(pc_reg_out1)
 );
@@ -615,7 +617,7 @@ register pc_reg1
 register pc_reg2
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_reg_out1),
     .out(pc_reg_out2)
 );
@@ -623,7 +625,7 @@ register pc_reg2
 register pc_reg3
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_reg_out2),
     .out(pc_reg_out3)
 );
@@ -631,7 +633,7 @@ register pc_reg3
 register pc_reg4
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_reg_out3),
     .out(pc_reg_out4)
 );
