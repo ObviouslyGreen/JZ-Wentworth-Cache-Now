@@ -30,23 +30,23 @@ def clean(filename):
 
 						if instruction == 'DIV':
 							concat = dest | R1 | 8 | R2
-							f_new.write('	DATA2 4x1'+format(concat,'x'))
+							f_new.write('	DATA2 4x1'+format(concat,'x')+'\n')
 
 						if instruction == 'MULT':
 							concat = dest | R1 | 16 | R2
-							f_new.write('	DATA2 4x1'+format(concat,'x'))
+							f_new.write('	DATA2 4x1'+format(concat,'x')+'\n')
 
 						if instruction == 'SUB':
 							concat = dest | R1 | 24 | R2
-							f_new.write('	DATA2 4x1'+format(concat,'x'))
-
-						if instruction == 'XOR':
-							concat = dest | R1 | 8 | R2
-							f_new.write('	DATA2 4x5'+format(concat,'x'))
+							f_new.write('	DATA2 4x1'+format(concat,'x')+'\n')
 
 						if instruction == 'OR':
+							concat = dest | R1 | 8 | R2
+							f_new.write('	DATA2 4x5'+format(concat,'x')+'\n')
+
+						if instruction == 'XOR':
 							concat = dest | R1 | 16| R2
-							f_new.write('	DATA2 4x5'+format(concat,'x'))
+							f_new.write('	DATA2 4x5'+format(concat,'x')+'\n')
 
 					else:
 						f_new.write(line)

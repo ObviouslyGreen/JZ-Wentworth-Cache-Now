@@ -45,6 +45,13 @@ applicable agreement for further details.
 		(line (pt 0 56)(pt 16 56))
 	)
 	(port
+		(pt 0 72)
+		(input)
+		(text "aclr" (rect 0 0 21 13)(font "Arial" (font_size 8)))
+		(text "aclr" (rect 20 66 36 78)(font "Arial" (font_size 8)))
+		(line (pt 0 72)(pt 16 72))
+	)
+	(port
 		(pt 176 24)
 		(output)
 		(text "quotient[15..0]" (rect 0 0 79 13)(font "Arial" (font_size 8)))
@@ -61,7 +68,7 @@ applicable agreement for further details.
 	(drawing
 		(text "Numer is SIGNED" (rect 86 51 248 112)(font "Arial" ))
 		(text "Denom is SIGNED" (rect 84 67 246 144)(font "Arial" ))
-		(text "Pipeline length of 2" (rect 82 83 242 176)(font "Arial" ))
+		(text "Pipeline length of 5" (rect 82 83 242 176)(font "Arial" ))
 		(line (pt 16 16)(pt 16 96))
 		(line (pt 16 16)(pt 160 16))
 		(line (pt 16 96)(pt 160 96))

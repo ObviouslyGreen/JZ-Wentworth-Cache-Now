@@ -124,7 +124,7 @@ lc3b_word forwarding_mux_b_out;
 logic sti_forward;
 logic [1:0] forwarding_sel_a;
 logic [1:0] forwarding_sel_b;
-logic [1:0] lc3xcounter_out;
+logic [2:0] lc3xcounter_out;
 
 logic lc3x_op_check;        //lc3x mult/div check
 
@@ -209,9 +209,9 @@ begin
     sr1_index_reg_in = bubble_enable ? 3'b000 : sr1;
     sr2_index_reg_in = bubble_enable ? 3'b000 : storemux_out;
 
-    if(ctrl_exec.aluopmux_sel == 2'b01 || ctrl_exec.aluopmux_sel == 2'b10)
+    if(ctrl_exec.opcode == op_add && (ctrl_exec.aluopmux_sel == 2'b01 || ctrl_exec.aluopmux_sel == 2'b10))
     begin
-        if(lc3xcounter_out == 2'b10)
+        if(lc3xcounter_out == 3'b110)
             lc3x_op_check = 1;
         else
             lc3x_op_check = 0;
@@ -291,22 +291,26 @@ alu alu_module
 /*
  * Additional ALU functions (DIV and MULT) that cannot be implemented through logic
  */
-/*divider divider_module
+ 
+divider divider_module
 (
+    .aclr(),
     .clock(clk),
     .denom(forwarding_mux_b_out),
     .numer(forwarding_mux_a_out),
-    .quotient(divider_out)
+    .quotient(divider_out),
+    .remain()
 );
 
 multiplier multiplier_module
 (
+    .aclr(),
     .clock(clk),
-    .dataa(forwarding_mux_a_out),
-    .datab(forwarding_mux_b_out),
+    .dataa(forwarding_mux_a_out[7:0]),
+    .datab(forwarding_mux_b_out[7:0]),
     .result(multiplier_out)
 );
-*/
+/*
 alu alu_module_div
 (
     .aluop(ctrl_exec.aluop),
@@ -314,20 +318,12 @@ alu alu_module_div
     .b(forwarding_mux_b_out),
     .f(divider_out)
 );
+*/
 
-alu alu_module_mult
-(
-    .aluop(ctrl_exec.aluop),
-    .a(forwarding_mux_a_out),
-    .b(forwarding_mux_b_out),
-    .f(multiplier_out)
-);
-
-
-up_counter lx3x_counter
+up8_counter lc3x_counter
 (
     .clk(clk),
-    .enable(ctrl_exec.aluopmux_sel == 2'b01 || ctrl_exec.aluopmux_sel == 2'b10),
+    .enable(ctrl_exec.opcode == op_add &&(ctrl_exec.aluopmux_sel == 2'b01 || ctrl_exec.aluopmux_sel == 2'b10)),
     .count(lc3xcounter_out)
 );
 

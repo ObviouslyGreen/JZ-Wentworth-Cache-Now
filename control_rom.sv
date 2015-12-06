@@ -43,61 +43,72 @@ begin
     ctrl.is_nop = is_nop;
     ctrl.imm_enable = 1'b0;
 
+
     if (~flush_enable)
     begin
         /* Assign control signals based on opcode */
         case(opcode)
             op_add:
             begin
-                if (lc3x_check == 2'b00)            //addition
+                if (imm_enable == 1'b1)
                 begin
-                    ctrl.aluop = alu_add;
-                    if (imm_enable == 1'b1)
-                    begin
                         /* DR <= A & SEXT(IR[4:0]) */
-                        ctrl.alumux_sel = 2'b10;
-                        ctrl.imm_enable = 1'b1;
+                    ctrl.alumux_sel = 2'b10;
+                    ctrl.imm_enable = 1'b1;
+                    ctrl.aluop = alu_add;
+                end
+                else
+                begin
+                    if (lc3x_check == 2'b00 )            //addition
+                    begin
+                        ctrl.aluop = alu_add;
+                    end
+                    /*LC-3X instructions do not need immediate*/
+                    else if (lc3x_check == 2'b01)       //division
+                    begin
+                        ctrl.aluopmux_sel = 2'b01;
+                    end
+                    
+                    else if (lc3x_check == 2'b10)       //multiplication
+                    begin
+                        ctrl.aluopmux_sel = 2'b10;
+                    end
+                    
+                    else if (lc3x_check == 2'b11)       //subtraction
+                    begin
+                        ctrl.aluop = alu_sub;
                     end
                 end
-                /*LC-3X instructions do not need immediate*/
-                else if (lc3x_check == 2'b01)       //division
-                begin
-                    ctrl.aluopmux_sel = 2'b01;
-                end
-                
-                else if (lc3x_check == 2'b10)       //multiplication
-                begin
-                    ctrl.aluopmux_sel = 2'b10;
-                end
-                
-                else if (lc3x_check == 2'b11)       //subtraction
-                begin
-                    ctrl.aluop = alu_sub;
-                end
                 ctrl.load_regfile = 1'b1;
-                ctrl.load_cc = 1'b1;        
+                ctrl.load_cc = 1'b1;
+
             end
 
             op_and:
             begin
-                if (lc3x_check == 2'b00)            //AND
-					 begin
+                if (imm_enable == 1'b1)
+                begin
+                    /* DR <= A & SEXT(IR[4:0]) */
+                    ctrl.alumux_sel = 2'b10;
+                    ctrl.imm_enable = 1'b1;
                     ctrl.aluop = alu_and;
-                    if (imm_enable == 1'b1)
-                    begin
-                        /* DR <= A & SEXT(IR[4:0]) */
-                        ctrl.alumux_sel = 2'b10;
-                        ctrl.imm_enable = 1'b1;
+                end
+                else
+                begin
+                    if (lc3x_check == 2'b00)            //AND
+    					 begin
+                        ctrl.aluop = alu_and;
+                        
                     end
-                end
-                else if (lc3x_check == 2'b01)       //OR
-                begin
-                    ctrl.aluop = alu_or;
-                end
+                    else if (lc3x_check == 2'b01)       //OR
+                    begin
+                        ctrl.aluop = alu_or;
+                    end
 
-                else if (lc3x_check == 2'b10)       //XOR
-                begin
-                    ctrl.aluop = alu_xor;
+                    else if (lc3x_check == 2'b10)       //XOR
+                    begin
+                        ctrl.aluop = alu_xor;
+                    end
                 end
                 ctrl.load_regfile = 1'b1;
                 ctrl.load_cc = 1'b1;
@@ -275,6 +286,7 @@ begin
                 begin
                     /* DR <= SR << IR[3:0] */
                     ctrl.aluop = alu_sll;
+                    ctrl.imm_enable = 1'b1;
                 end
                 else
                 begin
