@@ -3,7 +3,7 @@ import lc3b_types::*;
 /*
  * Datapath for cache
  */
-module cache_datapath
+module i_cache_datapath
 (
     input clk,
 
@@ -16,11 +16,11 @@ module cache_datapath
     input writecachemux_sel,
     input data0mux_sel,
     input data1mux_sel,
-    output hit,
-    output curr_way,
-    output lru_out,
-    output dirty0_out,
-    output dirty1_out,
+    output logic hit,
+    output logic curr_way,
+    output logic lru_out,
+    output logic dirty0_out,
+    output logic dirty1_out,
     output lc3b_c_tag pmem_tag,
 
     /* Memory signals */
@@ -307,4 +307,4 @@ mux2 #(.width(9)) pmemtag_mux
     .f(pmem_tag)
 );
 
-endmodule : cache_datapath
+endmodule : i_cache_datapath

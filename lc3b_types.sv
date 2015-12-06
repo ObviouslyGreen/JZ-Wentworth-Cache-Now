@@ -20,6 +20,8 @@ typedef logic [2:0] lc3b_reg;
 typedef logic [2:0] lc3b_nzp;
 typedef logic [1:0] lc3b_mem_wmask;
 
+typedef logic [1:0] lc3b_c_vic_index;
+typedef logic [11:0] lc3b_c_vic_tag;
 typedef logic [3:0] lc3b_c_l2_index;
 typedef logic [4:0] lc3b_c_l2_offset;
 typedef logic [6:0] lc3b_c_l2_tag;

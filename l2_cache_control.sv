@@ -8,6 +8,8 @@ module l2_cache_control
     input clk,
 
     /* Datapath signals */
+    input ewb_empty,
+    input ewb_ready, 
     input hit,
     input [1:0] curr_way,
     input [1:0] lru_out,
@@ -35,16 +37,21 @@ module l2_cache_control
     input mem_read,
     input mem_write,
     output lc3b_word pmem_address,
+    output lc3b_word pmem_waddress,
     output logic mem_resp,
     output logic pmem_read,
-    output logic pmem_write
+    output logic pmem_write,
+	 output logic l2_pmem_dirty_evict,
+     output logic ld_ewb_buff
 );
 
 
 enum int unsigned {
     /* List of states */
     idle_rw_cache,
+    cache_hit,
     phys_mem_write,
+    ewb_rw0,
     phys_mem_read
 } state, next_state;
 
@@ -68,46 +75,61 @@ begin: state_actions
     pmem_read = 1'b0;
     pmem_write = 1'b0;
     pmem_address = mem_address;
+	 pmem_waddress = mem_address;
+     l2_pmem_dirty_evict = 1'b0;
+     ld_ewb_buff = 1'b0;
 
     /* Actions for each state */
     case (state)
-        idle_rw_cache:
+        idle_rw_cache: 
+            /* Nothing */
+            
+        cache_hit:
         begin
-            if (hit)
+            if (hit && mem_write && curr_way == 2'b00)
             begin
                 ld_lru = 1'b1;
                 mem_resp = 1'b1;
-
-                if (mem_write)
-                begin
-                    writecachemux_sel = 1'b1;
-                    dirty_clean = 1'b1;
-
-                    if (curr_way == 2'b00)
-                    begin
-                        data0mux_sel = 1'b1;
-                        ld_dirty0 = 1'b1;
-                    end
-                    else if (curr_way == 2'b01)
-                    begin
-                        data1mux_sel = 1'b1;
-                        ld_dirty1 = 1'b1;
-                    end
-                    else if (curr_way == 2'b10)
-                    begin
-                        data2mux_sel = 1'b1;
-                        ld_dirty2 = 1'b1;
-                    end
-                    else if (curr_way == 2'b11)
-                    begin
-                        data3mux_sel = 1'b1;
-                        ld_dirty3 = 1'b1;
-                    end
-                end
+                writecachemux_sel = 1'b1;
+                dirty_clean = 1'b1;
+                data0mux_sel = 1'b1;
+                ld_dirty0 = 1'b1;
+            end
+            else if (hit && mem_write && curr_way == 2'b01)
+            begin
+                ld_lru = 1'b1;
+                mem_resp = 1'b1;
+                writecachemux_sel = 1'b1;
+                dirty_clean = 1'b1;
+                data1mux_sel = 1'b1;
+                ld_dirty1 = 1'b1;
+            end
+            else if (hit && mem_write && curr_way == 2'b10)
+            begin
+                ld_lru = 1'b1;
+                mem_resp = 1'b1;
+                writecachemux_sel = 1'b1;
+                dirty_clean = 1'b1;
+                data2mux_sel = 1'b1;
+                ld_dirty2 = 1'b1;
+            end
+            else if (hit && mem_write && curr_way == 2'b11)
+            begin
+                ld_lru = 1'b1;
+                mem_resp = 1'b1;
+                writecachemux_sel = 1'b1;
+                dirty_clean = 1'b1;
+                data3mux_sel = 1'b1;
+                ld_dirty3 = 1'b1;
+            end
+            else if (hit && ~mem_write)
+            begin
+                ld_lru = 1'b1;
+                mem_resp = 1'b1;
             end
         end
 
-        phys_mem_write:
+        ewb_rw0:
         begin
             dirty_clean = 1'b0;
             if (lru_out == 2'b00)
@@ -127,14 +149,26 @@ begin: state_actions
                 ld_dirty3 = 1'b1;
             end
 
-            pmem_address = {pmem_tag, mem_address[8:5], 5'b00000};
-            pmem_write = 1'b1;
+            pmem_waddress = {pmem_tag, mem_address[8:5], 5'b00000};
+            ld_cache = 1'b1;
+            l2_pmem_dirty_evict = 1'b1;
+            if (ewb_empty)
+                ld_ewb_buff = 1'b1;
+
+            if (ewb_ready)
+                pmem_read = 1'b1;
+
+            if (pmem_resp)
+                pmem_write = 1'b1;
         end
 
         phys_mem_read:
         begin
-            ld_cache = 1'b1;
-            pmem_read = 1'b1;
+            if (ewb_ready)
+            begin
+                ld_cache = 1'b1;
+                pmem_read = 1'b1;
+            end
         end
 
         default:
@@ -151,47 +185,52 @@ begin: next_state_logic
      case (state)
         idle_rw_cache:
         begin
-            if ((mem_read | mem_write) & (~hit))
+            if ((mem_read || mem_write) && (~hit))
             begin
                 if (lru_out == 2'b00)
                 begin
                     if (dirty0_out)
-                        next_state = phys_mem_write;
+                        next_state = ewb_rw0;
                     else
                         next_state = phys_mem_read;
                 end
                 else if (lru_out == 2'b01)
                 begin
                     if (dirty1_out)
-                        next_state = phys_mem_write;
+                        next_state = ewb_rw0;
                     else
                         next_state = phys_mem_read;
                 end
                 else if (lru_out == 2'b10)
                 begin
                     if (dirty2_out)
-                        next_state = phys_mem_write;
+                        next_state = ewb_rw0;
                     else
                         next_state = phys_mem_read;
                 end
                 else if (lru_out == 2'b11)
                 begin
                     if (dirty3_out)
-                        next_state = phys_mem_write;
+                        next_state = ewb_rw0;
                     else
                         next_state = phys_mem_read;
                 end
             end
-            else
-                next_state = idle_rw_cache;
+            else if ((mem_read || mem_write) && (hit))
+                next_state = cache_hit;
+        end
+        
+        cache_hit:
+        begin
+            next_state = idle_rw_cache;
         end
 
-        phys_mem_write:
+        ewb_rw0:
         begin
             if (pmem_resp)
-                next_state = phys_mem_read;
+                next_state = idle_rw_cache;
             else
-                next_state = phys_mem_write;
+                next_state = ewb_rw0;
         end
 
         phys_mem_read:

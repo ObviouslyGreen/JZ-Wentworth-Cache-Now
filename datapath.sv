@@ -131,7 +131,7 @@ logic lc3x_op_check;        //lc3x mult/div check
 logic is_nop;
 logic bubble_enable;
 logic flush_enable;
-logic [1:0] resp_count;
+logic [1:0] resp_count  /* synthesis syn_maxfan = 5 */;
 
 lc3b_word ir_in;
 lc3b_word ir_reg_in;

@@ -3,7 +3,7 @@ import lc3b_types::*;
 /*
  * Control signals and state machine for the cache
  */
-module cache_control
+module i_cache_control
 (
     input clk,
 
@@ -63,27 +63,26 @@ begin: state_actions
     case (state)
         idle_rw_cache:
         begin
-            if (hit)
+           if (hit && mem_write && curr_way)
             begin
                 ld_lru = 1'b1;
                 mem_resp = 1'b1;
-
-                if (mem_write)
-                begin
-                    writecachemux_sel = 1'b1;
-                    dirtymux_sel = 1'b1;
-
-                    if (curr_way)
-                    begin
-                        data1mux_sel = 1'b1;
-                        ld_dirty1 = 1'b1;
-                    end
-                    else
-                    begin
-                        data0mux_sel = 1'b1;
-                        ld_dirty0 = 1'b1;
-                    end
-                end
+                writecachemux_sel = 1'b1;
+                data1mux_sel = 1'b1;
+                ld_dirty1 = 1'b1;
+            end
+            else if (hit && mem_write && ~curr_way)
+            begin
+                ld_lru = 1'b1;
+                mem_resp = 1'b1;
+                writecachemux_sel = 1'b1;
+                data0mux_sel = 1'b1;
+                ld_dirty0 = 1'b1;
+            end
+            else if (hit && ~mem_write)
+            begin
+                ld_lru = 1'b1;
+                mem_resp = 1'b1;
             end
         end
 
@@ -171,4 +170,4 @@ begin: next_state_assignment
     state <= next_state;
 end
 
-endmodule : cache_control
+endmodule : i_cache_control

@@ -1,6 +1,6 @@
 import lc3b_types::*; 
 
-module l1_cache
+module i_cache
 (
     input clk,
     input mem_read,
@@ -33,7 +33,7 @@ logic dirty0_out;
 logic dirty1_out;
 lc3b_c_tag pmem_tag;
 
-cache_datapath cache_datapath_module
+i_cache_datapath cache_datapath_module
 (
     .clk(clk),
     .ld_cache(ld_cache),
@@ -58,7 +58,7 @@ cache_datapath cache_datapath_module
     .pmem_wdata(pmem_wdata)
 );
 
-cache_control cache_control_module
+i_cache_control cache_control_module
 (
     .clk(clk),
     .hit(hit),
@@ -85,4 +85,4 @@ cache_control cache_control_module
     .pmem_write(pmem_write)
 );
 
-endmodule : l1_cache
+endmodule : i_cache
