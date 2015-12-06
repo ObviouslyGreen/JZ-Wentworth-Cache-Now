@@ -8,6 +8,9 @@ module datapath
     input clk,
     input i_mem_resp,
     input d_mem_resp,
+    input lc3b_word i_miss_counter,
+    input lc3b_word d_miss_counter,
+    input lc3b_word l2_miss_counter,
     input lc3b_word instr_rdata,
     input lc3b_word mem_rdata,
     output logic branch_enable,
@@ -127,6 +130,8 @@ logic [1:0] forwarding_sel_b;
 logic [2:0] lc3xcounter_out;
 
 logic lc3x_op_check;        //lc3x mult/div check
+lc3b_miss miss_check;
+lc3b_word missmux_out;
 
 logic is_nop;
 logic bubble_enable;
@@ -256,6 +261,7 @@ ir ir_module
     .d_enable(d_enable),
     .imm_enable(imm_enable),
     .jsr_enable(jsr_enable),
+    .miss_check(miss_check),
     .out(ir_out)
 );
 
@@ -271,6 +277,7 @@ control_rom control_rom_module
     .imm_enable(imm_enable),
     .jsr_enable(jsr_enable),
     .d_enable(d_enable),
+    .miss_check(miss_check),
     .stb_high_enable(mem_address[0]),
     .is_nop(is_nop),
     .flush_enable(flush_enable || ir_out == 16'b0),
@@ -310,15 +317,6 @@ multiplier multiplier_module
     .datab(forwarding_mux_b_out[7:0]),
     .result(multiplier_out)
 );
-/*
-alu alu_module_div
-(
-    .aluop(ctrl_exec.aluop),
-    .a(forwarding_mux_a_out),
-    .b(forwarding_mux_b_out),
-    .f(divider_out)
-);
-*/
 
 up8_counter lc3x_counter
 (
@@ -333,11 +331,19 @@ mux4 aluop_mux
     .a(alu_out),         //changed for trans reg
     .b(divider_out),
     .c(multiplier_out),
-    .d(),
+    .d(missmux_out),
     .f(aluopmux_out)
 );
 
-
+mux4 miss_counter_mux
+(
+    .sel(ctrl_exec.missmux_sel),
+    .a(i_miss_counter),         //changed for trans reg
+    .b(d_miss_counter),
+    .c(l2_miss_counter),
+    .d(),
+    .f(missmux_out)
+);
 /*
  * Regfile
  */

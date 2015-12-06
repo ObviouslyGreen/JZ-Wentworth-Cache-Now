@@ -21,6 +21,7 @@ module ir
     output logic d_enable,
     output logic imm_enable,
     output logic jsr_enable,
+    output lc3b_miss miss_check,
     output lc3b_word out
 );
 
@@ -59,6 +60,8 @@ begin
     imm_enable = data[5];
     jsr_enable = data[11];
     lc3x_check = data[4:3];
+    miss_check = data[1:0];
+
     out = data;
 end
 

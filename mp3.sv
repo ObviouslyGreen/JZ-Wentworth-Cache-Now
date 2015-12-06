@@ -104,6 +104,10 @@ lc3b_pmem_data l2_pmem_wdata;
 logic l2_pmem_dirty_evict;
 logic ewb_empty;
 logic ld_ewb_buff;
+lc3b_word i_miss_counter;
+lc3b_word d_miss_counter;
+lc3b_word l2_miss_counter;
+
 
 /* Instantiate MP 3 top level blocks here */
 datapath datapath_module
@@ -112,6 +116,9 @@ datapath datapath_module
     .i_mem_resp(i_mem_resp),
     .d_mem_resp(d_mem_resp),
     .instr_rdata(i_mem_rdata),
+    .i_miss_counter(i_miss_counter),
+    .d_miss_counter(d_miss_counter),
+    .l2_miss_counter(l2_miss_counter),
     .mem_rdata(d_mem_rdata),
     .branch_enable(branch_enable),
     .d_enable(d_enable),
@@ -143,7 +150,8 @@ i_cache i_cache
     .pmem_write(i_pmem_write),
     .mem_rdata(i_mem_rdata),
     .pmem_address(i_pmem_address),
-    .pmem_wdata(i_pmem_wdata)
+    .pmem_wdata(i_pmem_wdata),
+    .l1_miss_counter(i_miss_counter)
 );
 
 d_cache d_cache
@@ -166,7 +174,8 @@ d_cache d_cache
     .pmem_swap(d_v_mem_swap),
     .mem_rdata(d_mem_rdata),
     .pmem_address(v_mem_address),
-    .pmem_wdata(v_mem_wdata)
+    .pmem_wdata(v_mem_wdata),
+    .l1_miss_counter(d_miss_counter)
 );
 
 victim_cache victim_cache
@@ -212,8 +221,8 @@ l2_cache l2_cache
     .pmem_waddress(pmem_waddress),
     .pmem_wdata(l2_pmem_wdata),
     .l2_pmem_dirty_evict(l2_pmem_dirty_evict),
-    .ld_ewb_buff(ld_ewb_buff)
-
+    .ld_ewb_buff(ld_ewb_buff),
+    .l2_miss_counter(l2_miss_counter)
 );
 
 eviction_write_buffer eviction_write_buffer
@@ -255,23 +264,5 @@ arbiter arbiter
     .l2_mem_rdata_out(arbiter_rdata_out),
     .l2_mem_wdata(l2_mem_wdata)
 );
-
-
-register #(.width(128)) l2_wdata_in_buffer
-(
-    .clk(clk),
-    .load(1'b1),
-    .in(l2_mem_wdata),
-    .out(l2_mem_wdata_buff_out)
-);
-
-register #(.width(16)) l2_addr_in_buffer
-(
-    .clk(clk),
-    .load(1'b1),
-    .in(l2_mem_address),
-    .out(l2_mem_address_buff_out)
-);
-//l2_cache
 
 endmodule : mp3

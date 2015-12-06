@@ -2,11 +2,6 @@ ORIGIN 4x0000
 
 SEGMENT CodeSegment:
 
-	;; asd;ljfka;sdlfjk
-	;; as;dljfasd;ljf
-	;; as;dlkfjas;dlfkj
-;; asd;lfkjas;dfl
-
 	LDR R1, R0, ONE 	; R1<=1
 	LDR R2, R0, TWO
 	LDR R3, R0, ONE
@@ -20,6 +15,9 @@ Loop1:
 	LDR R3, R0, THREE
 	DIV R1, R5, R3
 	NAND R3, R5, R1
+	CNT R6, 0
+	CNT R5, 1
+	CNT R4, 2
 
 	
 HALT:

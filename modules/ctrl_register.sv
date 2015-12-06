@@ -42,6 +42,7 @@ begin
     ctrl.is_nop = 1'b0;
     ctrl.mem_byte_enable = 2'b11;
     ctrl.imm_enable = 1'b0;
+	 ctrl.missmux_sel = 2'b00;
 end
 
 always_ff @(posedge clk)

@@ -9,6 +9,7 @@ module control_rom
     input stb_high_enable,
     input is_nop,
     input flush_enable,
+    input lc3b_miss miss_check,
     output lc3b_control_word ctrl
 );
 
@@ -42,6 +43,7 @@ begin
     ctrl.mem_byte_enable = 2'b11;
     ctrl.is_nop = is_nop;
     ctrl.imm_enable = 1'b0;
+    ctrl.missmux_sel = 2'b00;
 
 
     if (~flush_enable)
@@ -116,7 +118,13 @@ begin
                 end
                 ctrl.load_regfile = 1'b1;
                 ctrl.load_cc = 1'b1;
-               
+            end
+
+            op_cnt:
+            begin                                    //miss counter load into regfile
+                ctrl.load_regfile = 1'b1;
+                ctrl.missmux_sel = miss_check;
+                ctrl.aluopmux_sel = 2'b11;
             end
 
             op_not:

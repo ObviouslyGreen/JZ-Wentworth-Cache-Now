@@ -15,7 +15,8 @@ module i_cache
     output logic pmem_write,
     output lc3b_word mem_rdata,
     output lc3b_word pmem_address,
-    output lc3b_mem_data pmem_wdata
+    output lc3b_mem_data pmem_wdata,
+    output lc3b_word l1_miss_counter
 );
 
 logic ld_cache;
@@ -32,6 +33,17 @@ logic lru_out;
 logic dirty0_out;
 logic dirty1_out;
 lc3b_c_tag pmem_tag;
+initial
+begin
+    l1_miss_counter = 0;
+end
+
+always_ff @ (posedge clk)
+begin
+    if (pmem_resp)
+        l1_miss_counter++;
+end
+
 
 i_cache_datapath cache_datapath_module
 (

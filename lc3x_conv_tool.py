@@ -16,8 +16,15 @@ def clean(filename):
 				instr_whole = line.split()
 				if(len(instr_whole) > 0):
 					instruction = instr_whole[0]
-					if(instruction == 'DIV' or instruction == 'MULT' or instruction == 'SUB' or instruction == 'XOR' or instruction == 'OR' or instruction == 'NAND'):
-						regs = instr_whole[1:]
+					regs = instr_whole[1:]
+					if(instruction == 'CNT'):
+						logger.info(line)
+						dest = int((regs[0])[1])
+						cache = int(regs[1])
+						dest = dest << 9
+						concat = dest | cache
+						f_new.write('	DATA2 4x8'+format(concat,'x')+'\n')
+					elif(instruction == 'DIV' or instruction == 'MULT' or instruction == 'SUB' or instruction == 'XOR' or instruction == 'OR' or instruction == 'NAND'):
 						# get only the number of the register
 						dest = int((regs[0])[1])
 						R1 = int((regs[1])[1])
