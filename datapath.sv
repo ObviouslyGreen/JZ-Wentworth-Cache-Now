@@ -168,10 +168,15 @@ logic pred_reg1_out;
 logic pred_reg2_out;
 logic pred_reg3_out;
 
+lc3b_word mispredict_counter;
+lc3b_word predict_counter;
+
 initial
 begin
     ctrl_bubble = 0;
     ctrl_bubble.is_nop = 1'b1;
+    mispredict_counter = 16'b0;
+    predict_counter = 16'b0;
 end
 
 
@@ -260,6 +265,14 @@ begin
         pc_in = brmux_out;
     else
         pc_in = (branch_predict && ~mispredict) ? predicted_pc : brmux_out;
+end
+
+always_ff @(posedge clk)
+begin
+    if (mispredict)
+        mispredict_counter++;
+    if (branch_predict)
+        predict_counter++;
 end
 
 

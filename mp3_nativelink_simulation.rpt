@@ -31,121 +31,121 @@ ModelSim-Altera Info: # Modifying modelsim.ini
 ModelSim-Altera Warning: # ** Warning: Copied /software/altera/13.1/modelsim_ase/linuxaloem/../modelsim.ini to modelsim.ini.
 ModelSim-Altera Info: #          Updated modelsim.ini.
 ModelSim-Altera Info: # 
-ModelSim-Altera Info: # vlog -vlog01compat -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/multiplier.v}
+ModelSim-Altera Info: # vlog -vlog01compat -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/multiplier.v}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module multiplier
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	multiplier
-ModelSim-Altera Info: # vlog -vlog01compat -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/divider.v}
+ModelSim-Altera Info: # vlog -vlog01compat -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/divider.v}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module divider
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	divider
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/up8_counter.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/up8_counter.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module up8_counter
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	up8_counter
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/register_neg.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/register_neg.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module register_neg
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	register_neg
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/register.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/register.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module register
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	register
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/plus2.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/plus2.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module plus2
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	plus2
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/nzp_comparator.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/nzp_comparator.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module nzp_comparator
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	nzp_comparator
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/mux4.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/mux4.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module mux4
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	mux4
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/mux2.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/mux2.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module mux2
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	mux2
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/encoder.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/encoder.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module encoder
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	encoder
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/decoder.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/decoder.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module decoder
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	decoder
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/counter.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/counter.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module up_counter
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	up_counter
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/comparator.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/comparator.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module comparator
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	comparator
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/adder.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/adder.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module adder
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	adder
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/victim_cache_control.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/victim_cache_control.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module victim_cache_control
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	victim_cache_control
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/lru_stack.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/lru_stack.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module lru_stack
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	lru_stack
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/lc3b_types.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/lc3b_types.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package lc3b_types
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	--none--
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/arbiter_control.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/arbiter_control.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module arbiter_control
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	arbiter_control
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/gen_prediction.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/gen_prediction.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module gen_prediction
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	gen_prediction
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/ewb_datapath.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/ewb_datapath.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package ewb_datapath_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -153,7 +153,7 @@ ModelSim-Altera Info: # -- Compiling module ewb_datapath
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	ewb_datapath
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/ewb_control.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/ewb_control.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package ewb_control_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -161,7 +161,7 @@ ModelSim-Altera Info: # -- Compiling module ewb_control
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	ewb_control
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/eviction_write_buffer.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/eviction_write_buffer.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package eviction_write_buffer_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -169,7 +169,7 @@ ModelSim-Altera Info: # -- Compiling module eviction_write_buffer
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	eviction_write_buffer
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/zext.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/zext.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package zext_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -177,7 +177,7 @@ ModelSim-Altera Info: # -- Compiling module zext
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	zext
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/zadj.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/zadj.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package zadj_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -185,7 +185,7 @@ ModelSim-Altera Info: # -- Compiling module zadj
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	zadj
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/victim_tag_array.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/victim_tag_array.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package victim_tag_array_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -193,7 +193,7 @@ ModelSim-Altera Info: # -- Compiling module victim_tag_array
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	victim_tag_array
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/victim_array.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/victim_array.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package victim_array_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -201,7 +201,7 @@ ModelSim-Altera Info: # -- Compiling module victim_array
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	victim_array
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/stb_filter.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/stb_filter.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package stb_filter_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -209,7 +209,7 @@ ModelSim-Altera Info: # -- Compiling module stb_filter
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	stb_filter
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/sext.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/sext.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package sext_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -217,7 +217,7 @@ ModelSim-Altera Info: # -- Compiling module sext
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	sext
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/regfile_filter.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/regfile_filter.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package regfile_filter_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -225,7 +225,7 @@ ModelSim-Altera Info: # -- Compiling module regfile_filter
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	regfile_filter
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/regfile.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/regfile.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package regfile_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -233,7 +233,7 @@ ModelSim-Altera Info: # -- Compiling module regfile
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	regfile
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/pseudo_lru.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/pseudo_lru.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package pseudo_lru_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -241,7 +241,7 @@ ModelSim-Altera Info: # -- Compiling module pseudo_lru
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	pseudo_lru
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/l2_data_line_filter.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/l2_data_line_filter.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package l2_data_line_filter_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -249,7 +249,7 @@ ModelSim-Altera Info: # -- Compiling module l2_data_line_filter
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	l2_data_line_filter
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/l2_array.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/l2_array.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package l2_array_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -257,7 +257,7 @@ ModelSim-Altera Info: # -- Compiling module l2_array
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	l2_array
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/ir.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/ir.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package ir_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -265,7 +265,7 @@ ModelSim-Altera Info: # -- Compiling module ir
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	ir
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/hazard_detector.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/hazard_detector.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package hazard_detector_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -273,7 +273,7 @@ ModelSim-Altera Info: # -- Compiling module hazard_detector
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	hazard_detector
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/gencc.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/gencc.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package gencc_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -281,7 +281,7 @@ ModelSim-Altera Info: # -- Compiling module gencc
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	gencc
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/forwarding_unit.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/forwarding_unit.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package forwarding_unit_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -289,7 +289,7 @@ ModelSim-Altera Info: # -- Compiling module forwarding_unit
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	forwarding_unit
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/data_membyte_filter.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/data_membyte_filter.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package data_membyte_filter_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -297,7 +297,7 @@ ModelSim-Altera Info: # -- Compiling module data_membyte_filter
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	data_membyte_filter
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/ctrl_register.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/ctrl_register.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package ctrl_register_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -305,7 +305,7 @@ ModelSim-Altera Info: # -- Compiling module ctrl_register
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	ctrl_register
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/byte_select_mux2.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/byte_select_mux2.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package byte_select_mux2_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -313,7 +313,7 @@ ModelSim-Altera Info: # -- Compiling module byte_select_mux2
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	byte_select_mux2
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/array.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/array.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package array_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -321,7 +321,7 @@ ModelSim-Altera Info: # -- Compiling module array
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	array
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/alu.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/alu.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package alu_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -329,7 +329,7 @@ ModelSim-Altera Info: # -- Compiling module alu
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	alu
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/adj.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/adj.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package adj_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -337,7 +337,7 @@ ModelSim-Altera Info: # -- Compiling module adj
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	adj
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/victim_cache_datapath.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/victim_cache_datapath.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package victim_cache_datapath_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -345,7 +345,7 @@ ModelSim-Altera Info: # -- Compiling module victim_cache_datapath
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	victim_cache_datapath
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/victim_cache.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/victim_cache.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package victim_cache_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -353,7 +353,7 @@ ModelSim-Altera Info: # -- Compiling module victim_cache
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	victim_cache
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/mp3.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/mp3.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package mp3_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -361,7 +361,7 @@ ModelSim-Altera Info: # -- Compiling module mp3
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	mp3
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/l2_cache_datapath.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/l2_cache_datapath.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package l2_cache_datapath_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -369,7 +369,7 @@ ModelSim-Altera Info: # -- Compiling module l2_cache_datapath
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	l2_cache_datapath
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/l2_cache_control.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/l2_cache_control.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package l2_cache_control_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -377,7 +377,7 @@ ModelSim-Altera Info: # -- Compiling module l2_cache_control
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	l2_cache_control
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/l2_cache.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/l2_cache.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package l2_cache_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -385,7 +385,7 @@ ModelSim-Altera Info: # -- Compiling module l2_cache
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	l2_cache
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/i_cache_datapath.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/i_cache_datapath.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package i_cache_datapath_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -393,7 +393,7 @@ ModelSim-Altera Info: # -- Compiling module i_cache_datapath
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	i_cache_datapath
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/i_cache_control.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/i_cache_control.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package i_cache_control_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -401,7 +401,7 @@ ModelSim-Altera Info: # -- Compiling module i_cache_control
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	i_cache_control
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/i_cache.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/i_cache.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package i_cache_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -409,16 +409,16 @@ ModelSim-Altera Info: # -- Compiling module i_cache
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	i_cache
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/datapath.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/datapath.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package datapath_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
 ModelSim-Altera Info: # -- Compiling module datapath
-ModelSim-Altera Warning: # ** Warning: /home/mychen5/ece411/JZ-Wentworth-Cache-Now/datapath.sv(222): (vlog-2182) 'mispredict' might be read before written in always_comb block.
+ModelSim-Altera Warning: # ** Warning: /home/syao6/ece411/JZ-Wentworth-Cache-Now/datapath.sv(227): (vlog-2182) 'mispredict' might be read before written in always_comb block.
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	datapath
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/d_cache_datapath.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/d_cache_datapath.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package d_cache_datapath_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -426,7 +426,7 @@ ModelSim-Altera Info: # -- Compiling module d_cache_datapath
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	d_cache_datapath
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/d_cache_control.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/d_cache_control.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package d_cache_control_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -434,7 +434,7 @@ ModelSim-Altera Info: # -- Compiling module d_cache_control
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	d_cache_control
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/d_cache.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/d_cache.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package d_cache_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -442,7 +442,7 @@ ModelSim-Altera Info: # -- Compiling module d_cache
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	d_cache
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/control_rom.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/control_rom.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package control_rom_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -450,7 +450,7 @@ ModelSim-Altera Info: # -- Compiling module control_rom
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	control_rom
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/arbiter_datapath.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/arbiter_datapath.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package arbiter_datapath_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -458,7 +458,7 @@ ModelSim-Altera Info: # -- Compiling module arbiter_datapath
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	arbiter_datapath
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/arbiter.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/arbiter.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package arbiter_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -466,7 +466,7 @@ ModelSim-Altera Info: # -- Compiling module arbiter
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	arbiter
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/branch_predictors.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/branch_predictors.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package branch_predictors_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -474,7 +474,7 @@ ModelSim-Altera Info: # -- Compiling module branch_predictors
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	branch_predictors
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/branch_history.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules {/home/syao6/ece411/JZ-Wentworth-Cache-Now/modules/branch_history.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package branch_history_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
@@ -483,13 +483,13 @@ ModelSim-Altera Info: #
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	branch_history
 ModelSim-Altera Info: # 
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/mp3_tb.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/mp3_tb.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module mp3_tb
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	mp3_tb
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/physical_memory.sv}
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/syao6/ece411/JZ-Wentworth-Cache-Now {/home/syao6/ece411/JZ-Wentworth-Cache-Now/physical_memory.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module physical_memory
 ModelSim-Altera Info: # 
