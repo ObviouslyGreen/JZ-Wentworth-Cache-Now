@@ -489,9 +489,10 @@ hazard_detector hazard_detection_unit
 branch_history branch_history_table
 (
     .clk(clk),
+    .enable(ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .branch_enable(branch_enable && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .index(instr_address[4:0]),
-    .br_index(pc_reg_out3[4:0]),
+    .br_index(pc_reg_out4[4:0]),
     .out(branch_history_out),
     .br_out(br_branch_history_out)
 );
@@ -502,9 +503,10 @@ branch_history branch_history_table
 branch_predictors branch_predictor_table
 (
     .clk(clk),
+    .enable(ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .branch_enable(branch_enable && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .index(predictor_index),
-    .br_index(pc_reg_out3[4:0] ^ br_branch_history_out),
+    .br_index(pc_reg_out4[4:0] ^ br_branch_history_out),
     .branch_count(branch_count)
 );
 

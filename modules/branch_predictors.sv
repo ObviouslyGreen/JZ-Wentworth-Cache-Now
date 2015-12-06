@@ -6,6 +6,7 @@ import lc3b_types::*;
 module branch_predictors
 (
     input clk,
+    input enable,
     input branch_enable,
     input lc3b_p_index index,
     input lc3b_p_index br_index,
@@ -14,7 +15,6 @@ module branch_predictors
 
 // Data is 2^16 entries of 2 bit counters
 logic [1:0] data [31:0] /* synthesis ramstyle = "logic" */;
-assign branch_count = data[index];
 
 /* Initialize array */
 initial
@@ -28,9 +28,9 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (branch_enable)
+    if (enable)
     begin
-        case (branch_count)
+        case (data[br_index])
             2'b00:
             begin
                 if (branch_enable)
@@ -58,5 +58,7 @@ begin
         endcase
     end
 end
+
+assign branch_count = data[index];
 
 endmodule : branch_predictors
