@@ -231,8 +231,10 @@ begin
 
     predictor_index = instr_address[4:0] ^ branch_history_out;
     mispredict = (branch_enable ^ pred_reg3_out) && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop;
-    if (mispredict)
+    if (mispredict && ~branch_enable)
         pc_in = mispredict_pc_reg2_out;
+    else if (mispredict && branch_enable)
+        pc_in = brmux_out;
     else
         pc_in = (branch_predict && ~mispredict) ? predicted_pc : brmux_out;
 end
