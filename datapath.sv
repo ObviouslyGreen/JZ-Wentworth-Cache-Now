@@ -142,11 +142,10 @@ lc3b_control_word ctrl_bubble;
 
 lc3b_p_index predictor_index;
 lc3b_p_index branch_history_out;
+lc3b_word pc_in;
 lc3b_word adj9_predict_out;
 lc3b_word predicted_pc;
 lc3b_word brmux_predict_out;
-lc3b_word pc_out;
-lc3b_word pc_out_plus2_out;
 lc3b_word last_br_pc;
 logic [1:0] branch_count;
 logic branch_predict;
@@ -229,9 +228,9 @@ begin
     predictor_index = instr_address[4:0] ^ branch_history_out;
     mispredict = (branch_enable ^ pred_reg2_out) && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop;
     if (mispredict)
-        instr_address = last_br_pc;
+        pc_in = last_br_pc;
     else
-        instr_address = (branch_predict) ? predicted_pc : pc_out;
+        pc_in = (branch_predict) ? predicted_pc : brmux_predict_out;
 end
 
 
@@ -403,22 +402,13 @@ adder offset_adder
 );
 
 /*
- * Instruction address plus 2
+ * PC plus 2
  */
 plus2 plus2_module
 (
     .in(instr_address),
     .out(pc_plus2_out)
 );
-
-/*
- * PC plus 2
- */
- plus2 pc_plus2_module
- (
-     .in(pc_out),
-     .out(pc_out_plus2_out)
- );
 
 /*
  * CCComp
@@ -496,7 +486,7 @@ branch_history branch_history_table
 (
     .clk(clk),
     .branch_enable(branch_enable),
-    .index(pc_out[4:0]),
+    .index(instr_address[4:0]),
     .br_index(pc_reg_out3[4:0]),
     .out(branch_history_out)
 );
@@ -519,7 +509,7 @@ branch_predictors branch_predictor_table
 gen_prediction gen_prediction_module
 (
     .branch_count(branch_count),
-    .enable(ctrl.opcode == op_br && ~ctrl.is_nop),
+    .enable(opcode == op_br && ~is_nop),
     .branch_predict(branch_predict)
 );
 
@@ -538,7 +528,7 @@ adj #(.width(9)) adj9_predict
 adder offset_prediction_adder
 (
     .a(adj9_predict_out),
-    .b(pc_out_plus2_out),
+    .b(pc_plus2_out),
     .out(predicted_pc)
 );
 
@@ -554,8 +544,8 @@ register pc
 (
     .clk(clk),
     .load(global_load && ~bubble_enable),
-    .in(brmux_predict_out),
-    .out(pc_out)
+    .in(pc_in),
+    .out(instr_address)
 );
 
 /*
@@ -595,7 +585,7 @@ register #(.width(16)) mispredict_pc_reg
 (
     .clk(clk),
     .load(global_load && branch_predict),
-    .in(pc_out),
+    .in(instr_address),
     .out(last_br_pc)
 );
 
@@ -615,7 +605,7 @@ register pc_reg1
 (
     .clk(clk),
     .load(global_load && ~bubble_enable),
-    .in(pc_plus2_out),
+    .in(pc_in),
     .out(pc_reg_out1)
 );
 
@@ -862,7 +852,7 @@ mux2 br_mux_predict
 (
     // Only select prediction when decoding a br instruction
     // Choose brmux_out on mispredict
-    .sel((branch_predict && ctrl.opcode == op_br && ~ctrl.is_nop)),
+    .sel((branch_predict && opcode == op_br && ~is_nop)),
     .a(brmux_out),
     .b(predicted_pc),
     .f(brmux_predict_out)
