@@ -31,6 +31,12 @@ ModelSim-Altera Info: # Modifying modelsim.ini
 ModelSim-Altera Warning: # ** Warning: Copied /software/altera/13.1/modelsim_ase/linuxaloem/../modelsim.ini to modelsim.ini.
 ModelSim-Altera Info: #          Updated modelsim.ini.
 ModelSim-Altera Info: # 
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/register_neg.sv}
+ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+ModelSim-Altera Info: # -- Compiling module register_neg
+ModelSim-Altera Info: # 
+ModelSim-Altera Info: # Top level modules:
+ModelSim-Altera Info: # 	register_neg
 ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/register.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling module register
@@ -115,12 +121,6 @@ ModelSim-Altera Info: # -- Compiling module arbiter_control
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	arbiter_control
-ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/register_neg.sv}
-ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
-ModelSim-Altera Info: # -- Compiling module register_neg
-ModelSim-Altera Info: # 
-ModelSim-Altera Info: # Top level modules:
-ModelSim-Altera Info: # 	register_neg
 ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/zext.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package zext_sv_unit

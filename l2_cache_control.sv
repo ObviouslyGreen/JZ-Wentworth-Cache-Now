@@ -44,7 +44,7 @@ module l2_cache_control
 enum int unsigned {
     /* List of states */
     idle_rw_cache,
-    check_line,
+    cache_hit,
     phys_mem_write,
     phys_mem_read
 } state, next_state;
@@ -75,7 +75,7 @@ begin: state_actions
         idle_rw_cache: 
             /* Nothing */
             
-        check_line:
+        cache_hit:
         begin
             if (hit && mem_write && curr_way == 2'b00)
             begin
@@ -164,14 +164,6 @@ begin: next_state_logic
      case (state)
         idle_rw_cache:
         begin
-            if (mem_read || mem_write)
-                next_state = check_line;
-            else
-                next_state = idle_rw_cache;
-        end
-
-        check_line:
-        begin
             if ((mem_read || mem_write) && (~hit))
             begin
                 if (lru_out == 2'b00)
@@ -203,8 +195,13 @@ begin: next_state_logic
                         next_state = phys_mem_read;
                 end
             end
-            else
-                next_state = idle_rw_cache;
+            else if ((mem_read || mem_write) && (hit))
+                next_state = cache_hit;
+        end
+        
+        cache_hit:
+        begin
+            next_state = idle_rw_cache;
         end
 
         phys_mem_write:
