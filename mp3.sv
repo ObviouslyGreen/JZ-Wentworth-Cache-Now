@@ -93,6 +93,9 @@ lc3b_mem_data l2_mem_wdata;
 
 lc3b_mem_data arbiter_rdata_out;
 
+lc3b_mem_data l2_mem_wdata_buff_out;
+lc3b_word l2_mem_address_buff_out;
+
 /* Instantiate MP 3 top level blocks here */
 datapath datapath_module
 (
@@ -187,8 +190,8 @@ l2_cache l2_cache
     .mem_write(l2_mem_write),
     .pmem_resp(pmem_resp),
     .mem_byte_enable(2'b00),
-    .mem_wdata(l2_mem_wdata),
-    .mem_address(l2_mem_address),
+    .mem_wdata(l2_mem_wdata_buff_out),
+    .mem_address(l2_mem_address_buff_out),
     .pmem_rdata(pmem_rdata),
     .mem_resp(l2_mem_resp),
     .pmem_read(pmem_read),
@@ -221,6 +224,21 @@ arbiter arbiter
     .l2_mem_wdata(l2_mem_wdata)
 );
 
+register #(.width(128)) l2_wdata_in_buffer
+(
+    .clk(clk),
+    .load(1'b1),
+    .in(l2_mem_wdata),
+    .out(l2_mem_wdata_buff_out)
+);
+
+register #(.width(16)) l2_addr_in_buffer
+(
+    .clk(clk),
+    .load(1'b1),
+    .in(l2_mem_address),
+    .out(l2_mem_address_buff_out)
+);
 //l2_cache
 
 endmodule : mp3

@@ -39,6 +39,7 @@ logic comparator2_out;
 logic comparator3_out;
 lc3b_mem_data datareg_out;
 
+lc3b_c_vic_tag tagreg_out;
 lc3b_c_vic_tag tag;
 lc3b_c_vic_tag tag_out;
 lc3b_c_vic_tag tag0_out;
@@ -155,6 +156,14 @@ victim_array #(.width(128)) data
     .out(data_out)
 );
 
+register #(.width(12)) tag_reg
+(
+    .clk(clk),
+    .load(ld_cache),
+    .in(tag_out),
+    .out(tagreg_out)
+);
+
 /*
  * Tag 
  */
@@ -228,7 +237,7 @@ mux2 #(.width(16)) pmem_address_mux
 (
     .sel(pmem_write),
     .a(mem_address),
-    .b({tag_out, 4'b0000}),
+    .b({tagreg_out, 4'b0000}),
     .f(pmem_address)
 );
 
