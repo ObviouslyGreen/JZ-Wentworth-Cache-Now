@@ -101,6 +101,9 @@ logic l2_pmem_write;
 lc3b_word pmem_waddress;
 lc3b_word pmem_raddress;
 lc3b_pmem_data l2_pmem_wdata;
+logic l2_pmem_dirty_evict;
+logic ewb_empty;
+logic ld_ewb_buff;
 
 /* Instantiate MP 3 top level blocks here */
 datapath datapath_module
@@ -192,13 +195,14 @@ victim_cache victim_cache
 l2_cache l2_cache
 (
     .clk(clk),
+    .ewb_empty(ewb_empty),
     .ewb_ready(ewb_ready),
     .mem_read(l2_mem_read),
     .mem_write(l2_mem_write),
     .pmem_resp(pmem_resp),
     .mem_byte_enable(2'b00),
-    .mem_wdata(l2_mem_wdata_buff_out),
-    .mem_address(l2_mem_address_buff_out),
+    .mem_wdata(l2_mem_wdata),
+    .mem_address(l2_mem_address),
     .pmem_rdata(pmem_rdata),
     .mem_resp(l2_mem_resp),
     .pmem_read(pmem_read),
@@ -206,13 +210,17 @@ l2_cache l2_cache
     .mem_rdata(l2_mem_rdata_in),
     .pmem_address(pmem_raddress),
     .pmem_waddress(pmem_waddress),
-    .pmem_wdata(l2_pmem_wdata)
+    .pmem_wdata(l2_pmem_wdata),
+    .l2_pmem_dirty_evict(l2_pmem_dirty_evict),
+    .ld_ewb_buff(ld_ewb_buff)
 
 );
 
 eviction_write_buffer eviction_write_buffer
 (
     .clk(clk),
+    .ld_ewb_buff(ld_ewb_buff),
+    .l2_pmem_dirty_evict(l2_pmem_dirty_evict),
     .pmem_resp(pmem_resp),
     .l2_pmem_read(pmem_read),
     .l2_pmem_write(l2_pmem_write),
@@ -221,6 +229,7 @@ eviction_write_buffer eviction_write_buffer
     .l2_pmem_wdata(l2_pmem_wdata),
     .pmem_address(pmem_address),
     .pmem_wdata(pmem_wdata),
+    .empty(ewb_empty),
     .ready(ewb_ready),
     .pmem_write(pmem_write)
 );

@@ -8,6 +8,7 @@ module l2_cache_control
     input clk,
 
     /* Datapath signals */
+    input ewb_empty,
     input ewb_ready, 
     input hit,
     input [1:0] curr_way,
@@ -39,7 +40,9 @@ module l2_cache_control
     output lc3b_word pmem_waddress,
     output logic mem_resp,
     output logic pmem_read,
-    output logic pmem_write
+    output logic pmem_write,
+	 output logic l2_pmem_dirty_evict,
+     output logic ld_ewb_buff
 );
 
 
@@ -72,6 +75,8 @@ begin: state_actions
     pmem_write = 1'b0;
     pmem_address = mem_address;
 	 pmem_waddress = mem_address;
+     l2_pmem_dirty_evict = 1'b0;
+     ld_ewb_buff = 1'b0;
 
     /* Actions for each state */
     case (state)
@@ -145,6 +150,10 @@ begin: state_actions
 
             pmem_waddress = {pmem_tag, mem_address[8:5], 5'b00000};
             ld_cache = 1'b1;
+            l2_pmem_dirty_evict = 1'b1;
+            if (ewb_empty)
+                ld_ewb_buff = 1'b1;
+
             if (ewb_ready)
                 pmem_read = 1'b1;
 
@@ -214,7 +223,7 @@ begin: next_state_logic
                         next_state = phys_mem_read;
                 end
             end
-            else ((mem_read || mem_write) && (hit))
+            else if ((mem_read || mem_write) && (hit))
                 next_state = idle_rw_cache;
         end
 
