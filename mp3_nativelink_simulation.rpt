@@ -121,6 +121,30 @@ ModelSim-Altera Info: # -- Compiling module arbiter_control
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	arbiter_control
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/ewb_datapath.sv}
+ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+ModelSim-Altera Info: # -- Compiling package ewb_datapath_sv_unit
+ModelSim-Altera Info: # -- Importing package lc3b_types
+ModelSim-Altera Info: # -- Compiling module ewb_datapath
+ModelSim-Altera Info: # 
+ModelSim-Altera Info: # Top level modules:
+ModelSim-Altera Info: # 	ewb_datapath
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/ewb_control.sv}
+ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+ModelSim-Altera Info: # -- Compiling package ewb_control_sv_unit
+ModelSim-Altera Info: # -- Importing package lc3b_types
+ModelSim-Altera Info: # -- Compiling module ewb_control
+ModelSim-Altera Info: # 
+ModelSim-Altera Info: # Top level modules:
+ModelSim-Altera Info: # 	ewb_control
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/eviction_write_buffer.sv}
+ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+ModelSim-Altera Info: # -- Compiling package eviction_write_buffer_sv_unit
+ModelSim-Altera Info: # -- Importing package lc3b_types
+ModelSim-Altera Info: # -- Compiling module eviction_write_buffer
+ModelSim-Altera Info: # 
+ModelSim-Altera Info: # Top level modules:
+ModelSim-Altera Info: # 	eviction_write_buffer
 ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/zext.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package zext_sv_unit
@@ -519,6 +543,12 @@ ModelSim-Altera Info: # Loading work.pseudo_lru_sv_unit
 ModelSim-Altera Info: # Loading work.pseudo_lru
 ModelSim-Altera Info: # Loading work.l2_cache_control_sv_unit
 ModelSim-Altera Info: # Loading work.l2_cache_control
+ModelSim-Altera Info: # Loading work.eviction_write_buffer_sv_unit
+ModelSim-Altera Info: # Loading work.eviction_write_buffer
+ModelSim-Altera Info: # Loading work.ewb_datapath_sv_unit
+ModelSim-Altera Info: # Loading work.ewb_datapath
+ModelSim-Altera Info: # Loading work.ewb_control_sv_unit
+ModelSim-Altera Info: # Loading work.ewb_control
 ModelSim-Altera Info: # Loading work.arbiter_sv_unit
 ModelSim-Altera Info: # Loading work.arbiter
 ModelSim-Altera Info: # Loading work.arbiter_datapath_sv_unit

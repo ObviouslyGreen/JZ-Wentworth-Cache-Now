@@ -4,10 +4,12 @@ module ewb_control(
     /* Input and output port declarations */
 	input clk,
 
+    input l2_pmem_dirty_evict,
 	input l2_pmem_write,
 	input pmem_resp,
 	input lc3b_word ewb_addr_buff_out,
 	input lc3b_word l2_pmem_address,
+    output logic empty,
 	output logic ready, 
 	output logic ld_buff, 
 	output logic pmem_write, 
@@ -17,12 +19,14 @@ module ewb_control(
 enum int unsigned {
     /* List of states */
     idle,
+    in_queue,
     phys_mem_write
 } state, next_state;
 
 always_comb
 begin : state_actions
     /* Default output assignments */
+    empty = 1'b0;
     ready = 1'b0;
     ld_buff = 1'b0;
     pmem_address = l2_pmem_address;
@@ -32,9 +36,15 @@ begin : state_actions
 	case(state)
     	idle: 
     	begin
+            empty = 1'b1;
     		ready = 1'b1;
-    		ld_buff = 1'b1;
     	end
+
+        in_queue: 
+        begin
+            ready = 1'b1;
+            ld_buff = 1'b1;
+        end
 
     	phys_mem_write:
     	begin
@@ -56,9 +66,15 @@ begin : next_state_logic
     case(state)
     	idle: 
     	begin
-    		if (l2_pmem_write)
-    			next_state = phys_mem_write;
+    		if (l2_pmem_dirty_evict)
+    			next_state = in_queue;
     	end
+
+        in_queue: 
+        begin
+            if (l2_pmem_write)
+                next_state = phys_mem_write;
+        end
 
     	phys_mem_write:
     	begin

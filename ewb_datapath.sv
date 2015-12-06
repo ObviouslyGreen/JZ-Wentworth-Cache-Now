@@ -3,6 +3,7 @@ import lc3b_types::*;
 module ewb_datapath
 (
     input clk,
+    input ld_ewb_buff,
     input lc3b_word l2_pmem_waddress,
     input lc3b_word l2_pmem_raddress,
     input lc3b_pmem_data l2_pmem_wdata,
@@ -15,16 +16,16 @@ module ewb_datapath
 register #(.width(256)) ewb_data_buff
 (
     .clk(clk),
-    .load(ld_buff),
+    .load(ld_ewb_buff),
     .in(l2_pmem_wdata),
     .out(pmem_wdata)
 );
 
 
-register #(.width(256)) ewb_addr_buff
+register #(.width(16)) ewb_addr_buff
 (
     .clk(clk),
-    .load(ld_buff),
+    .load(ld_ewb_buff),
     .in(l2_pmem_waddress),
     .out(ewb_addr_buff_out)
 );
