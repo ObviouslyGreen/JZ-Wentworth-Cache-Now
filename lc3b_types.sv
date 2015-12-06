@@ -57,6 +57,7 @@ typedef enum bit [3:0] {
     alu_and,
     alu_or,
     alu_xor,
+    alu_nand,
     alu_not,
     alu_pass,
     alu_sll,

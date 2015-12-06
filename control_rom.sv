@@ -109,6 +109,10 @@ begin
                     begin
                         ctrl.aluop = alu_xor;
                     end
+                    else if (lc3x_check == 2'b11)       //NAND
+                    begin
+                        ctrl.aluop = alu_nand;
+                    end
                 end
                 ctrl.load_regfile = 1'b1;
                 ctrl.load_cc = 1'b1;

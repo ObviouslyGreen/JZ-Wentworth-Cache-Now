@@ -15,7 +15,7 @@ end
 
 always_ff @(negedge clk)
 begin
-    if (count == 3'b111)
+    if (count == 3'b110)
         count = 0;
     else if (enable)
         count++;
