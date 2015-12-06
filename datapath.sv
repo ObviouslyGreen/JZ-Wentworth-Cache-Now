@@ -133,9 +133,6 @@ logic lc3x_op_check;        //lc3x mult/div check
 lc3b_miss miss_check;
 lc3b_word missmux_out;
 
-lc3b_word bubble_count;
-lc3b_word instr_count;
-
 logic is_nop;
 logic bubble_enable;
 logic flush_enable;
@@ -171,15 +168,18 @@ logic pred_reg1_out;
 logic pred_reg2_out;
 logic pred_reg3_out;
 
-lc3b_word mispredict_counter;
-lc3b_word predict_counter;
+lc3b_word mispredict_count;
+lc3b_word predict_count;
+lc3b_word bubble_count;
+lc3b_word instr_count;
 
 initial
 begin
     ctrl_bubble = 0;
     ctrl_bubble.is_nop = 1'b1;
-    mispredict_counter = 16'b0;
-    predict_counter = 16'b0;
+    mispredict_count = 16'b0;
+    predict_count = 16'b0;
+    instr_count = 16'b0;
 end
 
 
@@ -273,9 +273,11 @@ end
 always_ff @(posedge clk)
 begin
     if (mispredict)
-        mispredict_counter++;
+        mispredict_count++;
     if (branch_predict)
-        predict_counter++;
+        predict_count++;
+    if (i_mem_resp)
+        instr_count++;
 end
 
 
@@ -551,7 +553,6 @@ hazard_detector hazard_detection_unit
     .write_reg1(write_reg1_out),
     .opcode(ctrl_mem.opcode),
     .bubble_count(bubble_count),
-    .instr_count(instr_count),
     .bubble_enable(bubble_enable)
 );
 

@@ -13,7 +13,6 @@ module hazard_detector
     input lc3b_reg write_reg1,
     input lc3b_opcode opcode,
     output lc3b_word bubble_count,
-    output lc3b_word instr_count,
     output logic bubble_enable
 );
 
@@ -27,8 +26,7 @@ assign is_data_hazard = mem_read
                     && opcode != op_trap;
 initial
 begin
-    bubble_count = 0;
-    instr_count = 0;
+    bubble_count = 16'b0;
 end
 
 always_comb
@@ -43,7 +41,6 @@ end
 
 always @ (posedge clk)
 begin
-    instr_count++;
     if(is_data_hazard)
         bubble_count++;
 end
