@@ -504,6 +504,8 @@ hazard_detector hazard_detection_unit
     .sr2(storemux_out),
     .write_reg1(write_reg1_out),
     .opcode(ctrl_mem.opcode),
+    .bubble_count(bubble_count),
+    .instr_count(instr_count),
     .bubble_enable(bubble_enable)
 );
 

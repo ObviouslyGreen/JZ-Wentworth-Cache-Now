@@ -11,6 +11,8 @@ module hazard_detector
     input lc3b_reg sr2,
     input lc3b_reg write_reg1,
     input lc3b_opcode opcode,
+    output lc3b_word bubble_count,
+    output lc3b_word instr_count,
     output logic bubble_enable
 );
 
@@ -22,6 +24,11 @@ assign is_data_hazard = mem_read
                     && opcode != op_jmp
                     && opcode != op_jsr
                     && opcode != op_trap;
+initial
+begin
+    bubble_count = 0;
+    instr_count = 0;
+end
 
 always_comb
 begin
@@ -31,6 +38,13 @@ begin
         bubble_enable = 1'b1;
     else
         bubble_enable = 1'b0;
+end
+
+always @ (posedge clk)
+begin
+    instr_count++;
+    if(is_data_hazard)
+        bubble_count++;
 end
 
 endmodule : hazard_detector
