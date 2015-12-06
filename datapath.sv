@@ -133,6 +133,9 @@ logic lc3x_op_check;        //lc3x mult/div check
 lc3b_miss miss_check;
 lc3b_word missmux_out;
 
+lc3b_word bubble_count;
+lc3b_word instr_count;
+
 logic is_nop;
 logic bubble_enable;
 logic flush_enable;
@@ -498,6 +501,7 @@ up_counter mem_resp_counter
  */
 hazard_detector hazard_detection_unit
 (
+    .clk(clk),
     .mem_read(ctrl_exec.mem_read),
     .is_nop(ctrl_mem.is_nop),
     .sr1(sr1),

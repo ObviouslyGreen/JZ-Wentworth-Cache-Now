@@ -5,6 +5,7 @@ import lc3b_types::*;
 
 module hazard_detector
 (
+    input clk,
     input mem_read,
     input is_nop,
     input lc3b_reg sr1,
