@@ -139,6 +139,12 @@ ModelSim-Altera Info: # -- Compiling module arbiter_control
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	arbiter_control
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/gen_prediction.sv}
+ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+ModelSim-Altera Info: # -- Compiling module gen_prediction
+ModelSim-Altera Info: # 
+ModelSim-Altera Info: # Top level modules:
+ModelSim-Altera Info: # 	gen_prediction
 ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/ewb_datapath.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
 ModelSim-Altera Info: # -- Compiling package ewb_datapath_sv_unit
@@ -408,6 +414,7 @@ ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 201
 ModelSim-Altera Info: # -- Compiling package datapath_sv_unit
 ModelSim-Altera Info: # -- Importing package lc3b_types
 ModelSim-Altera Info: # -- Compiling module datapath
+ModelSim-Altera Warning: # ** Warning: /home/mychen5/ece411/JZ-Wentworth-Cache-Now/datapath.sv(222): (vlog-2182) 'mispredict' might be read before written in always_comb block.
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	datapath
@@ -459,6 +466,22 @@ ModelSim-Altera Info: # -- Compiling module arbiter
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # Top level modules:
 ModelSim-Altera Info: # 	arbiter
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/branch_predictors.sv}
+ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+ModelSim-Altera Info: # -- Compiling package branch_predictors_sv_unit
+ModelSim-Altera Info: # -- Importing package lc3b_types
+ModelSim-Altera Info: # -- Compiling module branch_predictors
+ModelSim-Altera Info: # 
+ModelSim-Altera Info: # Top level modules:
+ModelSim-Altera Info: # 	branch_predictors
+ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/modules/branch_history.sv}
+ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+ModelSim-Altera Info: # -- Compiling package branch_history_sv_unit
+ModelSim-Altera Info: # -- Importing package lc3b_types
+ModelSim-Altera Info: # -- Compiling module branch_history
+ModelSim-Altera Info: # 
+ModelSim-Altera Info: # Top level modules:
+ModelSim-Altera Info: # 	branch_history
 ModelSim-Altera Info: # 
 ModelSim-Altera Info: # vlog -sv -work work +incdir+/home/mychen5/ece411/JZ-Wentworth-Cache-Now {/home/mychen5/ece411/JZ-Wentworth-Cache-Now/mp3_tb.sv}
 ModelSim-Altera Info: # Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
@@ -519,6 +542,11 @@ ModelSim-Altera Info: # Loading work.hazard_detector_sv_unit
 ModelSim-Altera Info: # Loading work.hazard_detector
 ModelSim-Altera Info: # Loading work.forwarding_unit_sv_unit
 ModelSim-Altera Info: # Loading work.forwarding_unit
+ModelSim-Altera Info: # Loading work.branch_history_sv_unit
+ModelSim-Altera Info: # Loading work.branch_history
+ModelSim-Altera Info: # Loading work.branch_predictors_sv_unit
+ModelSim-Altera Info: # Loading work.branch_predictors
+ModelSim-Altera Info: # Loading work.gen_prediction
 ModelSim-Altera Info: # Loading work.register
 ModelSim-Altera Info: # Loading work.ctrl_register_sv_unit
 ModelSim-Altera Info: # Loading work.ctrl_register

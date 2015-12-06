@@ -151,6 +151,23 @@ lc3b_word mar_reg_out;
 
 lc3b_control_word ctrl_bubble;
 
+lc3b_p_index predictor_index;
+lc3b_p_index branch_history_out;
+lc3b_p_index br_branch_history_out;
+lc3b_word pc_in;
+lc3b_word adj9_predict_out;
+lc3b_word predicted_pc;
+lc3b_word brmux_predict_out;
+lc3b_word last_br_pc;
+lc3b_word mispredict_pc_reg1_out;
+lc3b_word mispredict_pc_reg2_out;
+logic [1:0] branch_count;
+logic branch_predict;
+logic mispredict;
+logic pred_reg1_out;
+logic pred_reg2_out;
+logic pred_reg3_out;
+
 initial
 begin
     ctrl_bubble = 0;
@@ -201,10 +218,11 @@ begin
 
     mem_wdata = sti_forward ? regfile_filter_out : stb_filter_out;
 
-    flush_enable = (branch_enable && ~ctrl_mem.is_nop && ctrl_mem.opcode == op_br)
+    flush_enable = mispredict
                     || ctrl_mem.opcode == op_jmp
                     || ctrl_mem.opcode == op_jsr
                     || ctrl_mem.opcode == op_trap;
+
     ir_in = flush_enable ? 16'b0 : instr_rdata;
 
     ctrlword1_in = (bubble_enable || flush_enable) ? ctrl_bubble : ctrl;
@@ -228,10 +246,18 @@ begin
         mem_byte_enable = (mem_address[0]) ? 2'b10 : 2'b01;
     else
         mem_byte_enable = ctrl_mem.mem_byte_enable;
+
     if (ctrl_mem.indirect_enable)
         global_load = (resp_count == 2'b10);
     else
         global_load = i_mem_resp && (d_mem_resp || ~(ctrl_mem.mem_read || ctrl_mem.mem_write)) && (lc3x_op_check);
+
+    predictor_index = instr_address[4:0] ^ branch_history_out;
+    mispredict = (branch_enable ^ pred_reg3_out) && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop;
+    if (mispredict)
+        pc_in = mispredict_pc_reg2_out;
+    else
+        pc_in = (branch_predict && ~mispredict) ? predicted_pc : brmux_out;
 end
 
 
@@ -245,7 +271,7 @@ end
 ir ir_module
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(ir_in),
     .opcode(opcode),
     .dest(dest),
@@ -471,6 +497,7 @@ nzp_comparator cccomp
 (
     .nzp(cc_out),
     .ir_nzp(write_reg2_out),
+    .enable(ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .branch_enable(branch_enable)
 );
 
@@ -532,6 +559,60 @@ hazard_detector hazard_detection_unit
     .sel_b(forwarding_sel_b)
 );
 
+/*
+ * Branch history table
+ */
+branch_history branch_history_table
+(
+    .clk(clk),
+    .branch_enable(branch_enable && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
+    .index(instr_address[4:0]),
+    .br_index(pc_reg_out3[4:0]),
+    .out(branch_history_out),
+    .br_out(br_branch_history_out)
+);
+
+/*
+ * Branch bimodal counter table
+ */
+branch_predictors branch_predictor_table
+(
+    .clk(clk),
+    .branch_enable(branch_enable && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
+    .index(predictor_index),
+    .br_index(pc_reg_out3[4:0] ^ br_branch_history_out),
+    .branch_count(branch_count)
+);
+
+/*
+ * Predictor generator
+ */
+gen_prediction gen_prediction_module
+(
+    .branch_count(branch_count),
+    .enable(ir_in[15:12] == op_br && ir_in != 16'b0),
+    .branch_predict(branch_predict)
+);
+
+/*
+ * ADJ9 for prediction
+ */
+adj #(.width(9)) adj9_predict
+(
+    .in(ir_in[8:0]),
+    .out(adj9_predict_out)
+);
+
+/*
+ * Offset adder for prediction
+ */
+adder offset_prediction_adder
+(
+    .a(adj9_predict_out),
+    .b(pc_plus2_out),
+    .out(predicted_pc)
+);
+
 
 /**************************************
  * Registers                          *
@@ -543,8 +624,8 @@ hazard_detector hazard_detection_unit
 register pc
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
-    .in(brmux_out),
+    .load(global_load && (~bubble_enable || flush_enable)),
+    .in(pc_in),
     .out(instr_address)
 );
 
@@ -581,6 +662,14 @@ register #(.width(3)) cc
     .out(cc_out)
 );
 
+register #(.width(16)) mispredict_pc
+(
+    .clk(clk),
+    .load(global_load && branch_predict),
+    .in(pc_plus2_out),
+    .out(last_br_pc)
+);
+
 
 /**************************************
  * TRANSITION Registers               *
@@ -596,7 +685,7 @@ register mar_reg
 register pc_reg1
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_plus2_out),
     .out(pc_reg_out1)
 );
@@ -604,7 +693,7 @@ register pc_reg1
 register pc_reg2
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_reg_out1),
     .out(pc_reg_out2)
 );
@@ -612,7 +701,7 @@ register pc_reg2
 register pc_reg3
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_reg_out2),
     .out(pc_reg_out3)
 );
@@ -620,7 +709,7 @@ register pc_reg3
 register pc_reg4
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_reg_out3),
     .out(pc_reg_out4)
 );
@@ -761,6 +850,45 @@ register #(.width(3)) sr2_index_reg
     .out(sr2_index_reg_out)
 );
 
+register #(.width(1)) br_prediction_reg1
+(
+    .clk(clk),
+    .load(global_load && ~bubble_enable),
+    .in(branch_predict),
+    .out(pred_reg1_out)
+);
+
+register #(.width(1)) br_prediction_reg2
+(
+    .clk(clk),
+    .load(global_load && ~bubble_enable),
+    .in(pred_reg1_out),
+    .out(pred_reg2_out)
+);
+
+register #(.width(1)) br_prediction_reg3
+(
+    .clk(clk),
+    .load(global_load && ~bubble_enable),
+    .in(pred_reg2_out),
+    .out(pred_reg3_out)
+);
+
+register #(.width(16)) mispredict_pc_reg1
+(
+    .clk(clk),
+    .load(global_load),
+    .in(last_br_pc),
+    .out(mispredict_pc_reg1_out)
+);
+
+register #(.width(16)) mispredict_pc_reg2
+(
+    .clk(clk),
+    .load(global_load),
+    .in(mispredict_pc_reg1_out),
+    .out(mispredict_pc_reg2_out)
+);
 
 
 /**************************************
@@ -816,7 +944,7 @@ mux2 #(.width(3)) dest_mux
  */
 mux2 br_mux
 (
-    .sel((ctrl_mem.brmux_sel) & branch_enable),
+    .sel(ctrl_mem.brmux_sel && branch_enable && mispredict && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .a(pcmux_out),
     .b(offsetadder_reg1_out),
     .f(brmux_out)
@@ -885,7 +1013,6 @@ mux4 mar_mux
     .f(marmux_out)
 );
 
-
 mux4 forwarding_mux_a
 (
     .sel(forwarding_sel_a),
@@ -895,7 +1022,6 @@ mux4 forwarding_mux_a
     .d(offsetadder_reg1_out),
     .f(forwarding_mux_a_out)
 );
-
 
 mux4 forwarding_mux_b
 (
