@@ -48,6 +48,7 @@ enum int unsigned {
     idle_rw_cache,
     cache_hit,
     phys_mem_write,
+    ewb_rw0,
     phys_mem_read
 } state, next_state;
 

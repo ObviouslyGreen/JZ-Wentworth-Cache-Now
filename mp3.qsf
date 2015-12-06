@@ -82,6 +82,10 @@ set_global_assignment -name ROUTER_TIMING_OPTIMIZATION_LEVEL MAXIMUM
 set_global_assignment -name PRE_MAPPING_RESYNTHESIS ON
 set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
 set_global_assignment -name ENABLE_BENEFICIAL_SKEW_OPTIMIZATION OFF
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name SYSTEMVERILOG_FILE ewb_datapath.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ewb_control.sv
+set_global_assignment -name SYSTEMVERILOG_FILE eviction_write_buffer.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/register_neg.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/zext.sv
 set_global_assignment -name SYSTEMVERILOG_FILE modules/zadj.sv
@@ -143,4 +147,3 @@ set_global_assignment -name SYSTEMVERILOG_FILE arbiter_datapath.sv
 set_global_assignment -name SYSTEMVERILOG_FILE arbiter_control.sv
 set_global_assignment -name SYSTEMVERILOG_FILE arbiter.sv
 set_global_assignment -name TCL_SCRIPT_FILE Tcl_script1.tcl
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
