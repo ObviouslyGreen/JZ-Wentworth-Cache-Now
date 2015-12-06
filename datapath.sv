@@ -21,6 +21,10 @@ module datapath
     output logic mem_write,
     output logic instr_read,
     output logic instr_write,
+    output lc3b_word mispredict_count,
+    output lc3b_word predict_count,
+    output lc3b_word bubble_count,
+    output lc3b_word instr_count,
     output lc3b_word instr_wdata,
     output lc3b_word instr_address,
     output lc3b_word mem_wdata,
@@ -167,11 +171,6 @@ logic mispredict;
 logic pred_reg1_out;
 logic pred_reg2_out;
 logic pred_reg3_out;
-
-lc3b_word mispredict_count;
-lc3b_word predict_count;
-lc3b_word bubble_count;
-lc3b_word instr_count;
 
 initial
 begin
