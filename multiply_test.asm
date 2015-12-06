@@ -7,15 +7,15 @@ SEGMENT CodeSegment:
 	LDR R3, R0, FIVE
 	LDR R4, R0, TEN
 	LDR R5, R0, ZERO
+	LDR R6, R0, TEN
 
-# ADD 5 to R5 10 times
+; ADD 5 to R5 10 times
 Loop1:
 	ADD R5, R3, R5
 	SUB R4, R4, R1
-	BRnz multiply
+	BRp Loop1
 	
-multiply:
-	MULT R6, R3, R4
+	MULT R6, R3, R6
 
 HALT:
 	BRnzp HALT
