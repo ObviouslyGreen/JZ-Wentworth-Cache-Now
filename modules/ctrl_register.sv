@@ -29,6 +29,7 @@ begin
     ctrl.storemux_sel = 1'b0;
     ctrl.destmux_sel = 1'b0;
     ctrl.alumux_sel = 2'b00;
+    ctrl.aluopmux_sel = 2'b00;
     ctrl.regfilemux_sel = 2'b00;
     ctrl.marmux_sel = 2'b00;
     ctrl.mdrmux_sel = 1'b0;

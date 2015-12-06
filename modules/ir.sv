@@ -17,6 +17,7 @@ module ir
     output lc3b_byte trapvect8,
     output lc3b_offset9 offset9,
     output lc3b_offset11 offset11,
+    output lc3b_lc3x lc3x_check,
     output logic d_enable,
     output logic imm_enable,
     output logic jsr_enable,
@@ -57,6 +58,7 @@ begin
     d_enable   = data[4];
     imm_enable = data[5];
     jsr_enable = data[11];
+    lc3x_check = data[4:3];
     out = data;
 end
 

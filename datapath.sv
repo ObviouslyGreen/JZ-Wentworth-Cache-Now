@@ -59,6 +59,7 @@ lc3b_offset6 offset6;
 lc3b_byte trapvect8;
 lc3b_offset9 offset9;
 lc3b_offset11 offset11;
+lc3b_lc3x lc3x_check;
 
 lc3b_word zext4_out;
 lc3b_word sext5_out;
@@ -77,6 +78,9 @@ lc3b_word marmux_out;
 
 lc3b_word mdr_out;
 lc3b_word alu_out;
+lc3b_word aluopmux_out;
+lc3b_word divider_out;
+lc3b_word multiplier_out;
 lc3b_word regfile_filter_out;
 lc3b_word stb_filter_out;
 
@@ -120,7 +124,9 @@ lc3b_word forwarding_mux_b_out;
 logic sti_forward;
 logic [1:0] forwarding_sel_a;
 logic [1:0] forwarding_sel_b;
+logic [2:0] lc3xcounter_out;
 
+logic lc3x_op_check;        //lc3x mult/div check
 
 logic is_nop;
 logic bubble_enable;
@@ -202,6 +208,17 @@ begin
     write_reg1_in = (bubble_enable || ctrl.mem_write)  ? 3'b000 : destmux_out;
     sr1_index_reg_in = bubble_enable ? 3'b000 : sr1;
     sr2_index_reg_in = bubble_enable ? 3'b000 : storemux_out;
+
+    if(ctrl_exec.opcode == op_add && (ctrl_exec.aluopmux_sel == 2'b01 || ctrl_exec.aluopmux_sel == 2'b10))
+    begin
+        if(lc3xcounter_out == 3'b110)
+            lc3x_op_check = 1;
+        else
+            lc3x_op_check = 0;
+    end
+    else
+        lc3x_op_check = 1;
+
     if(ctrl_mem.opcode == op_stb)
         mem_byte_enable = (mem_address[0]) ? 2'b10 : 2'b01;
     else
@@ -209,7 +226,7 @@ begin
     if (ctrl_mem.indirect_enable)
         global_load = (resp_count == 2'b10);
     else
-        global_load = i_mem_resp && (d_mem_resp || ~(ctrl_mem.mem_read || ctrl_mem.mem_write));
+        global_load = i_mem_resp && (d_mem_resp || ~(ctrl_mem.mem_read || ctrl_mem.mem_write)) && (lc3x_op_check);
 end
 
 
@@ -235,6 +252,7 @@ ir ir_module
     .trapvect8(trapvect8),
     .offset9(offset9),
     .offset11(offset11),
+    .lc3x_check(lc3x_check),
     .d_enable(d_enable),
     .imm_enable(imm_enable),
     .jsr_enable(jsr_enable),
@@ -249,6 +267,7 @@ ir ir_module
 control_rom control_rom_module
 (
     .opcode(opcode),
+    .lc3x_check(lc3x_check),
     .imm_enable(imm_enable),
     .jsr_enable(jsr_enable),
     .d_enable(d_enable),
@@ -268,6 +287,56 @@ alu alu_module
     .b(forwarding_mux_b_out),
     .f(alu_out)
 );
+
+/*
+ * Additional ALU functions (DIV and MULT) that cannot be implemented through logic
+ */
+ 
+divider divider_module
+(
+    .aclr(),
+    .clock(clk),
+    .denom(forwarding_mux_b_out),
+    .numer(forwarding_mux_a_out),
+    .quotient(divider_out),
+    .remain()
+);
+
+multiplier multiplier_module
+(
+    .aclr(),
+    .clock(clk),
+    .dataa(forwarding_mux_a_out[7:0]),
+    .datab(forwarding_mux_b_out[7:0]),
+    .result(multiplier_out)
+);
+/*
+alu alu_module_div
+(
+    .aluop(ctrl_exec.aluop),
+    .a(forwarding_mux_a_out),
+    .b(forwarding_mux_b_out),
+    .f(divider_out)
+);
+*/
+
+up8_counter lc3x_counter
+(
+    .clk(clk),
+    .enable(ctrl_exec.opcode == op_add &&(ctrl_exec.aluopmux_sel == 2'b01 || ctrl_exec.aluopmux_sel == 2'b10)),
+    .count(lc3xcounter_out)
+);
+
+mux4 aluop_mux
+(
+    .sel(ctrl_exec.aluopmux_sel),
+    .a(alu_out),         //changed for trans reg
+    .b(divider_out),
+    .c(multiplier_out),
+    .d(),
+    .f(aluopmux_out)
+);
+
 
 /*
  * Regfile
@@ -554,7 +623,7 @@ register alu_reg
 (
     .clk(clk),
     .load(global_load),
-    .in(alu_out),
+    .in(aluopmux_out),
     .out(alu_reg_out)
 );
 
@@ -753,7 +822,7 @@ mux2 br_mux
 mux2 indirect_mar_mux
 (
     .sel((ctrl_mem.indirect_enable && resp_count == 2'b01 && d_mem_resp)),
-    .a(alu_out),
+    .a(aluopmux_out),
     .b(mem_rdata),
     .f(indirect_marmux_out)
 );
