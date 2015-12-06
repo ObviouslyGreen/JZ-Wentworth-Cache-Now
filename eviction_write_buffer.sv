@@ -16,6 +16,7 @@ module eviction_write_buffer
 );
 
 lc3b_word ewb_addr_buff_out;
+logic ld_buff;
 
 ewb_datapath ewb_datapath
 (
