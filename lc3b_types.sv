@@ -16,6 +16,7 @@ typedef logic [3:0] lc3b_offset4;
 typedef logic [2:0] lc3b_offset3;
 typedef logic [2:0] lc3b_lc3x;
 
+typedef logic [1:0] lc3b_miss;
 typedef logic [2:0] lc3b_reg;
 typedef logic [2:0] lc3b_nzp;
 typedef logic [1:0] lc3b_mem_wmask;
@@ -43,7 +44,7 @@ typedef enum bit [3:0] {
     op_ldr  = 4'b0110,
     op_lea  = 4'b1110,
     op_not  = 4'b1001,
-    op_rti  = 4'b1000,
+    op_cnt  = 4'b1000,
     op_shf  = 4'b1101,
     op_stb  = 4'b0011,
     op_sti  = 4'b1011,
@@ -93,6 +94,9 @@ typedef struct packed {
     logic is_nop;
     lc3b_mem_wmask mem_byte_enable;
     logic imm_enable;
+    lc3b_miss missmux_sel;
+
+
 } lc3b_control_word;
 
 endpackage : lc3b_types

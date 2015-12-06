@@ -15,7 +15,8 @@ module l2_cache
     output logic pmem_write,
     output lc3b_mem_data mem_rdata,
     output lc3b_word pmem_address,
-    output lc3b_pmem_data pmem_wdata
+    output lc3b_pmem_data pmem_wdata,
+    output lc3b_word l2_miss_counter
 );
 
 logic ld_cache;
@@ -38,6 +39,17 @@ logic dirty1_out;
 logic dirty2_out;
 logic dirty3_out;
 lc3b_c_l2_tag pmem_tag;
+
+initial
+begin
+    l2_miss_counter = 0;
+end
+
+always_ff @ (posedge clk)
+begin
+    if (pmem_resp)
+        l2_miss_counter++;
+end
 
 l2_cache_datapath l2_cache_datapath
 (
