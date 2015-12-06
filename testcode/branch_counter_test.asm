@@ -1,0 +1,17 @@
+ORIGIN 4x0000
+
+SEGMENT CodeSegment:
+    LDR R1, R0, NUM
+    LDR R2, R0, NEG_SIX
+SUB:
+    ADD R1, R1, R2
+    BRn DONE
+    ADD R1, R1, 3
+    BRnzp SUB
+
+DONE:
+    BRnzp DONE
+
+
+NUM:        DATA2 4x0100
+NEG_SIX:    DATA2 4xFFFA
