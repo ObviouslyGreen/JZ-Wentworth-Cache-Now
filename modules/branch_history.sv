@@ -6,6 +6,7 @@ import lc3b_types::*;
 module branch_history
 (
     input clk,
+    input enable,
     input branch_enable,
     input lc3b_p_index index,
     input lc3b_p_index br_index,
@@ -27,7 +28,7 @@ end
 
 always_ff @(posedge clk)
 begin
-    if (branch_enable)
+    if (enable)
     begin
         data[br_index] = (data[br_index] << 1) | branch_enable;
     end
