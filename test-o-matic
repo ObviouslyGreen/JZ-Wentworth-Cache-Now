@@ -26,7 +26,7 @@ TESTCODE_DIR=$HOME/ece411/testcode/
 #(not sure if 183 meant 181 and i also uncommented 185)
 # the original path was also incorrect so that was changed
 REG_FILE={/mp3_tb/dut/datapath_module/regfile_module/data}
-RUN_TIME=2000000ns
+RUN_TIME=3000000ns
 
 #Other debug signals
 #signals can be prefixed with -radix
