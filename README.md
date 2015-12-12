@@ -9,7 +9,7 @@ Pipelined CPU based on the [LC-3b ISA](https://courses.engr.illinois.edu/ece411/
 Two levels of cache w/ write-back, write-allocate policies controlled by a cache arbiter
  * Split L1 caches, 2-ways, 128-bit lines (one for instructions, one for data)
  * One L2 cache, 4-ways, 256-bit lines
-Hazard detection and data forwarding
+ * Hazard detection and data forwarding
 
 ## Advanced Design 
  * L2 cache has 4-ways, multicycle hits, and uses a pseudo-lru replacement policy.
