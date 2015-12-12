@@ -189,29 +189,37 @@ begin: next_state_logic
             begin
                 if (lru_out == 2'b00)
                 begin
-                    if (dirty0_out)
+                    if (dirty0_out && ewb_ready)
                         next_state = ewb_rw0;
+                    else if (dirty0_out)
+                        next_state = idle_rw_cache;
                     else
                         next_state = phys_mem_read;
                 end
                 else if (lru_out == 2'b01)
                 begin
-                    if (dirty1_out)
+                    if (dirty1_out && ewb_ready)
                         next_state = ewb_rw0;
+                    else if (dirty1_out)
+                        next_state = idle_rw_cache;
                     else
                         next_state = phys_mem_read;
                 end
                 else if (lru_out == 2'b10)
                 begin
-                    if (dirty2_out)
+                    if (dirty2_out && ewb_ready)
                         next_state = ewb_rw0;
+                    else if (dirty2_out)
+                        next_state = idle_rw_cache;
                     else
                         next_state = phys_mem_read;
                 end
                 else if (lru_out == 2'b11)
                 begin
-                    if (dirty3_out)
+                    if (dirty3_out && ewb_ready)
                         next_state = ewb_rw0;
+                    else if (dirty3_out)
+                        next_state = idle_rw_cache;
                     else
                         next_state = phys_mem_read;
                 end
