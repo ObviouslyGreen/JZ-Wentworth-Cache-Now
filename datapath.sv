@@ -223,7 +223,7 @@ end
 ir ir_module
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(ir_in),
     .opcode(opcode),
     .dest(dest),
@@ -396,6 +396,7 @@ nzp_comparator cccomp
 (
     .nzp(cc_out),
     .ir_nzp(write_reg2_out),
+    .enable(ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .branch_enable(branch_enable)
 );
 
@@ -468,7 +469,7 @@ hazard_detector hazard_detection_unit
 register pc
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(brmux_out),
     .out(instr_address)
 );
@@ -521,7 +522,7 @@ register mar_reg
 register pc_reg1
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_plus2_out),
     .out(pc_reg_out1)
 );
@@ -529,7 +530,7 @@ register pc_reg1
 register pc_reg2
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_reg_out1),
     .out(pc_reg_out2)
 );
@@ -537,7 +538,7 @@ register pc_reg2
 register pc_reg3
 (
     .clk(clk),
-    .load(global_load && ~bubble_enable),
+    .load(global_load && (~bubble_enable || flush_enable)),
     .in(pc_reg_out2),
     .out(pc_reg_out3)
 );
