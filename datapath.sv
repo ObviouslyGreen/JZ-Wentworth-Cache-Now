@@ -275,7 +275,7 @@ always_ff @(posedge clk)
 begin
     if (mispredict)
         mispredict_count++;
-    if (instr_rdata == op_br && global_load)
+    if (instr_rdata[15:12] == op_br && global_load)
         branch_count++;
     if (mispredict)
         instr_count = instr_count - 3;
