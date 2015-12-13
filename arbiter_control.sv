@@ -32,13 +32,13 @@ begin : state_actions
             begin
                 arbiter_sel = 1;
             end
-            else if (i_pmem_read)
-            begin
-                arbiter_sel = 0;
-            end
             else if (d_pmem_write)
             begin
                 arbiter_sel = 1;
+            end
+            else if (i_pmem_read)
+            begin
+                arbiter_sel = 0;
             end
         end
 
