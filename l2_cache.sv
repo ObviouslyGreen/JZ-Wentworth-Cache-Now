@@ -52,7 +52,7 @@ end
 
 always_ff @ (posedge clk)
 begin
-    if (pmem_resp)
+    if (pmem_resp && pmem_read)
         l2_miss_counter++;
 end
 

@@ -108,7 +108,7 @@ lc3b_word i_miss_counter;
 lc3b_word d_miss_counter;
 lc3b_word l2_miss_counter;
 lc3b_word mispredict_count;
-lc3b_word predict_count;
+lc3b_word branch_count;
 lc3b_word bubble_count;
 lc3b_word instr_count;
 
@@ -135,7 +135,7 @@ datapath datapath_module
     .instr_wdata(i_mem_wdata),
     .instr_address(i_mem_address),
     .mispredict_count(mispredict_count),
-    .predict_count(predict_count),
+    .branch_count(branch_count),
     .bubble_count(bubble_count),
     .instr_count(instr_count),
     .mem_wdata(d_mem_wdata),

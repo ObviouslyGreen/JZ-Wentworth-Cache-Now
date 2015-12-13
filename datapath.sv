@@ -22,7 +22,7 @@ module datapath
     output logic instr_read,
     output logic instr_write,
     output lc3b_word mispredict_count,
-    output lc3b_word predict_count,
+    output lc3b_word branch_count,
     output lc3b_word bubble_count,
     output lc3b_word instr_count,
     output lc3b_word instr_wdata,
@@ -165,7 +165,7 @@ lc3b_word brmux_predict_out;
 lc3b_word last_br_pc;
 lc3b_word mispredict_pc_reg1_out;
 lc3b_word mispredict_pc_reg2_out;
-logic [1:0] branch_count;
+logic [1:0] predictor;
 logic branch_predict;
 logic mispredict;
 logic pred_reg1_out;
@@ -177,7 +177,7 @@ begin
     ctrl_bubble = 0;
     ctrl_bubble.is_nop = 1'b1;
     mispredict_count = 16'b0;
-    predict_count = 16'b0;
+    branch_count = 16'b0;
     instr_count = 16'b0;
 end
 
@@ -205,14 +205,16 @@ begin
     end
 
     if (bubble_enable)
+    begin
         sr1reg1_in = 16'b0;
-    else
-        sr1reg1_in = sr1_out;
-
-    if (bubble_enable)
         sr2reg1_in = 16'b0;
+    end
     else
+    begin
+        sr1reg1_in = sr1_out;
         sr2reg1_in = sr2_out;
+    end
+
 
     if (forwarding_sel_b == 2'b01)
         sr2reg2_in = alu_reg_out;
@@ -273,9 +275,11 @@ always_ff @(posedge clk)
 begin
     if (mispredict)
         mispredict_count++;
-    if (branch_predict)
-        predict_count++;
-    if (i_mem_resp)
+    if (instr_rdata == op_br && global_load)
+        branch_count++;
+    if (mispredict)
+        instr_count = instr_count - 3;
+    else if (global_load)
         instr_count++;
 end
 
@@ -604,7 +608,7 @@ branch_predictors branch_predictor_table
     .branch_enable(branch_enable && ctrl_mem.opcode == op_br && ~ctrl_mem.is_nop),
     .index(predictor_index),
     .br_index(pc_reg_out4[4:0] ^ br_branch_history_out),
-    .branch_count(branch_count)
+    .branch_count(predictor)
 );
 
 /*
@@ -612,7 +616,7 @@ branch_predictors branch_predictor_table
  */
 gen_prediction gen_prediction_module
 (
-    .branch_count(branch_count),
+    .branch_count(predictor),
     .enable(ir_in[15:12] == op_br && ir_in != 16'b0),
     .branch_predict(branch_predict)
 );
