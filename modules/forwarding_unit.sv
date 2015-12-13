@@ -53,7 +53,7 @@ begin
             && ~exec_mem_read)
             sel_b = 2'b10;
     end
-    if (mem_opcode == op_sti && write_reg2 == write_reg3)
+    if (mem_opcode == op_sti && write_reg2 == write_reg3 && wb_reg_write)
     begin
         sti_forward = 1'b1;
     end
