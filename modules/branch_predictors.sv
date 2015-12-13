@@ -22,7 +22,7 @@ begin
     for (int i = 0; i < $size(data); i++)
     begin
         // Intialize everything to weakly taken
-        data[i] = 2'b10;
+        data[i] = 2'b01;
     end
 end
 
