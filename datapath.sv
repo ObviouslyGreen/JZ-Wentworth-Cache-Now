@@ -35,6 +35,11 @@ begin
     instr_wdata = 16'b0000000000000000;
 end
 
+logic dick;
+logic pls;
+assign dick = instr_rdata[15:12] == op_sti;
+assign pls = mem_address == 16'h0334;
+
 lc3b_opcode opcode;
 lc3b_control_word ctrlword1_in;
 lc3b_control_word ctrlword2_in;
@@ -742,7 +747,7 @@ mux2 #(.width(3)) dest_mux
  */
 mux2 br_mux
 (
-    .sel((ctrl_mem.brmux_sel) & branch_enable),
+    .sel((ctrl_mem.brmux_sel) && branch_enable),
     .a(pcmux_out),
     .b(offsetadder_reg1_out),
     .f(brmux_out)
